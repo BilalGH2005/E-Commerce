@@ -1,33 +1,38 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloudflare_turnstile/cloudflare_turnstile.dart';
 import 'package:e_commerce/auth/screens/reset_password_screen.dart';
 import 'package:e_commerce/auth/screens/sign_in_screen.dart';
 import 'package:e_commerce/auth/screens/sign_up_screen.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
+import 'package:e_commerce/core/utils/svg_util.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uni_links/uni_links.dart';
-
-import '../../home/screens/home_screen.dart';
 
 part 'auth_state.dart';
 
-//TODO: imp(1) - Error: AuthException(message: Code verifier could not be found in local storage., statusCode: null)
 //TODO: imp(3) - add reCAPTCHA to the auth
 
-class AuthCubit extends Cubit<AuthCubitState> {
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit() : super(AuthInitial()) {
+    print('AuthCubit instantiated');
+    SvgUtil.preLoadSvgImages([
+      'assets/images/apple_icon.svg',
+      'assets/images/facebook_icon.svg',
+      'assets/images/google_icon.svg'
+    ]);
+  }
   final _supabaseAuth = Supabase.instance.client.auth;
-  late final StreamSubscription<Uri?> deepLinksListener;
-  AuthCubit() : super(AuthInitial());
-  bool isObscure = true;
-  // 0 -> InitialState , 1 -> loading
+  final TextEditingController emailTextController = TextEditingController(),
+      passwordTextController = TextEditingController(),
+      confirmPasswordTextController = TextEditingController();
   int authStatus = 0;
-  Future<void> submitAuthentication(
+  bool isPasswordObscure = true, isConfirmPasswordObscure = true;
+
+  Future<void> formsAuthentication(
       {required BuildContext context,
       required GlobalKey<FormState> formKey,
-      required TextEditingController emailTextController,
-      TextEditingController? passwordTextController,
       required String screen}) async {
     authStatus = 1;
     emit(AuthStateChanged());
@@ -39,54 +44,61 @@ class AuthCubit extends Cubit<AuthCubitState> {
     formKey.currentState!.save();
     try {
       switch (screen) {
-        case SignInScreen.id:
+        case SignInScreen.name:
           await _supabaseAuth.signInWithPassword(
-              password: passwordTextController!.text,
+              password: passwordTextController.text,
               email: emailTextController.text);
-        case SignUpScreen.id:
+        case SignUpScreen.name:
           await _supabaseAuth.signUp(
-              password: passwordTextController!.text,
+              password: passwordTextController.text,
               email: emailTextController.text,
               emailRedirectTo: 'myapp://auth');
           SnackBarUtil.showSuccessfulSnackBar(
               context, 'Check your email messages');
           break;
-        case ResetPasswordScreen.id:
+        case ResetPasswordScreen.name:
           await _supabaseAuth.resetPasswordForEmail(
               //TODO: imp(2) - redirect user to reset the password
               emailTextController.text);
           SnackBarUtil.showSuccessfulSnackBar(
               context, 'Check your email messages');
       }
-    } catch (exception) {
-      //TODO: imp(1) - if(exception.toString() == AuthException(404))
-      SnackBarUtil.showErrorSnackBar(context, exception.toString());
-      return;
+    } on AuthException catch (exception) {
+      SnackBarUtil.showErrorSnackBar(context, exception.message);
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
     }
   }
 
-  Future<void> googleOAuth() async {
-    await _supabaseAuth.signInWithOAuth(OAuthProvider.google,
-        redirectTo: 'myapp://auth');
-  }
+  Future<void> googleOAuth() async => await _supabaseAuth
+      .signInWithOAuth(OAuthProvider.google, redirectTo: 'myapp://auth');
 
-  void handleIncomingLinks(BuildContext context) {
-    deepLinksListener = uriLinkStream.listen(
-      (Uri? uri) {
-        if (uri != null) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(HomeScreen.id, (route) => false);
-        }
-      },
-    );
-  }
+  Future<void> signOut() async => await _supabaseAuth.signOut();
 
-  void toggleObscure() {
-    isObscure = !isObscure;
+  void togglePasswordObscure() {
+    isPasswordObscure = !isPasswordObscure;
     emit(AuthStateChanged());
+  }
+
+  void toggleConfirmPasswordObscure() {
+    isConfirmPasswordObscure = !isConfirmPasswordObscure;
+    emit(AuthStateChanged());
+  }
+
+  Future<String?> get token async {
+    final turnstile = CloudflareTurnstile.invisible(
+      siteKey: '1x00000000000000000000BB',
+    );
+    try {
+      final token = await turnstile.getToken();
+      return token;
+    } on TurnstileException catch (e) {
+      print('Challenge failed: ${e.message}');
+    } finally {
+      turnstile.dispose();
+    }
+    return null;
   }
 
   static String? passwordValidator(String? value) {
@@ -120,9 +132,12 @@ class AuthCubit extends Cubit<AuthCubitState> {
     return null;
   }
 
-  @override
-  Future<void> close() {
-    deepLinksListener.cancel();
-    return super.close();
+  static String? confirmPasswordValidator(
+      {required String? value,
+      required TextEditingController passwordTextController}) {
+    if (value != passwordTextController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
   }
 }

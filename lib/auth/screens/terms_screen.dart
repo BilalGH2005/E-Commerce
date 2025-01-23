@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TermsScreen extends StatelessWidget {
-  static const String id = 'terms_screen';
-
   const TermsScreen({super.key});
+  static const String name = '/terms_screen';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Terms and Conditions'),
+        title: const Text('Terms and Conditions'),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
@@ -21,7 +20,8 @@ class TermsScreen extends StatelessWidget {
             child: Markdown(
               data: _termsText,
               styleSheet: MarkdownStyleSheet(
-                p: TextStyle(fontSize: 16, height: 1.5, color: Colors.black87),
+                p: const TextStyle(
+                    fontSize: 16, height: 1.5, color: Colors.black87),
               ),
             ),
           ),
@@ -61,5 +61,3 @@ By accessing or using our services, you agree to comply with and be bound by the
 Thank you for using **Stylish!**
 ''';
 }
-
-// By clicking **"I Agree"**, you confirm that you have read, understood, and accepted these terms and conditions.

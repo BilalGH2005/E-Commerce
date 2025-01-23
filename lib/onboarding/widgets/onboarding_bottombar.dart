@@ -2,6 +2,7 @@ import 'package:e_commerce/auth/screens/sign_in_screen.dart';
 import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingBottomBar extends StatelessWidget {
@@ -11,7 +12,7 @@ class OnBoardingBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OnBoardingCubit, OnBoardingState>(
       builder: (context, state) {
-        final currentPage = context.read<OnBoardingCubit>().currentPage;
+        final int currentPage = context.read<OnBoardingCubit>().currentPage;
         return SizedBox(
           height: 35,
           child: Row(
@@ -22,7 +23,7 @@ class OnBoardingBottomBar extends StatelessWidget {
                   onPressed: () {
                     context.read<OnBoardingCubit>().goToPreviousPage();
                   },
-                  child: Text(
+                  child: const Text(
                     'Prev',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
@@ -33,13 +34,13 @@ class OnBoardingBottomBar extends StatelessWidget {
                   ),
                 )
               else
-                SizedBox(
+                const SizedBox(
                   width: 64,
                 ),
               SmoothPageIndicator(
                 controller: context.watch<OnBoardingCubit>().pageController,
                 count: 3,
-                effect: ExpandingDotsEffect(
+                effect: const ExpandingDotsEffect(
                     radius: 40,
                     dotWidth: 10,
                     expansionFactor: 4,
@@ -49,10 +50,9 @@ class OnBoardingBottomBar extends StatelessWidget {
               ),
               currentPage <= 1.5
                   ? TextButton(
-                      onPressed: () {
-                        context.read<OnBoardingCubit>().goToNextPage();
-                      },
-                      child: Text(
+                      onPressed: () =>
+                          context.read<OnBoardingCubit>().goToNextPage(),
+                      child: const Text(
                         'Next',
                         style: TextStyle(
                             fontFamily: 'Montserrat',
@@ -61,12 +61,8 @@ class OnBoardingBottomBar extends StatelessWidget {
                       ),
                     )
                   : TextButton(
-                      onPressed: () {
-                        // context.read<OnBoardingCubit>().;
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, SignInScreen.id, (route) => false);
-                      },
-                      child: Text(
+                      onPressed: () => context.goNamed(SignInScreen.name),
+                      child: const Text(
                         'Get Started',
                         style: TextStyle(
                             fontFamily: 'Montserrat',

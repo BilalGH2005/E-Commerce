@@ -16,7 +16,6 @@ class SnackBarUtil {
             Flexible(
               child: Text(
                 message,
-                maxLines: 2,
               ),
             ),
           ],
@@ -32,7 +31,7 @@ class SnackBarUtil {
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.check_circle,
               color: Colors.green,
             ),

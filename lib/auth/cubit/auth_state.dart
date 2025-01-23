@@ -1,7 +1,8 @@
 part of 'auth_cubit.dart';
 
-sealed class AuthCubitState {}
+@immutable
+sealed class AuthState {}
 
-final class AuthInitial extends AuthCubitState {}
+final class AuthInitial extends AuthState {}
 
-final class AuthStateChanged extends AuthCubitState {}
+final class AuthStateChanged extends AuthState {}

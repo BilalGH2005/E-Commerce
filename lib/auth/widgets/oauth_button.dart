@@ -8,23 +8,21 @@ class OAuthButton extends StatelessWidget {
       {super.key, required this.iconPath, required this.onPressed});
 
   @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.primary),
-          shape: BoxShape.circle),
-      child: SizedBox(
-        width: 54,
-        height: 54,
-        child: IconButton.outlined(
-          onPressed: onPressed,
-          icon: SvgPicture.asset(
-            iconPath,
-            height: 26,
-            width: 26,
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.primary),
+            shape: BoxShape.circle),
+        child: SizedBox(
+          width: 54,
+          height: 54,
+          child: IconButton.outlined(
+            onPressed: onPressed,
+            icon: SvgPicture.asset(
+              iconPath,
+              height: 26,
+              width: 26,
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

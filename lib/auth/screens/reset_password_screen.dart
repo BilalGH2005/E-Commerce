@@ -7,12 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/auth_field.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  static const String id = 'reset_password_screen';
-
   ResetPasswordScreen({super.key});
+  static const String name = '/reset_password_screen';
 
-  final TextEditingController emailTextController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +42,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AuthField(
-                      controller: emailTextController,
+                      controller: context.read<AuthCubit>().emailTextController,
                       label: 'Enter your email address',
                       icon: const Icon(Icons.email),
                       validator: (value) => AuthCubit.emailValidator(value),
@@ -60,7 +58,7 @@ class ResetPasswordScreen extends StatelessWidget {
                               TextSpan(
                                 text:
                                     'We will send you a message to set or reset\nyour new password',
-                                style: kGreyTextStyle,
+                                style: Constants.kGreyTextStyle,
                               ),
                             ],
                           ),
@@ -68,13 +66,10 @@ class ResetPasswordScreen extends StatelessWidget {
                       ],
                     ),
                     ReusableButton(
-                      onPressed: () async {
-                        await context.read<AuthCubit>().submitAuthentication(
-                            context: context,
-                            formKey: formKey,
-                            emailTextController: emailTextController,
-                            screen: ResetPasswordScreen.id);
-                      },
+                      onPressed: () async => await context
+                          .read<AuthCubit>()
+                          .formsAuthentication(
+                              context: context, formKey: formKey, screen: name),
                       label: 'Submit',
                     )
                   ],

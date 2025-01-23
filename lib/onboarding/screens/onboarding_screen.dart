@@ -7,19 +7,16 @@ import '../widgets/onboarding_bottombar.dart';
 import '../widgets/onboarding_page.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  static const String id = 'onboarding_screen';
-
+  static const String name = '/onboarding_screen';
   const OnBoardingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => OnBoardingCubit(),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: OnBoardingAppBar(),
-            bottomNavigationBar: OnBoardingBottomBar(),
+  Widget build(BuildContext context) => BlocProvider(
+        create: (BuildContext context) => OnBoardingCubit(),
+        child: Builder(
+          builder: (context) => Scaffold(
+            appBar: const OnBoardingAppBar(),
+            bottomNavigationBar: const OnBoardingBottomBar(),
             body: PageView(
               controller: context.watch<OnBoardingCubit>().pageController,
               children: const [
@@ -43,9 +40,7 @@ class OnBoardingScreen extends StatelessWidget {
                 ),
               ],
             ),
-          );
-        },
-      ),
-    );
-  }
+          ),
+        ),
+      );
 }
