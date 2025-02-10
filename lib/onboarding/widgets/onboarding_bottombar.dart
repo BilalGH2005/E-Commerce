@@ -1,8 +1,9 @@
-import 'package:e_commerce/auth/screens/sign_in_screen.dart';
+import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingBottomBar extends StatelessWidget {
@@ -12,7 +13,8 @@ class OnBoardingBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OnBoardingCubit, OnBoardingState>(
       builder: (context, state) {
-        final int currentPage = context.read<OnBoardingCubit>().currentPage;
+        final OnBoardingCubit cubit = context.read<OnBoardingCubit>();
+        final int currentPage = cubit.currentPage;
         return SizedBox(
           height: 35,
           child: Row(
@@ -21,7 +23,7 @@ class OnBoardingBottomBar extends StatelessWidget {
               if (currentPage > 0.5 && currentPage <= 2.0)
                 TextButton(
                   onPressed: () {
-                    context.read<OnBoardingCubit>().goToPreviousPage();
+                    cubit.goToPreviousPage();
                   },
                   child: const Text(
                     'Prev',
@@ -38,7 +40,7 @@ class OnBoardingBottomBar extends StatelessWidget {
                   width: 64,
                 ),
               SmoothPageIndicator(
-                controller: context.watch<OnBoardingCubit>().pageController,
+                controller: cubit.pageController,
                 count: 3,
                 effect: const ExpandingDotsEffect(
                     radius: 40,
@@ -50,24 +52,31 @@ class OnBoardingBottomBar extends StatelessWidget {
               ),
               currentPage <= 1.5
                   ? TextButton(
-                      onPressed: () =>
-                          context.read<OnBoardingCubit>().goToNextPage(),
-                      child: const Text(
+                      onPressed: () => cubit.goToNextPage(),
+                      child: Text(
                         'Next',
                         style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     )
                   : TextButton(
-                      onPressed: () => context.goNamed(SignInScreen.name),
-                      child: const Text(
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('hasSeenOnBoarding', true);
+                        context.goNamed(ScreensNames.signIn);
+                      },
+                      child: Text(
                         'Get Started',
                         style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
             ],

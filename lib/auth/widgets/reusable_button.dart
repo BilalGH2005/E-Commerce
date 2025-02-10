@@ -15,11 +15,11 @@ class ReusableButton extends StatelessWidget {
           final bool isLoading = context.watch<AuthCubit>().authStatus == 0;
           return ElevatedButton(
             style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 55),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4 /*10*/),
-              ),
-            ),
+                minimumSize: const Size(double.infinity, 55),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4 /*10*/),
+                ),
+                backgroundColor: Theme.of(context).primaryColor),
             onPressed: isLoading ? onPressed : null,
             child: isLoading
                 ? Text(

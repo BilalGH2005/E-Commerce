@@ -1,6 +1,7 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/auth/widgets/reusable_button.dart';
-import 'package:e_commerce/core/utils/constants.dart';
+import 'package:e_commerce/core/utils/constants/constants.dart';
+import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +9,6 @@ import '../widgets/auth_field.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({super.key});
-  static const String name = '/reset_password_screen';
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -69,7 +69,8 @@ class ResetPasswordScreen extends StatelessWidget {
                       onPressed: () async => await context
                           .read<AuthCubit>()
                           .formsAuthentication(
-                              context: context, formKey: formKey, screen: name),
+                              formKey: formKey,
+                              screen: ScreensNames.resetPassword),
                       label: 'Submit',
                     )
                   ],

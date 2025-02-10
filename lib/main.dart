@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'app/widgets/my_app.dart';
-
-//TODO: imp(3) - Error: AuthException(message: Code verifier could not be found in local storage., statusCode: null)
+import 'app/widgets/material_app_class.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,5 +14,5 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((_) => runApp(Phoenix(child: MyApp())));
+  ]).then((_) => runApp(MaterialAppClass()));
 }

@@ -1,28 +1,18 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:cloudflare_turnstile/cloudflare_turnstile.dart';
-import 'package:e_commerce/auth/screens/reset_password_screen.dart';
-import 'package:e_commerce/auth/screens/sign_in_screen.dart';
-import 'package:e_commerce/auth/screens/sign_up_screen.dart';
+import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
-import 'package:e_commerce/core/utils/svg_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../core/routes/app_router.dart';
 
 part 'auth_state.dart';
 
-//TODO: imp(3) - add reCAPTCHA to the auth
-
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial()) {
-    print('AuthCubit instantiated');
-    SvgUtil.preLoadSvgImages([
-      'assets/images/apple_icon.svg',
-      'assets/images/facebook_icon.svg',
-      'assets/images/google_icon.svg'
-    ]);
-  }
+  AuthCubit() : super(AuthInitial());
+
   final _supabaseAuth = Supabase.instance.client.auth;
   final TextEditingController emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
@@ -31,9 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
   bool isPasswordObscure = true, isConfirmPasswordObscure = true;
 
   Future<void> formsAuthentication(
-      {required BuildContext context,
-      required GlobalKey<FormState> formKey,
-      required String screen}) async {
+      {required GlobalKey<FormState> formKey, required String screen}) async {
     authStatus = 1;
     emit(AuthStateChanged());
     if (!formKey.currentState!.validate()) {
@@ -42,32 +30,50 @@ class AuthCubit extends Cubit<AuthState> {
       return;
     }
     formKey.currentState!.save();
+    //TOD0: imp(3) - make a web-view and a domain for captcha
+    // final turnstile = CloudflareTurnstile.invisible(
+    //     siteKey:
+    //     dotenv.env['TURNSTILE_SITE_KEY']!);
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+    if (context == null) return;
     try {
+      // final token = await turnstile.getToken();
+      // print(token);
       switch (screen) {
-        case SignInScreen.name:
+        case ScreensNames.signIn:
           await _supabaseAuth.signInWithPassword(
+              // captchaToken: token,
               password: passwordTextController.text,
               email: emailTextController.text);
-        case SignUpScreen.name:
+        case ScreensNames.signUp:
           await _supabaseAuth.signUp(
-              password: passwordTextController.text,
+              // captchaToken: token,
               email: emailTextController.text,
+              password: passwordTextController.text,
               emailRedirectTo: 'myapp://auth');
           SnackBarUtil.showSuccessfulSnackBar(
-              context, 'Check your email messages');
+              context, 'Check your email for verification.');
           break;
-        case ResetPasswordScreen.name:
+        case ScreensNames.resetPassword:
           await _supabaseAuth.resetPasswordForEmail(
-              //TODO: imp(2) - redirect user to reset the password
+              // captchaToken: token,
+              //TOD0: imp(1) - redirect user to reset the password
               emailTextController.text);
-          SnackBarUtil.showSuccessfulSnackBar(
-              context, 'Check your email messages');
+          SnackBarUtil.showSuccessfulSnackBar(context,
+              'If this email is registered, you will receive a reset link.');
       }
     } on AuthException catch (exception) {
       SnackBarUtil.showErrorSnackBar(context, exception.message);
+    }
+    // on TurnstileException catch (exception) {
+    //   SnackBarUtil.showErrorSnackBar(context, exception.message);
+    // }
+    catch (exception) {
+      SnackBarUtil.showErrorSnackBar(context, exception.toString());
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
+      // turnstile.dispose();
     }
   }
 
@@ -76,29 +82,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signOut() async => await _supabaseAuth.signOut();
 
-  void togglePasswordObscure() {
-    isPasswordObscure = !isPasswordObscure;
-    emit(AuthStateChanged());
-  }
-
-  void toggleConfirmPasswordObscure() {
-    isConfirmPasswordObscure = !isConfirmPasswordObscure;
-    emit(AuthStateChanged());
-  }
-
-  Future<String?> get token async {
-    final turnstile = CloudflareTurnstile.invisible(
-      siteKey: '1x00000000000000000000BB',
-    );
-    try {
-      final token = await turnstile.getToken();
-      return token;
-    } on TurnstileException catch (e) {
-      print('Challenge failed: ${e.message}');
-    } finally {
-      turnstile.dispose();
+  void togglePasswordObscure(String? fieldName) {
+    if (fieldName == 'password') {
+      isPasswordObscure = !isPasswordObscure;
+    } else if (fieldName == 'confirmPassword') {
+      isConfirmPasswordObscure = !isConfirmPasswordObscure;
     }
-    return null;
+    emit(AuthStateChanged());
   }
 
   static String? passwordValidator(String? value) {

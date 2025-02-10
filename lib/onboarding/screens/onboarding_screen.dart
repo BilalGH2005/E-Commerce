@@ -7,7 +7,6 @@ import '../widgets/onboarding_bottombar.dart';
 import '../widgets/onboarding_page.dart';
 
 class OnBoardingScreen extends StatelessWidget {
-  static const String name = '/onboarding_screen';
   const OnBoardingScreen({super.key});
 
   @override

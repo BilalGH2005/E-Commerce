@@ -10,12 +10,12 @@ class OAuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).colorScheme.primary),
+            border: Border.all(color: Theme.of(context).primaryColor),
             shape: BoxShape.circle),
         child: SizedBox(
           width: 54,
           height: 54,
-          child: IconButton.outlined(
+          child: IconButton(
             onPressed: onPressed,
             icon: SvgPicture.asset(
               iconPath,

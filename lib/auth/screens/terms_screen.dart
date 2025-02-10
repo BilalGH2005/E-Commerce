@@ -3,7 +3,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TermsScreen extends StatelessWidget {
   const TermsScreen({super.key});
-  static const String name = '/terms_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +10,7 @@ class TermsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Terms and Conditions'),
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

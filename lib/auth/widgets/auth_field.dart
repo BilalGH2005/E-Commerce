@@ -22,16 +22,36 @@ class AuthField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextFormField(
+      onTapOutside: (PointerDownEvent event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       controller: controller,
       obscureText: isObscure ?? false,
       keyboardType: keyboardType,
       decoration: InputDecoration(
+        fillColor: Color(0xFFF3F3F3),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(
+            color: Color(0xFFA8A8A9),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2,
+          ),
+        ),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(
+            color: Color(0xFFA8A8A9),
+          ),
+        ),
         prefixIcon: icon,
         suffixIcon: suffixIcon,
         filled: true,
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
         label: Text(
           label,
           style: const TextStyle(

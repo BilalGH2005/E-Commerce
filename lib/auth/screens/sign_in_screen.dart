@@ -1,8 +1,7 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
-import 'package:e_commerce/auth/screens/reset_password_screen.dart';
-import 'package:e_commerce/auth/screens/sign_up_screen.dart';
 import 'package:e_commerce/auth/widgets/obscure_button.dart';
-import 'package:e_commerce/core/utils/constants.dart';
+import 'package:e_commerce/core/utils/constants/constants.dart';
+import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +12,6 @@ import '../widgets/reusable_button.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
-  static const String name = '/sign_in_screen';
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -59,7 +57,7 @@ class SignInScreen extends StatelessWidget {
                               suffixIcon: ObscureButton(
                                   isObscure: cubit.isPasswordObscure,
                                   onPressed: () =>
-                                      cubit.togglePasswordObscure()),
+                                      cubit.togglePasswordObscure('password')),
                               label: 'Password',
                               icon: const Icon(Icons.lock),
                               validator: (value) =>
@@ -68,16 +66,14 @@ class SignInScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                onPressed: () =>
-                                    context.pushNamed(ResetPasswordScreen.name),
+                                onPressed: () => context
+                                    .pushNamed(ScreensNames.resetPassword),
                                 child: Text(
                                   'Forgot password?',
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 12,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
                             ],
@@ -85,11 +81,10 @@ class SignInScreen extends StatelessWidget {
                           ReusableButton(
                             onPressed: () async =>
                                 await cubit.formsAuthentication(
-                                    context: context,
                                     formKey: formKey,
-                                    screen: name),
+                                    screen: ScreensNames.signIn),
                             label: 'Login',
-                          )
+                          ),
                         ],
                       );
                     },
@@ -99,10 +94,10 @@ class SignInScreen extends StatelessWidget {
                 SizedBox(
                   width: 236,
                   height: 154,
-                  child: OAuthButtons(
+                  child: OAuthWidget(
                     label: 'Create an account',
                     buttonText: 'Sign up',
-                    onPressed: () => context.pushNamed(SignUpScreen.name),
+                    onPressed: () => context.pushNamed(ScreensNames.signUp),
                   ),
                 ),
               ],

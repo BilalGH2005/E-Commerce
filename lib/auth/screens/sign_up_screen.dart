@@ -1,7 +1,6 @@
-import 'package:e_commerce/auth/screens/sign_in_screen.dart';
-import 'package:e_commerce/auth/screens/terms_screen.dart';
 import 'package:e_commerce/auth/widgets/oauth_widget.dart';
-import 'package:e_commerce/core/utils/constants.dart';
+import 'package:e_commerce/core/utils/constants/constants.dart';
+import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +13,6 @@ import '../widgets/reusable_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
-  static const String name = '/sign_up_screen';
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -62,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
                                 isObscure: cubit.isPasswordObscure,
                                 onPressed: () => context
                                     .read<AuthCubit>()
-                                    .togglePasswordObscure()),
+                                    .togglePasswordObscure('password')),
                             label: 'Password',
                             icon: const Icon(Icons.lock),
                             validator: (value) =>
@@ -75,7 +73,7 @@ class SignUpScreen extends StatelessWidget {
                                 isObscure: cubit.isConfirmPasswordObscure,
                                 onPressed: () => context
                                     .read<AuthCubit>()
-                                    .toggleConfirmPasswordObscure),
+                                    .togglePasswordObscure('confirmPassword')),
                             label: 'Confirm password',
                             icon: const Icon(Icons.lock),
                             validator: (value) =>
@@ -94,7 +92,6 @@ class SignUpScreen extends StatelessWidget {
                                       'By clicking the Create Account button, you\nagree to ',
                                   style: Constants.kGreyTextStyle,
                                   children: <TextSpan>[
-                                    //TODO: imp(1) - show the ripple effect when pressing the button
                                     TextSpan(
                                       text: 'our terms',
                                       style: TextStyle(
@@ -105,7 +102,7 @@ class SignUpScreen extends StatelessWidget {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          context.pushNamed(TermsScreen.name);
+                                          context.pushNamed(ScreensNames.terms);
                                         },
                                     ),
                                   ],
@@ -116,9 +113,8 @@ class SignUpScreen extends StatelessWidget {
                           ReusableButton(
                             onPressed: () async =>
                                 await cubit.formsAuthentication(
-                                    context: context,
                                     formKey: formKey,
-                                    screen: name),
+                                    screen: ScreensNames.signUp),
                             label: 'Create Account',
                           )
                         ],
@@ -130,10 +126,10 @@ class SignUpScreen extends StatelessWidget {
                 SizedBox(
                   width: 260,
                   height: 154,
-                  child: OAuthButtons(
+                  child: OAuthWidget(
                     label: 'I already have an account',
                     buttonText: 'Sign in',
-                    onPressed: () => context.pushNamed(SignInScreen.name),
+                    onPressed: () => context.pushNamed(ScreensNames.signIn),
                   ),
                 ),
               ],

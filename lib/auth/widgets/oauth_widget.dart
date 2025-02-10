@@ -1,13 +1,13 @@
+import 'package:e_commerce/core/utils/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/utils/constants.dart';
 import '../../core/utils/snackbar_util.dart';
 import '../cubit/auth_cubit.dart';
 import 'oauth_button.dart';
 
-class OAuthButtons extends StatelessWidget {
-  const OAuthButtons({
+class OAuthWidget extends StatelessWidget {
+  const OAuthWidget({
     super.key,
     required this.label,
     required this.onPressed,
@@ -63,10 +63,12 @@ class OAuthButtons extends StatelessWidget {
                 child: Text(
                   buttonText,
                   style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.primary),
+                    decoration: TextDecoration.underline,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).primaryColor,
+                    decorationColor: Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ],
