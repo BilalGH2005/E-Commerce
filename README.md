@@ -1,16 +1,25 @@
-# e_commerce
+# E-Commerce App
 
-A new Flutter project.
+## Description
+This is an e-commerce app built using **Flutter**. The app provides a platform where users can browse products, add them to their cart, and complete the purchase. It features a smooth UI and integrates various features such as authentication, payment processing, and product management.
 
-## Getting Started
+## Features
+- User Authentication (Sign Up, Login, Logout)
+- Product Listing and Search
+- Shopping Cart Functionality
+- Checkout and Order Confirmation
+- User Profile Management
+- Integration with [Payment Gateway API]
 
-This project is a starting point for a Flutter application.
+## Technologies Used
+- **Flutter** for building the cross-platform mobile app.
+- **Dart** as the programming language.
+- **Firebase** for Authentication and Cloud Firestore.
+- **Hive** for local storage.
+- **Supabase** for backend services.
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the repository:
+   ```bash
+   git clone https://gitlab.com/bilalgh2005@gmail.com/e_commerce.git
