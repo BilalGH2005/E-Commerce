@@ -8,15 +8,12 @@ This is an e-commerce app built using **Flutter**. The app provides a platform w
 - Product Listing and Search
 - Shopping Cart Functionality
 - Checkout and Order Confirmation
-- User Profile Management
-- Integration with [Payment Gateway API]
 
 ## Technologies Used
 - **Flutter** for building the cross-platform mobile app.
 - **Dart** as the programming language.
-- **Firebase** for Authentication and Cloud Firestore.
-- **Hive** for local storage.
-- **Supabase** for backend services.
+- **Supabase** for Authentication and Cloud and backend services.
+- **Shared Preferences** for local storage.
 
 ## Installation
 
