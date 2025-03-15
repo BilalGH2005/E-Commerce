@@ -20,21 +20,16 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
               return RichText(
                 text: TextSpan(
                   text: (cubit.currentPage + 1).toString(),
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: Theme.of(context).textTheme.bodyLarge!.color),
-                  children: const <TextSpan>[
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.inverseSurface),
+                  children: <TextSpan>[
                     TextSpan(
                       text: '/3',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Montserrat',
-                        fontSize: 18,
-                        color: Color(0xFFA0A0A1),
-                      ),
-                    )
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(color: Theme.of(context).colorScheme.tertiary),
+                    ),
                   ],
                 ),
               );
@@ -51,15 +46,8 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               onPressed: () => context.read<OnBoardingCubit>().goToLastPage(),
-              child: Text(
-                'Skip',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                  color: Theme.of(context).textTheme.bodyLarge!.color,
-                ),
-              ),
+              child: Text('Skip',
+                  style: Theme.of(context).textTheme.headlineMedium!),
             ),
           )
         ],

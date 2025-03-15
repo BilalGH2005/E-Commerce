@@ -20,3 +20,15 @@ subprojects {
         }
     }
 }
+//rootProject.allprojects {
+//    subprojects {
+//        project.configurations.all {
+//            resolutionStrategy.eachDependency { details ->
+//                if (details.requested.group == 'com.github.bumptech.glide'
+//                        && details.requested.name.contains('glide')) {
+//                    details.useVersion '4.15.1'
+//                }
+//            }
+//        }
+//    }
+//}

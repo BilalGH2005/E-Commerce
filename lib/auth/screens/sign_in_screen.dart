@@ -1,14 +1,13 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/auth/widgets/obscure_button.dart';
-import 'package:e_commerce/core/utils/constants/constants.dart';
 import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/widgets/reusable_button.dart';
 import '../widgets/auth_field.dart';
 import '../widgets/oauth_widget.dart';
-import '../widgets/reusable_button.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -31,16 +30,18 @@ class SignInScreen extends StatelessWidget {
                   child: BlocBuilder<AuthCubit, AuthState>(
                     builder: (context, state) {
                       final AuthCubit cubit = context.read<AuthCubit>();
+                      final bool isLoading = cubit.authStatus == 0;
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 'Welcome\nBack!',
                                 textAlign: TextAlign.start,
-                                style: Constants.kTitleTextStyle,
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge,
                               ),
                             ],
                           ),
@@ -48,7 +49,7 @@ class SignInScreen extends StatelessWidget {
                               controller: cubit.emailTextController,
                               label: 'Email',
                               keyboardType: TextInputType.emailAddress,
-                              icon: const Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person),
                               validator: (value) =>
                                   AuthCubit.emailValidator(value)),
                           AuthField(
@@ -59,7 +60,7 @@ class SignInScreen extends StatelessWidget {
                                   onPressed: () =>
                                       cubit.togglePasswordObscure('password')),
                               label: 'Password',
-                              icon: const Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               validator: (value) =>
                                   AuthCubit.passwordValidator(value)),
                           Row(
@@ -73,17 +74,26 @@ class SignInScreen extends StatelessWidget {
                                   style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: 12,
-                                      color: Theme.of(context).primaryColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                                 ),
                               ),
                             ],
                           ),
                           ReusableButton(
-                            onPressed: () async =>
-                                await cubit.formsAuthentication(
+                            onPressed: isLoading
+                                ? () async => await cubit.authentication(
                                     formKey: formKey,
-                                    screen: ScreensNames.signIn),
-                            label: 'Login',
+                                    screen: ScreensNames.signIn)
+                                : null,
+                            label: isLoading
+                                ? Text('Login',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                : CircularProgressIndicator(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
                           ),
                         ],
                       );

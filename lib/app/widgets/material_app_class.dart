@@ -1,6 +1,7 @@
 import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:e_commerce/core/routes/app_router.dart';
-import 'package:e_commerce/core/themes/themes.dart';
+import 'package:e_commerce/core/themes/dark_theme.dart';
+import 'package:e_commerce/core/themes/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,6 @@ class MaterialAppClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Themes themes = Themes();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -22,12 +22,16 @@ class MaterialAppClass extends StatelessWidget {
           create: (context) => AuthCubit(),
         ),
       ],
-      child: MaterialApp.router(
-        routerConfig: AppRouter().router,
-        debugShowCheckedModeBanner: false,
-        theme: themes.lightTheme,
-        darkTheme: themes.darkTheme,
-        themeMode: ThemeMode.light,
+      child: Builder(
+        builder: (context) => MaterialApp.router(
+          routerConfig: AppRouter().router,
+          debugShowCheckedModeBanner: false,
+          theme: LightTheme().lightTheme,
+          darkTheme: DarkTheme().darkTheme,
+          themeMode: context.watch<AppCubit>().isDarkTheme!
+              ? ThemeMode.dark
+              : ThemeMode.light,
+        ),
       ),
     );
   }

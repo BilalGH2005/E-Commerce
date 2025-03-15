@@ -1,7 +1,6 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
-import 'package:e_commerce/auth/widgets/reusable_button.dart';
-import 'package:e_commerce/core/utils/constants/constants.dart';
 import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,14 +22,11 @@ class ResetPasswordScreen extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Forgot\npassword?',
                     textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700),
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                 ],
               ),
@@ -38,42 +34,55 @@ class ResetPasswordScreen extends StatelessWidget {
               SizedBox(
                 width: 317,
                 height: 210,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AuthField(
-                      controller: context.read<AuthCubit>().emailTextController,
-                      label: 'Enter your email address',
-                      icon: const Icon(Icons.email),
-                      validator: (value) => AuthCubit.emailValidator(value),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                child: BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    final AuthCubit cubit = context.read<AuthCubit>();
+                    final bool isLoading = cubit.authStatus == 0;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: '* ',
-                            style: TextStyle(color: Colors.red, fontSize: 12),
-                            children: const <TextSpan>[
-                              TextSpan(
-                                text:
-                                    'We will send you a message to set or reset\nyour new password',
-                                style: Constants.kGreyTextStyle,
+                        AuthField(
+                          controller: cubit.emailTextController,
+                          label: 'Enter your email address',
+                          prefixIcon: const Icon(Icons.email),
+                          validator: (value) => AuthCubit.emailValidator(value),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: '* ',
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 12),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text:
+                                        'We will send you a message to set or reset\nyour new password',
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
+                        ReusableButton(
+                          onPressed: isLoading
+                              ? () async => await cubit.authentication(
+                                  formKey: formKey,
+                                  screen: ScreensNames.resetPassword)
+                              : null,
+                          label: isLoading
+                              ? Text('Submit',
+                                  style: Theme.of(context).textTheme.bodyMedium)
+                              : CircularProgressIndicator(
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
                         ),
                       ],
-                    ),
-                    ReusableButton(
-                      onPressed: () async => await context
-                          .read<AuthCubit>()
-                          .formsAuthentication(
-                              formKey: formKey,
-                              screen: ScreensNames.resetPassword),
-                      label: 'Submit',
-                    )
-                  ],
+                    );
+                  },
                 ),
               )
             ],

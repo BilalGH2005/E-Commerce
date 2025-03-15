@@ -20,7 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   int authStatus = 0;
   bool isPasswordObscure = true, isConfirmPasswordObscure = true;
 
-  Future<void> formsAuthentication(
+  Future<void> authentication(
       {required GlobalKey<FormState> formKey, required String screen}) async {
     authStatus = 1;
     emit(AuthStateChanged());

@@ -10,7 +10,7 @@ class OAuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
+            border: Border.all(color: Theme.of(context).colorScheme.primary),
             shape: BoxShape.circle),
         child: SizedBox(
           width: 54,
@@ -21,6 +21,10 @@ class OAuthButton extends StatelessWidget {
               iconPath,
               height: 26,
               width: 26,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.inverseSurface,
+                BlendMode.srcIn,
+              ),
             ),
           ),
         ),

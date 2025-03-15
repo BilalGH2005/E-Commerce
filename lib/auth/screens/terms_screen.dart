@@ -7,10 +7,14 @@ class TermsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //TODO: solve appbar color to be const
       appBar: AppBar(
-        title: const Text('Terms and Conditions'),
+        foregroundColor: Theme.of(context).colorScheme.inverseSurface,
+        title: Text(
+          'Terms and Conditions',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -19,8 +23,7 @@ class TermsScreen extends StatelessWidget {
             child: Markdown(
               data: _termsText,
               styleSheet: MarkdownStyleSheet(
-                p: const TextStyle(
-                    fontSize: 16, height: 1.5, color: Colors.black87),
+                p: Theme.of(context).textTheme.displayMedium,
               ),
             ),
           ),
@@ -30,7 +33,7 @@ class TermsScreen extends StatelessWidget {
   }
 
   final String _termsText = '''
-Welcome to **Stylish!**
+Welcome to **E-Commerce!**
 
 By accessing or using our services, you agree to comply with and be bound by the following terms and conditions:
 
@@ -55,8 +58,8 @@ By accessing or using our services, you agree to comply with and be bound by the
    - Your personal data is processed according to our Privacy Policy, available on the app.
 
 7. **Liability Limitation**:
-   - **Stylish** is not responsible for any indirect, incidental, or consequential damages arising from your use of our services.
+   - **E-Commerce** is not responsible for any indirect, incidental, or consequential damages arising from your use of our services.
 
-Thank you for using **Stylish!**
+Thank you for using **E-Commerce!**
 ''';
 }

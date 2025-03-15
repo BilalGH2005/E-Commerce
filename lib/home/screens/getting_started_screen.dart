@@ -1,18 +1,21 @@
+import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/widgets/reusable_button.dart';
 
 class GettingStartedScreen extends StatelessWidget {
   const GettingStartedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        width: screenSize.width,
-        height: screenSize.height,
+        width: size.width,
+        height: size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Color(0xFF000000), Color(0xFF000000).withAlpha(23)]),
           image: DecorationImage(
             image: AssetImage('assets/images/getting_started.png'),
             fit: BoxFit.cover,
@@ -21,27 +24,61 @@ class GettingStartedScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            SizedBox(
-              width: 390,
+            Container(
+              padding:
+                  EdgeInsets.only(bottom: 30, left: 55, right: 55, top: 55),
               height: 362,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withAlpha(0),
+                    Colors.black.withAlpha(160),
+                  ],
+                  stops: [0.0, 0.24],
+                ),
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 315,
-                    child: Text(
-                      'You want Authentic, here you go!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'montserrat',
-                          fontSize: 34,
-                          color: Theme.of(context).scaffoldBackgroundColor),
+                    height: 25,
+                  ),
+                  Text(
+                    'You want Authentic, here you go!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'montserrat',
+                        fontSize: 34,
+                        color: Theme.of(context).scaffoldBackgroundColor),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Find it here, buy it now!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'montserrat',
+                      color: Color(0xFFF2F2F2),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  ReusableButton(
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('seenGettingStarted', true);
+                      context.goNamed(ScreensNames.home);
+                    },
+                    label: Text('Get Started',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/utils/constants/constants.dart';
+import 'package:e_commerce/core/utils/constants/constants_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +27,7 @@ class OAuthWidget extends StatelessWidget {
               fontFamily: 'Montserrat',
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Constants.kNiceGrey,
+              color: ColorConstants.kBottomAuthGreyColor,
             ),
           ),
           Row(
@@ -40,12 +40,12 @@ class OAuthWidget extends StatelessWidget {
               ),
               OAuthButton(
                 iconPath: 'assets/images/apple_icon.svg',
-                onPressed: () => SnackBarUtil.showErrorSnackBar(
+                onPressed: () => SnackBarUtil.showNotificationSnackBar(
                     context, 'Apple accounts will be supported soon.'),
               ),
               OAuthButton(
                 iconPath: 'assets/images/facebook_icon.svg',
-                onPressed: () => SnackBarUtil.showErrorSnackBar(
+                onPressed: () => SnackBarUtil.showNotificationSnackBar(
                     context, 'Facebook accounts will be supported soon.'),
               )
             ],
@@ -56,7 +56,8 @@ class OAuthWidget extends StatelessWidget {
               Text(
                 label,
                 style: const TextStyle(
-                    fontFamily: 'Montserrat', color: Constants.kNiceGrey),
+                    fontFamily: 'Montserrat',
+                    color: ColorConstants.kBottomAuthGreyColor),
               ),
               TextButton(
                 onPressed: onPressed,
@@ -66,8 +67,8 @@ class OAuthWidget extends StatelessWidget {
                     decoration: TextDecoration.underline,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor,
-                    decorationColor: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
+                    decorationColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

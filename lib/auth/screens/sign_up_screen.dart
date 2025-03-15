@@ -1,15 +1,14 @@
 import 'package:e_commerce/auth/widgets/oauth_widget.dart';
-import 'package:e_commerce/core/utils/constants/constants.dart';
 import 'package:e_commerce/core/utils/constants/screens_names.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/widgets/reusable_button.dart';
 import '../cubit/auth_cubit.dart';
 import '../widgets/auth_field.dart';
 import '../widgets/obscure_button.dart';
-import '../widgets/reusable_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -31,17 +30,19 @@ class SignUpScreen extends StatelessWidget {
                   height: 488,
                   child: BlocBuilder<AuthCubit, AuthState>(
                     builder: (context, state) {
-                      final cubit = context.read<AuthCubit>();
+                      final AuthCubit cubit = context.read<AuthCubit>();
+                      final bool isLoading = cubit.authStatus == 0;
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 'Create an\naccount',
                                 textAlign: TextAlign.start,
-                                style: Constants.kTitleTextStyle,
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge,
                               ),
                             ],
                           ),
@@ -49,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
                             controller: cubit.emailTextController,
                             label: 'Email',
                             keyboardType: TextInputType.emailAddress,
-                            icon: const Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                             validator: (value) =>
                                 AuthCubit.emailValidator(value),
                           ),
@@ -62,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                                     .read<AuthCubit>()
                                     .togglePasswordObscure('password')),
                             label: 'Password',
-                            icon: const Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             validator: (value) =>
                                 AuthCubit.passwordValidator(value),
                           ),
@@ -75,7 +76,7 @@ class SignUpScreen extends StatelessWidget {
                                     .read<AuthCubit>()
                                     .togglePasswordObscure('confirmPassword')),
                             label: 'Confirm password',
-                            icon: const Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             validator: (value) =>
                                 AuthCubit.confirmPasswordValidator(
                                     value: value,
@@ -90,14 +91,16 @@ class SignUpScreen extends StatelessWidget {
                                 text: TextSpan(
                                   text:
                                       'By clicking the Create Account button, you\nagree to ',
-                                  style: Constants.kGreyTextStyle,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                   children: <TextSpan>[
                                     TextSpan(
                                       text: 'our terms',
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 12,
-                                        color: Color(0xFFFF4B26),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                         decoration: TextDecoration.underline,
                                       ),
                                       recognizer: TapGestureRecognizer()
@@ -111,12 +114,19 @@ class SignUpScreen extends StatelessWidget {
                             ],
                           ),
                           ReusableButton(
-                            onPressed: () async =>
-                                await cubit.formsAuthentication(
+                            onPressed: isLoading
+                                ? () async => await cubit.authentication(
                                     formKey: formKey,
-                                    screen: ScreensNames.signUp),
-                            label: 'Create Account',
-                          )
+                                    screen: ScreensNames.signUp)
+                                : null,
+                            label: isLoading
+                                ? Text('Create Account',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium)
+                                : CircularProgressIndicator(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                          ),
                         ],
                       );
                     },

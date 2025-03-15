@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class AuthField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
-  final Icon icon;
-
+  final Icon prefixIcon;
   final String? Function(String?) validator;
   final bool? isObscure;
   final TextInputType? keyboardType;
@@ -13,7 +12,7 @@ class AuthField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.label,
-    required this.icon,
+    required this.prefixIcon,
     required this.validator,
     this.keyboardType,
     this.suffixIcon,
@@ -25,11 +24,20 @@ class AuthField extends StatelessWidget {
       onTapOutside: (PointerDownEvent event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
+      style: Theme.of(context).textTheme.labelSmall,
+      // cursorErrorColor: Colors.red,
       controller: controller,
       obscureText: isObscure ?? false,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        fillColor: Color(0xFFF3F3F3),
+        fillColor: Theme.of(context).colorScheme.onSurface,
+        // errorBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.all(Radius.circular(10)),
+        //   //TODO: error border color and error message color
+        //   borderSide: BorderSide(
+        //     color: Colors.red,
+        //   ),
+        // ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
@@ -39,7 +47,7 @@ class AuthField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             width: 2,
           ),
         ),
@@ -49,16 +57,15 @@ class AuthField extends StatelessWidget {
             color: Color(0xFFA8A8A9),
           ),
         ),
-        prefixIcon: icon,
+        prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         filled: true,
         label: Text(
           label,
-          style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w500,
-            fontSize: 12,
-          ),
+          style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w500,
+              fontSize: 12),
         ),
       ),
       validator: validator);

@@ -11,7 +11,11 @@ class ObscureButton extends StatelessWidget {
         splashRadius: 20,
         onPressed: onPressed,
         icon: isObscure
-            ? const Icon(Icons.remove_red_eye_outlined)
-            : const Icon(Icons.visibility_off_outlined),
+            ? Icon(
+                Icons.remove_red_eye_outlined,
+                color: Theme.of(context).colorScheme.inverseSurface,
+              )
+            : Icon(Icons.visibility_off_outlined,
+                color: Theme.of(context).colorScheme.inverseSurface),
       );
 }

@@ -42,11 +42,12 @@ class OnBoardingBottomBar extends StatelessWidget {
               SmoothPageIndicator(
                 controller: cubit.pageController,
                 count: 3,
-                effect: const ExpandingDotsEffect(
+                effect: ExpandingDotsEffect(
                     radius: 40,
                     dotWidth: 10,
                     expansionFactor: 4,
-                    activeDotColor: Color(0xFF17223B),
+                    activeDotColor:
+                        Theme.of(context).colorScheme.onInverseSurface,
                     dotColor: Color(0xFFC4C4C4),
                     dotHeight: 10),
               ),
@@ -55,28 +56,26 @@ class OnBoardingBottomBar extends StatelessWidget {
                       onPressed: () => cubit.goToNextPage(),
                       child: Text(
                         'Next',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.primary),
                       ),
                     )
                   : TextButton(
                       onPressed: () async {
                         final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('hasSeenOnBoarding', true);
+                        await prefs.setBool('seenOnBoarding', true);
                         context.goNamed(ScreensNames.signIn);
                       },
                       child: Text(
                         'Get Started',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
             ],
