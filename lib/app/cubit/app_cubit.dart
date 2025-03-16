@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +24,8 @@ class AppCubit extends Cubit<AppState> {
   late final StreamSubscription<AuthState> _authListener;
   // late final StreamSubscription<Uri?> _uriListener;
   bool? seenGettingStarted;
-  bool? isDarkTheme = true;
+  bool? isDarkTheme = false;
+  bool? isArabic = false;
   AsyncValue<List<Map<String, dynamic>>>? products;
 
   void _checkIfNewUser() async {
@@ -35,6 +36,7 @@ class AppCubit extends Cubit<AppState> {
   void _themeMode() async {
     final prefs = await SharedPreferences.getInstance();
     isDarkTheme = prefs.getBool('isDarkTheme') ?? false;
+    isArabic = prefs.getBool('isArabic') ?? false;
   }
 
   StreamSubscription<AuthState> _addAuthEventsListener() =>
@@ -58,6 +60,13 @@ class AppCubit extends Cubit<AppState> {
     isDarkTheme = newValue;
     emit(AppThemeChanged());
     await prefs.setBool('isDarkTheme', newValue!);
+  }
+
+  void toggleLocale(bool? newValue) async {
+    final prefs = await SharedPreferences.getInstance();
+    isArabic = newValue;
+    emit(AppThemeChanged());
+    await prefs.setBool('isArabic', newValue!);
   }
 
   // StreamSubscription<Uri?> _addUriListener() =>

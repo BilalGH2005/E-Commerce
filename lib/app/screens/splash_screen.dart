@@ -19,11 +19,7 @@ class SplashScreen extends StatelessWidget {
               ),
               Text(
                 'E-Commerce',
-                style: const TextStyle().copyWith(
-                    fontFamily: 'LibreCaslonText',
-                    color: Theme.of(context).colorScheme.primary,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
             ],
           ),

@@ -1,8 +1,9 @@
 import 'package:e_commerce/auth/widgets/oauth_widget.dart';
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/widgets/reusable_button.dart';
@@ -39,16 +40,15 @@ class SignUpScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Create an\naccount',
+                                AppLocalizations.of(context)!.createAnAccount,
                                 textAlign: TextAlign.start,
-                                style:
-                                    Theme.of(context).textTheme.headlineLarge,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
                           AuthField(
                             controller: cubit.emailTextController,
-                            label: 'Email',
+                            label: AppLocalizations.of(context)!.email,
                             keyboardType: TextInputType.emailAddress,
                             prefixIcon: const Icon(Icons.person),
                             validator: (value) =>
@@ -62,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                                 onPressed: () => context
                                     .read<AuthCubit>()
                                     .togglePasswordObscure('password')),
-                            label: 'Password',
+                            label: AppLocalizations.of(context)!.password,
                             prefixIcon: const Icon(Icons.lock),
                             validator: (value) =>
                                 AuthCubit.passwordValidator(value),
@@ -75,7 +75,8 @@ class SignUpScreen extends StatelessWidget {
                                 onPressed: () => context
                                     .read<AuthCubit>()
                                     .togglePasswordObscure('confirmPassword')),
-                            label: 'Confirm password',
+                            label:
+                                AppLocalizations.of(context)!.confirmPassword,
                             prefixIcon: const Icon(Icons.lock),
                             validator: (value) =>
                                 AuthCubit.confirmPasswordValidator(
@@ -89,20 +90,23 @@ class SignUpScreen extends StatelessWidget {
                             children: [
                               RichText(
                                 text: TextSpan(
-                                  text:
-                                      'By clicking the Create Account button, you\nagree to ',
+                                  text: AppLocalizations.of(context)!
+                                      .termsAgreement,
                                   style: Theme.of(context).textTheme.bodySmall,
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: 'our terms',
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 12,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
-                                        decoration: TextDecoration.underline,
-                                      ),
+                                      text: AppLocalizations.of(context)!
+                                          .ourTerms,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           context.pushNamed(ScreensNames.terms);
@@ -120,12 +124,14 @@ class SignUpScreen extends StatelessWidget {
                                     screen: ScreensNames.signUp)
                                 : null,
                             label: isLoading
-                                ? Text('Create Account',
+                                ? Text(
+                                    AppLocalizations.of(context)!.createAccount,
                                     style:
                                         Theme.of(context).textTheme.bodyMedium)
                                 : CircularProgressIndicator(
                                     color: Theme.of(context)
-                                        .scaffoldBackgroundColor),
+                                        .colorScheme
+                                        .inverseSurface),
                           ),
                         ],
                       );
@@ -137,8 +143,8 @@ class SignUpScreen extends StatelessWidget {
                   width: 260,
                   height: 154,
                   child: OAuthWidget(
-                    label: 'I already have an account',
-                    buttonText: 'Sign in',
+                    label: AppLocalizations.of(context)!.alreadyHaveAnAccount,
+                    buttonText: AppLocalizations.of(context)!.signIn,
                     onPressed: () => context.pushNamed(ScreensNames.signIn),
                   ),
                 ),

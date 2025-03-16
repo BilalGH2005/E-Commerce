@@ -5,6 +5,7 @@ class SnackBarUtil {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
@@ -16,6 +17,10 @@ class SnackBarUtil {
             Flexible(
               child: Text(
                 message,
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: Theme.of(context).colorScheme.surface),
               ),
             ),
           ],
@@ -28,6 +33,7 @@ class SnackBarUtil {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
@@ -39,6 +45,10 @@ class SnackBarUtil {
             Flexible(
               child: Text(
                 message,
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: Theme.of(context).colorScheme.surface),
               ),
             ),
           ],
@@ -51,6 +61,7 @@ class SnackBarUtil {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
         behavior: SnackBarBehavior.floating,
         content: Row(
           children: [
@@ -63,6 +74,10 @@ class SnackBarUtil {
               child: Text(
                 message,
                 maxLines: 2,
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall!
+                    .copyWith(color: Theme.of(context).colorScheme.surface),
               ),
             ),
           ],

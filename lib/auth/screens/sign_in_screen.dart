@@ -1,8 +1,9 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/auth/widgets/obscure_button.dart';
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/widgets/reusable_button.dart';
@@ -38,16 +39,15 @@ class SignInScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                'Welcome\nBack!',
+                                AppLocalizations.of(context)!.welcomeBack,
                                 textAlign: TextAlign.start,
-                                style:
-                                    Theme.of(context).textTheme.headlineLarge,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
                           AuthField(
                               controller: cubit.emailTextController,
-                              label: 'Email',
+                              label: AppLocalizations.of(context)!.email,
                               keyboardType: TextInputType.emailAddress,
                               prefixIcon: const Icon(Icons.person),
                               validator: (value) =>
@@ -59,7 +59,7 @@ class SignInScreen extends StatelessWidget {
                                   isObscure: cubit.isPasswordObscure,
                                   onPressed: () =>
                                       cubit.togglePasswordObscure('password')),
-                              label: 'Password',
+                              label: AppLocalizations.of(context)!.password,
                               prefixIcon: const Icon(Icons.lock),
                               validator: (value) =>
                                   AuthCubit.passwordValidator(value)),
@@ -70,13 +70,14 @@ class SignInScreen extends StatelessWidget {
                                 onPressed: () => context
                                     .pushNamed(ScreensNames.resetPassword),
                                 child: Text(
-                                  'Forgot password?',
-                                  style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 12,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
+                                  AppLocalizations.of(context)!.forgotPassword,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
                                 ),
                               ),
                             ],
@@ -88,7 +89,7 @@ class SignInScreen extends StatelessWidget {
                                     screen: ScreensNames.signIn)
                                 : null,
                             label: isLoading
-                                ? Text('Login',
+                                ? Text(AppLocalizations.of(context)!.login,
                                     style:
                                         Theme.of(context).textTheme.bodyMedium)
                                 : CircularProgressIndicator(
@@ -105,8 +106,8 @@ class SignInScreen extends StatelessWidget {
                   width: 236,
                   height: 154,
                   child: OAuthWidget(
-                    label: 'Create an account',
-                    buttonText: 'Sign up',
+                    label: AppLocalizations.of(context)!.createAnAccount,
+                    buttonText: AppLocalizations.of(context)!.signUp,
                     onPressed: () => context.pushNamed(ScreensNames.signUp),
                   ),
                 ),

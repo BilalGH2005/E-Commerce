@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/routes/app_router.dart';
@@ -35,7 +36,6 @@ class AuthCubit extends Cubit<AuthState> {
     //     siteKey:
     //     dotenv.env['TURNSTILE_SITE_KEY']!);
     final BuildContext? context = AppRouter.navigatorKey.currentContext;
-    if (context == null) return;
     try {
       // final token = await turnstile.getToken();
       // print(token);
@@ -51,25 +51,25 @@ class AuthCubit extends Cubit<AuthState> {
               email: emailTextController.text,
               password: passwordTextController.text,
               emailRedirectTo: 'myapp://auth');
-          SnackBarUtil.showSuccessfulSnackBar(
-              context, 'Check your email for verification.');
+          SnackBarUtil.showSuccessfulSnackBar(context!,
+              AppLocalizations.of(context)!.checkEmailForVerification);
           break;
         case ScreensNames.resetPassword:
           await _supabaseAuth.resetPasswordForEmail(
               // captchaToken: token,
               //TOD0: imp(1) - redirect user to reset the password
               emailTextController.text);
-          SnackBarUtil.showSuccessfulSnackBar(context,
-              'If this email is registered, you will receive a reset link.');
+          SnackBarUtil.showSuccessfulSnackBar(
+              context!, AppLocalizations.of(context)!.resetPasswordEmailSent);
       }
     } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.message);
+      SnackBarUtil.showErrorSnackBar(context!, exception.message);
     }
     // on TurnstileException catch (exception) {
     //   SnackBarUtil.showErrorSnackBar(context, exception.message);
     // }
     catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.toString());
+      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
@@ -92,32 +92,34 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   static String? passwordValidator(String? value) {
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value == null || value.trim().isEmpty) {
-      return 'Password is required';
+      return AppLocalizations.of(context!)!.passwordRequired;
     }
     if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return AppLocalizations.of(context!)!.passwordLength;
     }
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Password must contain at least one uppercase letter';
+      return AppLocalizations.of(context!)!.passwordUppercase;
     }
     if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'Password must contain at least one lowercase letter';
+      return AppLocalizations.of(context!)!.passwordLowercase;
     }
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Password must contain at least one number';
+      return AppLocalizations.of(context!)!.passwordNumber;
     }
     return null;
   }
 
   static String? emailValidator(String? value) {
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value == null || value.trim().isEmpty) {
-      return 'Email address is required';
+      return AppLocalizations.of(context!)!.emailRequired;
     }
     if (!RegExp(
             r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|io|us)$")
         .hasMatch(value)) {
-      return 'Enter a valid email address';
+      return AppLocalizations.of(context!)!.emailInvalid;
     }
     return null;
   }
@@ -126,7 +128,8 @@ class AuthCubit extends Cubit<AuthState> {
       {required String? value,
       required TextEditingController passwordTextController}) {
     if (value != passwordTextController.text) {
-      return 'Passwords do not match';
+      final BuildContext? context = AppRouter.navigatorKey.currentContext;
+      return AppLocalizations.of(context!)!.passwordsDoNotMatch;
     }
     return null;
   }

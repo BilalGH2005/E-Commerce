@@ -1,8 +1,9 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:e_commerce/core/widgets/reusable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/auth_field.dart';
 
@@ -24,9 +25,9 @@ class ResetPasswordScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Forgot\npassword?',
+                    AppLocalizations.of(context)!.forgotPasswordTitle,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
@@ -43,7 +44,8 @@ class ResetPasswordScreen extends StatelessWidget {
                       children: [
                         AuthField(
                           controller: cubit.emailTextController,
-                          label: 'Enter your email address',
+                          label: AppLocalizations.of(context)!
+                              .enterYourEmailAddress,
                           prefixIcon: const Icon(Icons.email),
                           validator: (value) => AuthCubit.emailValidator(value),
                         ),
@@ -57,8 +59,8 @@ class ResetPasswordScreen extends StatelessWidget {
                                     TextStyle(color: Colors.red, fontSize: 12),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text:
-                                        'We will send you a message to set or reset\nyour new password',
+                                    text: AppLocalizations.of(context)!
+                                        .passwordResetMessage,
                                     style:
                                         Theme.of(context).textTheme.bodySmall,
                                   ),
@@ -74,7 +76,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                   screen: ScreensNames.resetPassword)
                               : null,
                           label: isLoading
-                              ? Text('Submit',
+                              ? Text(AppLocalizations.of(context)!.submit,
                                   style: Theme.of(context).textTheme.bodyMedium)
                               : CircularProgressIndicator(
                                   color: Theme.of(context)

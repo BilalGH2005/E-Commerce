@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/widgets/reusable_button.dart';
 import '../cubit/admin_cubit.dart';
@@ -38,9 +39,9 @@ class AdminScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'Add New\nProduct',
+                            AppLocalizations.of(context)!.addNewProduct,
                             textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.headlineLarge,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ],
                       ),
@@ -55,7 +56,7 @@ class AdminScreen extends StatelessWidget {
                                 width: size.width * 0.45,
                                 child: ProductField(
                                   controller: name,
-                                  label: 'Name',
+                                  label: AppLocalizations.of(context)!.name,
                                   validator: (value) =>
                                       AdminCubit.nameValidator(value),
                                 ),
@@ -69,7 +70,7 @@ class AdminScreen extends StatelessWidget {
                                     size: 16,
                                   ),
                                   controller: price,
-                                  label: 'Price',
+                                  label: AppLocalizations.of(context)!.price,
                                   keyboardType: TextInputType.number,
                                   validator: (value) =>
                                       AdminCubit.priceValidator(value),
@@ -78,7 +79,7 @@ class AdminScreen extends StatelessWidget {
                             ]),
                             ProductField(
                               controller: description,
-                              label: 'Description',
+                              label: AppLocalizations.of(context)!.description,
                               maxLines: 3,
                             ),
                             Row(
@@ -90,7 +91,8 @@ class AdminScreen extends StatelessWidget {
                                   width: size.width * 0.55,
                                   child: ProductField(
                                     controller: imageUrl,
-                                    label: 'Image URL',
+                                    label:
+                                        AppLocalizations.of(context)!.imageUrl,
                                     validator: (value) =>
                                         AdminCubit.imageUrlValidator(value),
                                   ),
@@ -111,7 +113,7 @@ class AdminScreen extends StatelessWidget {
                                 imageUrl: imageUrl.text)
                             : null,
                         label: isLoading
-                            ? Text('Add',
+                            ? Text(AppLocalizations.of(context)!.add,
                                 style: Theme.of(context).textTheme.bodyMedium)
                             : CircularProgressIndicator(
                                 color:

@@ -1,7 +1,8 @@
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -25,14 +26,12 @@ class OnBoardingBottomBar extends StatelessWidget {
                   onPressed: () {
                     cubit.goToPreviousPage();
                   },
-                  child: const Text(
-                    'Prev',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: Color(0xFFC4C4C4),
-                    ),
+                  child: Text(
+                    AppLocalizations.of(context)!.prev,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: Color(0xFFC4C4C4)),
                   ),
                 )
               else
@@ -55,7 +54,7 @@ class OnBoardingBottomBar extends StatelessWidget {
                   ? TextButton(
                       onPressed: () => cubit.goToNextPage(),
                       child: Text(
-                        'Next',
+                        AppLocalizations.of(context)!.next,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
@@ -70,7 +69,7 @@ class OnBoardingBottomBar extends StatelessWidget {
                         context.goNamed(ScreensNames.signIn);
                       },
                       child: Text(
-                        'Get Started',
+                        AppLocalizations.of(context)!.getStarted,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!

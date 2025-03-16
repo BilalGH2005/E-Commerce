@@ -20,6 +20,7 @@ class ProductCard extends StatelessWidget {
         width: 164,
         height: 239,
         child: Card(
+          color: Theme.of(context).colorScheme.surface,
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -53,11 +54,7 @@ class ProductCard extends StatelessWidget {
                     ),
                     Text(
                       "\$$price",
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat',
-                          color: Theme.of(context).colorScheme.inverseSurface),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],
                 ),

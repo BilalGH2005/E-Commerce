@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -78,22 +79,25 @@ class AdminCubit extends Cubit<AdminState> {
   }
 
   static String? nameValidator(String? value) {
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value == null || value.trim().isEmpty) {
-      return 'Name is required';
+      return AppLocalizations.of(context!)!.nameRequired;
     }
     return null;
   }
 
   static String? priceValidator(String? value) {
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value == null || value.trim().isEmpty) {
-      return 'Price is required';
+      return AppLocalizations.of(context!)!.priceRequired;
     }
     return null;
   }
 
   static String? imageUrlValidator(String? value) {
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value == null || value.trim().isEmpty) {
-      return 'Image URL is required';
+      return AppLocalizations.of(context!)!.imageUrlRequired;
     }
     return null;
   }

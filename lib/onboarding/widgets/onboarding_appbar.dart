@@ -1,6 +1,7 @@
 import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -28,7 +29,8 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!
-                          .copyWith(color: Theme.of(context).colorScheme.tertiary),
+                          .copyWith(
+                              color: Theme.of(context).colorScheme.tertiary),
                     ),
                   ],
                 ),
@@ -46,7 +48,7 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               onPressed: () => context.read<OnBoardingCubit>().goToLastPage(),
-              child: Text('Skip',
+              child: Text(AppLocalizations.of(context)!.skip,
                   style: Theme.of(context).textTheme.headlineMedium!),
             ),
           )

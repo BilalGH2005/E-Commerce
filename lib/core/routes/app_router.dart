@@ -3,12 +3,10 @@ import 'package:e_commerce/auth/screens/sign_in_screen.dart';
 import 'package:e_commerce/auth/screens/sign_up_screen.dart';
 import 'package:e_commerce/auth/screens/terms_screen.dart';
 import 'package:e_commerce/core/routes/navigation_bar.dart';
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:e_commerce/onboarding/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../admin/screens/admin_screen.dart';
 import '../../app/screens/splash_screen.dart';
@@ -26,7 +24,7 @@ class AppRouter {
   AppRouter() {
     router = GoRouter(
       navigatorKey: navigatorKey,
-      initialLocation: ScreensNames.splash,
+      initialLocation: ScreensNames.settings,
       routes: <RouteBase>[
         GoRoute(
           name: ScreensNames.splash,
@@ -96,28 +94,28 @@ class AppRouter {
           ],
         ),
       ],
-      redirect: (context, state) async {
-        final supabaseAuth = Supabase.instance.client.auth;
-        final prefs = await SharedPreferences.getInstance();
-        bool? hasSeenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
-        if (hasSeenOnBoarding == true) {
-          final session = supabaseAuth.currentSession;
-          if (session != null && session.isExpired) {
-            await supabaseAuth.refreshSession();
-            return ScreensNames.home;
-          } else if (session != null &&
-              !session.isExpired &&
-              state.uri.path == ScreensNames.splash) {
-            return ScreensNames.home;
-          } else if (session == null && state.uri.path == ScreensNames.splash) {
-            return ScreensNames.signIn;
-          }
-        } else if (hasSeenOnBoarding == false &&
-            state.uri.path == ScreensNames.splash) {
-          return ScreensNames.onBoarding;
-        }
-        return null;
-      },
+      // redirect: (context, state) async {
+      //   final supabaseAuth = Supabase.instance.client.auth;
+      //   final prefs = await SharedPreferences.getInstance();
+      //   bool? hasSeenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
+      //   if (hasSeenOnBoarding == true) {
+      //     final session = supabaseAuth.currentSession;
+      //     if (session != null && session.isExpired) {
+      //       await supabaseAuth.refreshSession();
+      //       return ScreensNames.home;
+      //     } else if (session != null &&
+      //         !session.isExpired &&
+      //         state.uri.path == ScreensNames.splash) {
+      //       return ScreensNames.home;
+      //     } else if (session == null && state.uri.path == ScreensNames.splash) {
+      //       return ScreensNames.signIn;
+      //     }
+      //   } else if (hasSeenOnBoarding == false &&
+      //       state.uri.path == ScreensNames.splash) {
+      //     return ScreensNames.onBoarding;
+      //   }
+      //   return null;
+      // },
     );
   }
 }

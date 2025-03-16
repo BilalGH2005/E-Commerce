@@ -4,6 +4,7 @@ import 'package:e_commerce/home/widgets/reusable_error_widget.dart';
 import 'package:e_commerce/home/widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../cubit/home_cubit.dart';
@@ -50,7 +51,8 @@ class HomeScreen extends StatelessWidget {
                 },
                 error: (context, error) {
                   return ReusableErrorWidget(
-                      error: 'Something went wrong', buttonLabel: 'Retry');
+                      error: AppLocalizations.of(context)!.somethingWentWrong,
+                      buttonLabel: AppLocalizations.of(context)!.retry);
                 },
               );
             },

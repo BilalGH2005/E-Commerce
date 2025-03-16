@@ -1,5 +1,6 @@
-import 'package:e_commerce/core/utils/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,7 +46,7 @@ class GettingStartedScreen extends StatelessWidget {
                     height: 25,
                   ),
                   Text(
-                    'You want Authentic, here you go!',
+                    AppLocalizations.of(context)!.youWantAuthentic,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
@@ -57,7 +58,7 @@ class GettingStartedScreen extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'Find it here, buy it now!',
+                    AppLocalizations.of(context)!.findItHereBuyItNow,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'montserrat',
@@ -73,7 +74,7 @@ class GettingStartedScreen extends StatelessWidget {
                       await prefs.setBool('seenGettingStarted', true);
                       context.goNamed(ScreensNames.home);
                     },
-                    label: Text('Get Started',
+                    label: Text(AppLocalizations.of(context)!.getStarted,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ],

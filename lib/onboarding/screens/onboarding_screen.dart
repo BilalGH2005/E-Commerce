@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../cubit/onboarding_cubit.dart';
 import '../widgets/onboarding_appbar.dart';
@@ -18,24 +19,22 @@ class OnBoardingScreen extends StatelessWidget {
             bottomNavigationBar: const OnBoardingBottomBar(),
             body: PageView(
               controller: context.watch<OnBoardingCubit>().pageController,
-              children: const [
+              children: [
                 OnBoardingPage(
                   imagePath: 'assets/images/onboard_screen1_image.svg',
-                  title: 'Choose Products',
+                  title: AppLocalizations.of(context)!.chooseProducts,
                   subTitle:
-                      "Browse a wide range of products and find exactly what you need. From essentials to exclusive items, we've got it all at your fingertips.",
+                      AppLocalizations.of(context)!.chooseProductsSubtitle,
                 ),
                 OnBoardingPage(
                   imagePath: 'assets/images/onboard_screen2_image.svg',
-                  title: 'Make Payments',
-                  subTitle:
-                      "Experience hassle-free payments with our secure and fast checkout process. Choose your preferred payment method and complete your purchase with confidence.",
+                  title: AppLocalizations.of(context)!.makePayments,
+                  subTitle: AppLocalizations.of(context)!.makePaymentsSubtitle,
                 ),
                 OnBoardingPage(
                   imagePath: 'assets/images/onboard_screen3_image.svg',
-                  title: 'Get Your Order',
-                  subTitle:
-                      "Sit back and relax while we bring your order to your doorstep. Track your package in real-time and enjoy quick, reliable delivery.",
+                  title: AppLocalizations.of(context)!.getYourOrder,
+                  subTitle: AppLocalizations.of(context)!.getYourOrderSubtitle,
                 ),
               ],
             ),

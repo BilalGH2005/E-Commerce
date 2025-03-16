@@ -1,4 +1,3 @@
-import 'package:e_commerce/core/utils/constants/constants_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,14 +20,12 @@ class OAuthWidget extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             '- Or continue with -',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: ColorConstants.kBottomAuthGreyColor,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .labelSmall!
+                .copyWith(color: Color(0xFF575757)),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -55,21 +52,17 @@ class OAuthWidget extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: ColorConstants.kBottomAuthGreyColor),
+                style: Theme.of(context).textTheme.displaySmall,
               ),
               TextButton(
                 onPressed: onPressed,
                 child: Text(
                   buttonText,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.primary,
-                    decorationColor: Theme.of(context).colorScheme.primary,
-                  ),
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Theme.of(context).colorScheme.primary),
                 ),
               ),
             ],
