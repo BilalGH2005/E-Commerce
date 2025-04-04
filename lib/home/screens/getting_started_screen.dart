@@ -4,21 +4,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/widgets/reusable_button.dart';
+import '../../core/reusable_widgets/reusable_button.dart';
 
 class GettingStartedScreen extends StatelessWidget {
   const GettingStartedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      //TODO: add single child scroll view to prevent render flex
       body: Container(
-        width: size.width,
-        height: size.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/getting_started.png'),
+            image: AssetImage('assets/images/getting_started.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -26,9 +24,10 @@ class GettingStartedScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              padding:
-                  EdgeInsets.only(bottom: 30, left: 55, right: 55, top: 55),
+              padding: const EdgeInsets.only(
+                  bottom: 30, left: 55, right: 55, top: 55),
               height: 362,
+              width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -40,44 +39,40 @@ class GettingStartedScreen extends StatelessWidget {
                   stops: [0.0, 0.24],
                 ),
               ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.youWantAuthentic,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'montserrat',
-                        fontSize: 34,
-                        color: Theme.of(context).scaffoldBackgroundColor),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.findItHereBuyItNow,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'montserrat',
-                      color: Color(0xFFF2F2F2),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 500),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.youWantAuthentic,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  ReusableButton(
-                    onPressed: () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setBool('seenGettingStarted', true);
-                      context.goNamed(ScreensNames.home);
-                    },
-                    label: Text(AppLocalizations.of(context)!.getStarted,
-                        style: Theme.of(context).textTheme.bodyMedium),
-                  ),
-                ],
+                    Text(
+                      AppLocalizations.of(context)!.findItHereBuyItNow,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(color: const Color(0xFFF2F2F2)),
+                    ),
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 500),
+                        child: ReusableButton(
+                          onPressed: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool('seenGettingStarted', true);
+                            context.goNamed(ScreensNames.home);
+                          },
+                          label: Text(AppLocalizations.of(context)!.getStarted,
+                              style: Theme.of(context).textTheme.bodyMedium),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

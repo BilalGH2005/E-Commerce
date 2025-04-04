@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../cubit/home_cubit.dart';
+import '../models/product.dart';
 
 class ProductsGrid extends StatelessWidget {
   final List<Map<String, dynamic>> products;
@@ -19,19 +20,14 @@ class ProductsGrid extends StatelessWidget {
       child: GridView.builder(
         shrinkWrap: true,
         itemCount: products.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 164,
           crossAxisSpacing: 12.0,
           mainAxisSpacing: 12.0,
           childAspectRatio: 164 / 239,
         ),
-        itemBuilder: (context, index) {
-          return ProductCard(
-              name: products[index]['name'],
-              imageUrl: products[index]['image_url'],
-              description: products[index]['description'],
-              price: products[index]['price']);
-        },
+        itemBuilder: (context, index) =>
+            ProductCard(product: Product.fromProducts(products[index])),
       ),
     );
   }

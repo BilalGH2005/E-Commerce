@@ -6,24 +6,29 @@ class ShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Theme.of(context).colorScheme.onSurface,
-      highlightColor: Theme.of(context).colorScheme.tertiary,
-      child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: 8,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          childAspectRatio: 164 / 239,
-        ),
-        itemBuilder: (context, index) {
-          return Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)));
-        },
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 26,
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 164,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        childAspectRatio: 164 / 239,
       ),
+      itemBuilder: (context, index) {
+        return Shimmer /*.fromColors*/ (
+          gradient: LinearGradient(colors: [
+            Theme.of(context).colorScheme.surfaceContainer,
+            Theme.of(context).colorScheme.tertiaryFixedDim
+          ]),
+          // baseColor: Theme.of(context).colorScheme.surfaceContainer,
+          // highlightColor: Theme.of(context).colorScheme.tertiaryFixedDim,
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+        );
+      },
     );
   }
 }

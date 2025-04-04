@@ -14,7 +14,7 @@ part 'admin_state.dart';
 class AdminCubit extends Cubit<AdminState> {
   AdminCubit() : super(AdminInitial());
   final SupabaseClient _supabase = Supabase.instance.client;
-  String? selectedValue = 'Play Station';
+  String? selectedValue = 'Men';
   String? imageUrl;
   int adminStatus = 0;
 
@@ -70,11 +70,9 @@ class AdminCubit extends Cubit<AdminState> {
     }
   }
 
-  void Function(String?)? dropDownButtonValue(String? newValue) {
-    if (newValue != null) {
-      selectedValue = newValue;
-      emit(AdminStateChanged());
-    }
+  void Function(String?)? categoryValue(String? newValue) {
+    selectedValue = newValue;
+    emit(AdminStateChanged());
     return null;
   }
 

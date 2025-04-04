@@ -79,7 +79,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
@@ -97,7 +97,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
                     width: 40,
                     height: 5,
                     decoration: BoxDecoration(
-                      color: Colors.grey[400],
+                      color: Theme.of(context).colorScheme.tertiaryFixedDim,
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),

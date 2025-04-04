@@ -15,9 +15,6 @@ part 'app_state.dart';
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial()) {
     _addAuthEventsListener();
-    _checkIfNewUser();
-    _themeMode();
-    // PhotoManager.clearFileCache();
   }
 
   final _supabaseAuth = Supabase.instance.client.auth;
@@ -28,21 +25,21 @@ class AppCubit extends Cubit<AppState> {
   bool? isArabic = false;
   AsyncValue<List<Map<String, dynamic>>>? products;
 
-  void _checkIfNewUser() async {
+  Future<void> checkIfNewUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     seenGettingStarted = prefs.getBool('seenGettingStarted') ?? false;
   }
 
-  void _themeMode() async {
+  Future<void> getThemeAndLocale() async {
     final prefs = await SharedPreferences.getInstance();
     isDarkTheme = prefs.getBool('isDarkTheme') ?? false;
     isArabic = prefs.getBool('isArabic') ?? false;
   }
 
   StreamSubscription<AuthState> _addAuthEventsListener() =>
-      _authListener = _supabaseAuth.onAuthStateChange.listen((data) async {
-        final AuthChangeEvent event = data.event;
+      _authListener = _supabaseAuth.onAuthStateChange.listen((data) {
         final BuildContext? context = AppRouter.navigatorKey.currentContext;
+        final AuthChangeEvent event = data.event;
         if (context == null) return;
         if (event == AuthChangeEvent.signedIn) {
           if (seenGettingStarted!) {
@@ -55,18 +52,22 @@ class AppCubit extends Cubit<AppState> {
         }
       });
 
-  void toggleTheme(bool? newValue) async {
+  Future<void> toggleTheme(bool? newValue) async {
     final prefs = await SharedPreferences.getInstance();
     isDarkTheme = newValue;
     emit(AppThemeChanged());
     await prefs.setBool('isDarkTheme', newValue!);
   }
 
-  void toggleLocale(bool? newValue) async {
+  Future<void> localeValue(String? newValue) async {
     final prefs = await SharedPreferences.getInstance();
-    isArabic = newValue;
+    if (newValue == 'English') {
+      isArabic = false;
+    } else {
+      isArabic = true;
+    }
     emit(AppThemeChanged());
-    await prefs.setBool('isArabic', newValue!);
+    await prefs.setBool('isArabic', isArabic!);
   }
 
   // StreamSubscription<Uri?> _addUriListener() =>

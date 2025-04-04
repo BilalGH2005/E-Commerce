@@ -7,11 +7,17 @@ import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:e_commerce/onboarding/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+// ignore: unused_import
+import 'package:shared_preferences/shared_preferences.dart';
+// ignore: unused_import
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../admin/screens/admin_screen.dart';
 import '../../app/screens/splash_screen.dart';
+import '../../home/models/product.dart';
 import '../../home/screens/getting_started_screen.dart';
 import '../../home/screens/home_screen.dart';
+import '../../home/screens/product_screen.dart';
 import '../../home/screens/profile_screen.dart';
 import '../../home/screens/search_screen.dart';
 import '../../home/screens/settings_screen.dart';
@@ -24,7 +30,7 @@ class AppRouter {
   AppRouter() {
     router = GoRouter(
       navigatorKey: navigatorKey,
-      initialLocation: ScreensNames.settings,
+      initialLocation: ScreensNames.splash,
       routes: <RouteBase>[
         GoRoute(
           name: ScreensNames.splash,
@@ -72,14 +78,14 @@ class AppRouter {
               builder: (context, state) => const HomeScreen(),
             ),
             GoRoute(
-              name: ScreensNames.admin,
-              path: ScreensNames.admin,
-              builder: (context, state) => AdminScreen(),
-            ),
-            GoRoute(
               name: ScreensNames.search,
               path: ScreensNames.search,
               builder: (context, state) => const SearchScreen(),
+            ),
+            GoRoute(
+              name: ScreensNames.admin,
+              path: ScreensNames.admin,
+              builder: (context, state) => AdminScreen(),
             ),
             GoRoute(
               name: ScreensNames.profile,
@@ -93,29 +99,37 @@ class AppRouter {
             ),
           ],
         ),
+        GoRoute(
+          name: ScreensNames.product,
+          path: ScreensNames.product,
+          builder: (context, state) {
+            return ProductScreen(product: state.extra as Product);
+          },
+        ),
       ],
-      // redirect: (context, state) async {
-      //   final supabaseAuth = Supabase.instance.client.auth;
-      //   final prefs = await SharedPreferences.getInstance();
-      //   bool? hasSeenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
-      //   if (hasSeenOnBoarding == true) {
-      //     final session = supabaseAuth.currentSession;
-      //     if (session != null && session.isExpired) {
-      //       await supabaseAuth.refreshSession();
-      //       return ScreensNames.home;
-      //     } else if (session != null &&
-      //         !session.isExpired &&
-      //         state.uri.path == ScreensNames.splash) {
-      //       return ScreensNames.home;
-      //     } else if (session == null && state.uri.path == ScreensNames.splash) {
-      //       return ScreensNames.signIn;
-      //     }
-      //   } else if (hasSeenOnBoarding == false &&
-      //       state.uri.path == ScreensNames.splash) {
-      //     return ScreensNames.onBoarding;
-      //   }
-      //   return null;
-      // },
+      // TODO: make splash force appear
+      redirect: (context, state) async {
+        final supabaseAuth = Supabase.instance.client.auth;
+        final prefs = await SharedPreferences.getInstance();
+        bool? hasSeenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
+        if (hasSeenOnBoarding == true) {
+          final session = supabaseAuth.currentSession;
+          if (session != null && session.isExpired) {
+            await supabaseAuth.refreshSession();
+            return ScreensNames.home;
+          } else if (session != null &&
+              !session.isExpired &&
+              state.uri.path == ScreensNames.splash) {
+            return ScreensNames.home;
+          } else if (session == null && state.uri.path == ScreensNames.splash) {
+            return ScreensNames.signIn;
+          }
+        } else if (hasSeenOnBoarding == false &&
+            state.uri.path == ScreensNames.splash) {
+          return ScreensNames.onBoarding;
+        }
+        return null;
+      },
     );
   }
 }

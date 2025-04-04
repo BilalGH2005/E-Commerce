@@ -10,48 +10,45 @@ class OnBoardingPage extends StatelessWidget {
       required this.title});
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(34.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 350,
-              child: Column(
-                children: [
-                  const Spacer(),
-                  SvgPicture.asset(imagePath),
-                ],
+  Widget build(BuildContext context) => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 28),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 350,
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    SvgPicture.asset(imagePath),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 24.0,
-                fontFamily: 'Montserrat',
+              const SizedBox(
+                height: 15,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              subTitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                fontFamily: 'Montserrat',
-                color: Color(0xFFA8A8A9),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.inverseSurface),
               ),
-            ),
-            const SizedBox(
-              height: 65,
-            )
-          ],
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                subTitle,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.tertiaryFixedDim,
+                    ),
+              ),
+              const SizedBox(
+                height: 65,
+              )
+            ],
+          ),
         ),
       );
 }

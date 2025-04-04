@@ -6,24 +6,38 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/images/app_logo.svg'),
-              const SizedBox(
-                width: 9,
+      body: Center(
+        child: screenWidth >= 500
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset('assets/images/app_logo.svg'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'E-Commerce',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset('assets/images/app_logo.svg'),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'E-Commerce',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                ],
               ),
-              Text(
-                'E-Commerce',
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

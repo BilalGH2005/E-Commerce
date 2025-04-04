@@ -6,9 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial()) {
-    print('Got instantiated');
-  }
+  HomeCubit() : super(HomeInitial());
 
   final SupabaseClient _supabase = Supabase.instance.client;
   AsyncValue<List<Map<String, dynamic>>>? products;

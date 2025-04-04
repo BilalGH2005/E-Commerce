@@ -1,70 +1,110 @@
 import 'package:flutter/material.dart';
 
+import 'const_colors.dart';
+
 class DarkTheme {
-  final ThemeData darkTheme = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Color(0xFF0d1b2a),
-    colorScheme: ColorScheme.dark().copyWith(
-      primary: Color(0xFF4166D5),
-      secondary: Color(0xFF4392F9),
-      surface: Color(0xFF0d1b2a) /*Color(0xFF292A2D)*/,
-      inverseSurface: Colors.white,
-      onPrimary: Color(0xFF3959B2),
-      onSurface: Color(0xFF0E1323),
-      onInverseSurface: Colors.white,
-      tertiary: Color(0xFFA0A0A1),
-    ),
-    textTheme: TextTheme(
+  final Locale locale;
+
+  DarkTheme(this.locale);
+  ThemeData get darkTheme => ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: ConstColors.darkSurface,
+        primaryColor: ConstColors.darkPrimary,
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: ConstColors.darkPrimary,
+          secondary: ConstColors.secondary,
+          surface: ConstColors.darkSurface,
+          inverseSurface: ConstColors.white,
+          primaryFixed: ConstColors.darkPrimaryFixed,
+          onSurface: ConstColors.white,
+          surfaceContainer: ConstColors.darkSurfaceContainer,
+          onInverseSurface: ConstColors.white,
+          tertiary: ConstColors.darkTertiary,
+          tertiaryFixed: ConstColors.darkTertiaryFixed,
+          tertiaryFixedDim: ConstColors.darkTertiaryFixedDim,
+          error: ConstColors.red,
+        ),
+        textTheme: _getTextTheme(),
+      );
+
+  TextTheme _getTextTheme() {
+    final String fontFamily =
+        locale.languageCode == 'ar' ? 'Tajawal' : 'Montserrat';
+    final String headlineFontFamily =
+        locale.languageCode == 'ar' ? 'Tajawal' : 'LibreCaslonText';
+
+    return TextTheme(
       headlineLarge: TextStyle(
-        fontFamily: 'LibreCaslonText',
-        color: Color(0xFF4166D5),
+        fontFamily: headlineFontFamily,
+        color: ConstColors.darkPrimary,
         fontWeight: FontWeight.bold,
         fontSize: 40,
       ),
       bodyLarge: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w700,
+        fontFamily: fontFamily,
+        color: ConstColors.white,
+        fontWeight: FontWeight.bold,
         fontSize: 36,
       ),
+      displayLarge: TextStyle(
+        fontFamily: fontFamily,
+        color: ConstColors.white,
+        fontWeight: FontWeight.w600,
+        fontSize: 34,
+      ),
+      labelMedium: TextStyle(
+        fontFamily: fontFamily,
+        color: ConstColors.black,
+        fontWeight: FontWeight.w800,
+        fontSize: 24,
+      ),
       bodyMedium: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Montserrat',
+        fontFamily: fontFamily,
+        color: ConstColors.white,
         fontWeight: FontWeight.w600,
         fontSize: 20,
       ),
       titleLarge: TextStyle(
-        fontFamily: 'LibreCaslonText',
-        color: Color(0xFF4392F9),
+        fontFamily: headlineFontFamily,
+        color: ConstColors.secondary,
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
       headlineMedium: TextStyle(
-        fontFamily: 'Montserrat',
-        color: Colors.white,
+        fontFamily: fontFamily,
+        color: ConstColors.white,
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
       displayMedium: TextStyle(
-        color: Colors.white,
+        fontFamily: fontFamily,
+        color: ConstColors.white,
+        fontWeight: FontWeight.normal,
         fontSize: 16,
-        height: 1.5,
       ),
       displaySmall: TextStyle(
-        fontFamily: 'Montserrat',
-        color: Color(0xFF575757),
+        fontFamily: fontFamily,
+        color: ConstColors.white,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       ),
-      bodySmall: TextStyle(
-        fontFamily: 'Montserrat',
-        fontSize: 12,
-        color: Color(0xFF676767),
-      ),
       labelSmall: TextStyle(
-        color: Colors.white,
-        fontFamily: 'Montserrat',
+        fontFamily: fontFamily,
+        color: ConstColors.white,
         fontWeight: FontWeight.w500,
         fontSize: 12,
       ),
-    ),
-  );
+      bodySmall: TextStyle(
+        fontFamily: fontFamily,
+        color: ConstColors.white,
+        fontWeight: FontWeight.normal,
+        fontSize: 12,
+      ),
+      titleSmall: TextStyle(
+        fontFamily: fontFamily,
+        color: ConstColors.white,
+        fontWeight: FontWeight.normal,
+        fontSize: 10,
+      ),
+    );
+  }
 }

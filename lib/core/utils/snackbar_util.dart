@@ -39,7 +39,7 @@ class SnackBarUtil {
           children: [
             Icon(
               Icons.error,
-              color: Colors.grey.shade700,
+              color: Theme.of(context).colorScheme.tertiaryFixed,
             ),
             const SizedBox(width: 6),
             Flexible(

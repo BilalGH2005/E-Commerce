@@ -17,7 +17,9 @@ class MaterialAppClass extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AppCubit(),
+          create: (context) => AppCubit()
+            ..checkIfNewUser()
+            ..getThemeAndLocale(),
           lazy: false,
         ),
         BlocProvider(
@@ -25,25 +27,28 @@ class MaterialAppClass extends StatelessWidget {
         ),
       ],
       child: Builder(
-        builder: (context) => MaterialApp.router(
-          title: 'E-Commerce',
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          locale: context.watch<AppCubit>().isArabic!
-              ? const Locale('ar')
-              : const Locale('en'),
-          routerConfig: AppRouter().router,
-          debugShowCheckedModeBanner: false,
-          theme: LightTheme().lightTheme,
-          darkTheme: DarkTheme().darkTheme,
-          themeMode: context.watch<AppCubit>().isDarkTheme!
-              ? ThemeMode.dark
-              : ThemeMode.light,
+        builder: (context) => BlocBuilder<AppCubit, AppState>(
+          builder: (context, state) {
+            final cubit = context.read<AppCubit>();
+            final locale =
+                cubit.isArabic! ? const Locale('ar') : const Locale('en');
+            return MaterialApp.router(
+              title: 'E-Commerce',
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: locale,
+              routerConfig: AppRouter().router,
+              debugShowCheckedModeBanner: false,
+              theme: LightTheme(locale).lightTheme,
+              darkTheme: DarkTheme(locale).darkTheme,
+              themeMode: cubit.isDarkTheme! ? ThemeMode.dark : ThemeMode.light,
+            );
+          },
         ),
       ),
     );

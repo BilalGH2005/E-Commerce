@@ -7,7 +7,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('THIS IS PROFILE SCREEN'),
+        child: Text(
+          'THIS IS PROFILE SCREEN (PLACEHOLDER)',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ),
     );
   }

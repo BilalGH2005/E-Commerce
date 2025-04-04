@@ -82,12 +82,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signOut() async => await _supabaseAuth.signOut();
 
-  void togglePasswordObscure(String? fieldName) {
-    if (fieldName == 'password') {
-      isPasswordObscure = !isPasswordObscure;
-    } else if (fieldName == 'confirmPassword') {
-      isConfirmPasswordObscure = !isConfirmPasswordObscure;
-    }
+  void togglePasswordObscure() {
+    isPasswordObscure = !isPasswordObscure;
+    emit(AuthStateChanged());
+  }
+
+  void toggleConfirmPasswordObscure() {
+    isConfirmPasswordObscure = !isConfirmPasswordObscure;
     emit(AuthStateChanged());
   }
 
@@ -127,8 +128,8 @@ class AuthCubit extends Cubit<AuthState> {
   static String? confirmPasswordValidator(
       {required String? value,
       required TextEditingController passwordTextController}) {
+    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value != passwordTextController.text) {
-      final BuildContext? context = AppRouter.navigatorKey.currentContext;
       return AppLocalizations.of(context!)!.passwordsDoNotMatch;
     }
     return null;

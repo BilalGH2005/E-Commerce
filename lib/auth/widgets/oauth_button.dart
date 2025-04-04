@@ -4,8 +4,14 @@ import 'package:flutter_svg/svg.dart';
 class OAuthButton extends StatelessWidget {
   final String iconPath;
   final VoidCallback onPressed;
+  final ColorFilter? colorFilter;
+  final String? tooltip;
   const OAuthButton(
-      {super.key, required this.iconPath, required this.onPressed});
+      {super.key,
+      required this.iconPath,
+      required this.onPressed,
+      this.tooltip,
+      this.colorFilter});
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
@@ -16,16 +22,10 @@ class OAuthButton extends StatelessWidget {
           width: 54,
           height: 54,
           child: IconButton(
+            tooltip: tooltip,
             onPressed: onPressed,
-            icon: SvgPicture.asset(
-              iconPath,
-              height: 26,
-              width: 26,
-              colorFilter: ColorFilter.mode(
-                Theme.of(context).colorScheme.inverseSurface,
-                BlendMode.srcIn,
-              ),
-            ),
+            icon: SvgPicture.asset(iconPath,
+                height: 26, width: 26, colorFilter: colorFilter),
           ),
         ),
       );

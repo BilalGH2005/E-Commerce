@@ -16,9 +16,9 @@ class BottomNavBar extends StatelessWidget {
   int _getSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).uri.toString();
     if (location == ScreensNames.home) return 0;
-    if (location == ScreensNames.admin) return 1;
-    if (location == ScreensNames.profile) return 2;
-    if (location == ScreensNames.search) return 3;
+    if (location == ScreensNames.search) return 1;
+    if (location == ScreensNames.admin) return 2;
+    if (location == ScreensNames.profile) return 3;
     if (location == ScreensNames.settings) return 4;
     return 0;
   }
@@ -43,13 +43,13 @@ class BottomNavBar extends StatelessWidget {
               context.goNamed(ScreensNames.home);
               break;
             case 1:
-              context.goNamed(ScreensNames.admin);
+              context.goNamed(ScreensNames.search);
               break;
             case 2:
-              context.goNamed(ScreensNames.profile);
+              context.goNamed(ScreensNames.admin);
               break;
             case 3:
-              context.goNamed(ScreensNames.search);
+              context.goNamed(ScreensNames.profile);
               break;
             case 4:
               context.goNamed(ScreensNames.settings);
@@ -62,47 +62,61 @@ class BottomNavBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
+      const HomeScreen(),
+      const SearchScreen(),
       AdminScreen(),
-      ProfileScreen(),
-      SearchScreen(),
-      SettingsScreen(),
+      const ProfileScreen(),
+      const SettingsScreen(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarItems(BuildContext context) {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.home_outlined),
+        icon: const Padding(
+          padding: EdgeInsets.only(top: 12.0),
+          child: Icon(Icons.home_outlined),
+        ),
         title: AppLocalizations.of(context)!.home,
         activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.person_outlined),
-        title: AppLocalizations.of(context)!.admin,
-        activeColorPrimary: Theme.of(context).colorScheme.primary,
-        inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
-      ),
-      PersistentBottomNavBarItem(
-        icon: Icon(
-          Icons.person,
-          color: Theme.of(context).colorScheme.surface,
+        icon: const Padding(
+          padding: EdgeInsets.only(top: 12.0),
+          child: Icon(Icons.search),
         ),
-        inactiveIcon: Icon(
-          Icons.person,
-          color: Theme.of(context).colorScheme.inverseSurface,
-        ),
-        activeColorPrimary: Theme.of(context).colorScheme.primary,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.search),
         title: AppLocalizations.of(context)!.search,
         activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.settings_outlined),
+        icon: Icon(
+          Icons.admin_panel_settings_outlined,
+          color: Theme.of(context).colorScheme.surface,
+        ),
+        inactiveIcon: Icon(
+          Icons.admin_panel_settings_outlined,
+          color: Theme.of(context).colorScheme.inverseSurface,
+        ),
+        title: AppLocalizations.of(context)!.admin,
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
+        inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Padding(
+          padding: EdgeInsets.only(top: 12.0),
+          child: Icon(Icons.person_outline),
+        ),
+        title: AppLocalizations.of(context)!.profile,
+        activeColorPrimary: Theme.of(context).colorScheme.primary,
+        inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Padding(
+          padding: EdgeInsets.only(top: 12.0),
+          child: Icon(Icons.settings_outlined),
+        ),
         title: AppLocalizations.of(context)!.settings,
         activeColorPrimary: Theme.of(context).colorScheme.primary,
         inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,

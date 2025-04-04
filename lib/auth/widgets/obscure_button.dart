@@ -10,12 +10,13 @@ class ObscureButton extends StatelessWidget {
   Widget build(BuildContext context) => IconButton(
         splashRadius: 20,
         onPressed: onPressed,
+        focusNode: FocusNode(skipTraversal: true),
         icon: isObscure
             ? Icon(
                 Icons.remove_red_eye_outlined,
-                color: Theme.of(context).colorScheme.inverseSurface,
+                color: Theme.of(context).colorScheme.tertiaryFixed,
               )
             : Icon(Icons.visibility_off_outlined,
-                color: Theme.of(context).colorScheme.inverseSurface),
+                color: Theme.of(context).colorScheme.tertiaryFixed),
       );
 }

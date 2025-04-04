@@ -10,48 +10,46 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
       : preferredSize = const Size.fromHeight(22);
 
   @override
-  Widget build(BuildContext context) => AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0.0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 17),
-          child: BlocBuilder<OnBoardingCubit, OnBoardingState>(
-            builder: (context, state) {
-              final OnBoardingCubit cubit = context.read<OnBoardingCubit>();
-              return RichText(
-                text: TextSpan(
-                  text: (cubit.currentPage + 1).toString(),
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.inverseSurface),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: '/3',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(
-                              color: Theme.of(context).colorScheme.tertiary),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 17.0),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(0, 0),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: BlocBuilder<OnBoardingCubit, OnBoardingState>(
+        builder: (context, state) {
+          final OnBoardingCubit cubit = context.read<OnBoardingCubit>();
+          return AppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            elevation: 0.0,
+            leading: RichText(
+              text: TextSpan(
+                text: (cubit.currentPage + 1).toString(),
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.inverseSurface),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '/3',
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.tertiaryFixedDim),
+                  ),
+                ],
               ),
-              onPressed: () => context.read<OnBoardingCubit>().goToLastPage(),
-              child: Text(AppLocalizations.of(context)!.skip,
-                  style: Theme.of(context).textTheme.headlineMedium!),
             ),
-          )
-        ],
-      );
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: const Size(0, 0),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: () async => await cubit.goToSignIn(),
+                child: Text(
+                  AppLocalizations.of(context)!.skip,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 }
