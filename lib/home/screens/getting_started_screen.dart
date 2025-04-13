@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/reusable_widgets/reusable_button.dart';
+import '../../core/utils/asset_images_paths.dart';
 
 class GettingStartedScreen extends StatelessWidget {
   const GettingStartedScreen({super.key});
@@ -16,7 +17,7 @@ class GettingStartedScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/getting_started.jpg'),
+            image: AssetImage(AssetImagesPaths.kGettingStarted),
             fit: BoxFit.cover,
           ),
         ),

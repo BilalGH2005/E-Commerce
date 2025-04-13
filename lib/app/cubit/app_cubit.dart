@@ -13,9 +13,7 @@ import '../../core/utils/async.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
-  AppCubit() : super(AppInitial()) {
-    _addAuthEventsListener();
-  }
+  AppCubit() : super(AppInitial());
 
   final _supabaseAuth = Supabase.instance.client.auth;
   late final StreamSubscription<AuthState> _authListener;
@@ -36,7 +34,7 @@ class AppCubit extends Cubit<AppState> {
     isArabic = prefs.getBool('isArabic') ?? false;
   }
 
-  StreamSubscription<AuthState> _addAuthEventsListener() =>
+  StreamSubscription<AuthState> addAuthEventsListener() =>
       _authListener = _supabaseAuth.onAuthStateChange.listen((data) {
         final BuildContext? context = AppRouter.navigatorKey.currentContext;
         final AuthChangeEvent event = data.event;

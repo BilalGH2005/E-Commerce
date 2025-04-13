@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/themes/const_colors.dart';
+
 class CustomButton extends StatelessWidget {
   final List<Color> colors;
   final void Function()? onPressed;
@@ -26,13 +28,13 @@ class CustomButton extends StatelessWidget {
       ),
       onTap: onPressed,
       child: Stack(
+        alignment: isRTL ? Alignment.centerRight : Alignment.centerLeft,
         children: [
           Container(
             padding:
-                EdgeInsets.only(left: isRTL ? 6 : 40, right: isRTL ? 40 : 6),
+                EdgeInsets.only(left: isRTL ? 8 : 48, right: isRTL ? 48 : 8),
             alignment: Alignment.center,
             height: 36,
-            width: 136,
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.only(
@@ -49,10 +51,8 @@ class CustomButton extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: Theme.of(context)
-                  .textTheme
-                  .displayMedium!
-                  .copyWith(fontWeight: FontWeight.w500),
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                  fontWeight: FontWeight.w500, color: ConstColors.kWhite),
             ),
           ),
           Container(
@@ -67,7 +67,7 @@ class CustomButton extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withAlpha(77),
+                  color: ConstColors.kBlack.withAlpha(77),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: Offset(0, 3),

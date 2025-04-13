@@ -1,5 +1,5 @@
 class Product {
-  final int id;
+  final String id;
   final DateTime addedAt;
   final String name;
   final String description;
@@ -22,7 +22,7 @@ class Product {
         addedAt: DateTime.parse(product['added_at']),
         name: product['name'],
         description: product['description'],
-        price: product['price'].toDouble(),
+        price: product['price'],
         imageUrl: product['image_url'],
         category: product['category'],
       );

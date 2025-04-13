@@ -43,5 +43,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Ignore the .env file
-*.env
+# Ignore the dotenv file
+dotenv

@@ -18,12 +18,18 @@ class ResetPasswordScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: ConstrainedBox(
-            constraints:
-                const BoxConstraints(maxWidth: 500, minHeight: double.infinity),
+            constraints: const BoxConstraints(
+              maxWidth: 500, /*minHeight: double.infinity*/
+            ),
             child: Form(
               key: formKey,
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 48.0, horizontal: 29.0),
+                padding: const EdgeInsets.all(30
+                    // top: 48.0,
+                    // bottom: 29.0,
+                    // right: 29.0,
+                    // left: 29.0,
+                    ),
                 child: Column(
                   children: [
                     Row(

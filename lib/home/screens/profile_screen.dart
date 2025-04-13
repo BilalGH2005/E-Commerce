@@ -9,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
       body: Center(
         child: Text(
           'THIS IS PROFILE SCREEN (PLACEHOLDER)',
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

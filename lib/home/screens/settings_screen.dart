@@ -75,7 +75,7 @@ class SettingsScreen extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .displaySmall!
-                                  .copyWith(color: ConstColors.white),
+                                  .copyWith(color: ConstColors.kWhite),
                             ),
                           ),
                         ),

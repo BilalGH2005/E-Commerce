@@ -65,10 +65,12 @@
   "createAccount": "Create Account",
   "profile": "Profile",
   "productDetails": "Product Details",
-  "goToCart": "Go to cart",
   "buyNow": "Buy now",
   "back": "Back",
   "googleOAuth": "Sign in with Google",
   "appleOAuth": "Sign in with Apple",
-  "facebookOAuth": "Sign in with Facebook"
+  "facebookOAuth": "Sign in with Facebook",
+  "cart": "Cart",
+  "addToCart": "Add to cart",
+  "yourCartIsEmpty": "Your cart is empty"
 }

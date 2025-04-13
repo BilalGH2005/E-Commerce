@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../auth/cubit/auth_cubit.dart';
+import '../../home/cubit/home_cubit.dart';
 
 class MaterialAppClass extends StatelessWidget {
   const MaterialAppClass({super.key});
@@ -19,11 +20,15 @@ class MaterialAppClass extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()
             ..checkIfNewUser()
-            ..getThemeAndLocale(),
+            ..getThemeAndLocale()
+            ..addAuthEventsListener(),
           lazy: false,
         ),
         BlocProvider(
           create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HomeCubit(),
         ),
       ],
       child: Builder(

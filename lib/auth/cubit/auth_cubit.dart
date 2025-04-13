@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,6 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
               // captchaToken: token,
               password: passwordTextController.text,
               email: emailTextController.text);
+        //TODO: customize the sign up email message
         case ScreensNames.signUp:
           await _supabaseAuth.signUp(
               // captchaToken: token,
@@ -54,6 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
           SnackBarUtil.showSuccessfulSnackBar(context!,
               AppLocalizations.of(context)!.checkEmailForVerification);
           break;
+        //TODO: make the reset password logic and email message
         case ScreensNames.resetPassword:
           await _supabaseAuth.resetPasswordForEmail(
               // captchaToken: token,
@@ -77,8 +80,10 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> googleOAuth() async => await _supabaseAuth
-      .signInWithOAuth(OAuthProvider.google, redirectTo: 'myapp://auth');
+  Future<void> googleOAuth() async {
+    await _supabaseAuth.signInWithOAuth(OAuthProvider.google,
+        redirectTo: kIsWeb ? 'http://localhost:5555/' : 'myapp://auth');
+  }
 
   Future<void> signOut() async => await _supabaseAuth.signOut();
 

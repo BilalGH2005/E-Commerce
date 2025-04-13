@@ -65,10 +65,12 @@
     "createAccount": "إنشاء الحساب",
     "profile": "البروفايل",
     "productDetails": "تفاصيل المنتج",
-    "goToCart": "الذهاب إلى العربة",
     "buyNow": "الشراء الاّن",
     "back": "رجوع",
     "googleOAuth": "تسجيل دخول عبر Google",
     "appleOAuth": "تسجيل دخول عبر Apple",
-    "facebookOAuth": "تسجيل دخول عبر Facebook"
+    "facebookOAuth": "تسجيل دخول عبر Facebook",
+    "cart": "سلة التسوق",
+    "addToCart": "الإضافة إلى سلة التسوق",
+    "yourCartIsEmpty": "سلة التسوق فارغة"
 }

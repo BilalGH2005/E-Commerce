@@ -1,6 +1,4 @@
 import 'package:e_commerce/auth/screens/reset_password_screen.dart';
-import 'package:e_commerce/auth/screens/sign_in_screen.dart';
-import 'package:e_commerce/auth/screens/sign_up_screen.dart';
 import 'package:e_commerce/auth/screens/terms_screen.dart';
 import 'package:e_commerce/core/routes/navigation_bar.dart';
 import 'package:e_commerce/core/utils/screens_names.dart';
@@ -14,6 +12,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../admin/screens/admin_screen.dart';
 import '../../app/screens/splash_screen.dart';
+import '../../auth/screens/sign_in_screen.dart';
+import '../../auth/screens/sign_up_screen.dart';
 import '../../home/models/product.dart';
 import '../../home/screens/getting_started_screen.dart';
 import '../../home/screens/home_screen.dart';
@@ -69,13 +69,13 @@ class AppRouter {
         ),
         ShellRoute(
           builder: (context, state, child) {
-            return BottomNavBar(child: child);
+            return NavigationBars(child: child);
           },
           routes: [
             GoRoute(
               name: ScreensNames.home,
               path: ScreensNames.home,
-              builder: (context, state) => const HomeScreen(),
+              builder: (context, state) => HomeScreen(),
             ),
             GoRoute(
               name: ScreensNames.search,

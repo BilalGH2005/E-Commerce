@@ -1,5 +1,6 @@
 import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:e_commerce/core/themes/const_colors.dart';
+import 'package:e_commerce/core/utils/asset_images_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,31 +38,31 @@ class OAuthWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             OAuthButton(
-              iconPath: 'assets/images/google_icon.svg',
+              iconPath: AssetImagesPaths.kGoogleIcon,
               onPressed: () async =>
                   await context.read<AuthCubit>().googleOAuth(),
               tooltip: AppLocalizations.of(context)!.googleOAuth,
             ),
             OAuthButton(
-              iconPath: 'assets/images/apple_icon.svg',
+              iconPath: AssetImagesPaths.kAppleIcon,
               onPressed: () => SnackBarUtil.showNotificationSnackBar(
                   context, AppLocalizations.of(context)!.appleAccountsSoon),
               tooltip: AppLocalizations.of(context)!.appleOAuth,
               colorFilter: isDarkTheme
                   ? ColorFilter.mode(
-                      ConstColors.white,
+                      ConstColors.kWhite,
                       BlendMode.srcIn,
                     )
                   : null,
             ),
             OAuthButton(
-              iconPath: 'assets/images/facebook_icon.svg',
+              iconPath: AssetImagesPaths.kFacebookIcon,
               onPressed: () => SnackBarUtil.showNotificationSnackBar(
                   context, AppLocalizations.of(context)!.facebookAccountsSoon),
               tooltip: AppLocalizations.of(context)!.facebookOAuth,
               colorFilter: isDarkTheme
                   ? ColorFilter.mode(
-                      ConstColors.white,
+                      ConstColors.kWhite,
                       BlendMode.srcIn,
                     )
                   : null,

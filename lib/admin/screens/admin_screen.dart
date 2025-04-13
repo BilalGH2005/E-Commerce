@@ -18,20 +18,19 @@ class AdminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
     return BlocProvider(
       create: (context) => AdminCubit(),
       child: Scaffold(
-        body: Center(
-          child: ConstrainedBox(
-            constraints:
-                BoxConstraints(maxWidth: 500, minHeight: double.infinity),
-            child: BlocBuilder<AdminCubit, AdminState>(
-              builder: (context, state) {
-                final cubit = context.read<AdminCubit>();
-                final bool isLoading = cubit.adminStatus == 0;
-                //TODO: fix keyboard disappear
-                return SingleChildScrollView(
+        body: BlocBuilder<AdminCubit, AdminState>(
+          builder: (context, state) {
+            final cubit = context.read<AdminCubit>();
+            final bool isLoading = cubit.adminStatus == 0;
+            //TODO: fix keyboard disappear
+            return Center(
+              child: ConstrainedBox(
+                constraints:
+                    BoxConstraints(maxWidth: 500, minHeight: double.infinity),
+                child: SingleChildScrollView(
                   child: Form(
                     key: formKey,
                     child: Padding(
@@ -57,8 +56,7 @@ class AdminScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Row(children: [
-                                  SizedBox(
-                                    width: screenWidth * 0.45,
+                                  Expanded(
                                     child: ProductField(
                                       textInputAction: TextInputAction.next,
                                       controller: nameTextController,
@@ -67,9 +65,8 @@ class AdminScreen extends StatelessWidget {
                                           AdminCubit.nameValidator(value),
                                     ),
                                   ),
-                                  const Spacer(),
-                                  SizedBox(
-                                    width: screenWidth * 0.45,
+                                  const SizedBox(width: 20),
+                                  Expanded(
                                     child: ProductField(
                                       prefixIcon: const Icon(
                                         Icons.attach_money_outlined,
@@ -95,8 +92,8 @@ class AdminScreen extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      width: screenWidth * 0.35,
+                                    Expanded(
+                                      flex: 2,
                                       child: ReusableDropdownButton(
                                         items: [
                                           'Men',
@@ -109,9 +106,9 @@ class AdminScreen extends StatelessWidget {
                                             cubit.categoryValue(newValue),
                                       ),
                                     ),
-                                    const Spacer(),
-                                    SizedBox(
-                                      width: screenWidth * 0.55,
+                                    const SizedBox(width: 20),
+                                    Expanded(
+                                      flex: 3,
                                       child: ProductField(
                                         controller: imageUrl,
                                         label: AppLocalizations.of(context)!
@@ -148,10 +145,10 @@ class AdminScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                );
-              },
-            ),
-          ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

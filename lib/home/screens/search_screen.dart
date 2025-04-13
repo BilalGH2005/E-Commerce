@@ -9,7 +9,7 @@ class SearchScreen extends StatelessWidget {
       body: Center(
         child: Text(
           'THIS IS SEARCH SCREEN (PLACEHOLDER)',
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
     );

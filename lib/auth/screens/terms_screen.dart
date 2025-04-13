@@ -1,7 +1,7 @@
+import 'package:e_commerce/core/reusable_widgets/reusable_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:go_router/go_router.dart';
 
 class TermsScreen extends StatelessWidget {
   const TermsScreen({super.key});
@@ -11,17 +11,9 @@ class TermsScreen extends StatelessWidget {
         appBar: AppBar(
           foregroundColor: Theme.of(context).colorScheme.inverseSurface,
           leading: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            //TODO: fix the shape of the button
-            child: IconButton(
-              tooltip: AppLocalizations.of(context)!.back,
-              onPressed: () => context.pop(),
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Theme.of(context).colorScheme.inverseSurface,
-              ),
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              //TODO: fix the shape of the button
+              child: ReusableBackButton()),
           title: Text(
             AppLocalizations.of(context)!.termsAndConditions,
             style: Theme.of(context).textTheme.titleLarge,

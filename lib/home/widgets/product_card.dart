@@ -44,6 +44,8 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     Text(
