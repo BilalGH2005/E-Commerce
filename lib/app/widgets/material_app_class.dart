@@ -1,3 +1,4 @@
+import 'package:e_commerce/admin/cubit/admin_cubit.dart';
 import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:e_commerce/core/routes/app_router.dart';
 import 'package:e_commerce/core/themes/dark_theme.dart';
@@ -15,12 +16,12 @@ class MaterialAppClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: fix material app getting called twice
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => AppCubit()
-            ..checkIfNewUser()
-            ..getThemeAndLocale()
+            ..getAppDetails()
             ..addAuthEventsListener(),
           lazy: false,
         ),
@@ -29,6 +30,9 @@ class MaterialAppClass extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AdminCubit(),
         ),
       ],
       child: Builder(

@@ -7,10 +7,11 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('SPLASH SCREEN IS INVOKED');
     final screenWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
       body: Center(
-        child: screenWidth >= 500
+        child: screenWidth >= 768
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

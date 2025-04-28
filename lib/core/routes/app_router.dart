@@ -68,9 +68,7 @@ class AppRouter {
           builder: (context, state) => const GettingStartedScreen(),
         ),
         ShellRoute(
-          builder: (context, state, child) {
-            return NavigationBars(child: child);
-          },
+          builder: (context, state, child) => NavigationBars(child: child),
           routes: [
             GoRoute(
               name: ScreensNames.home,
@@ -107,28 +105,31 @@ class AppRouter {
           },
         ),
       ],
-      // TODO: make splash force appear
+      // TODO: force splash screen to appear
       redirect: (context, state) async {
-        final supabaseAuth = Supabase.instance.client.auth;
+        if (state.uri.path != ScreensNames.splash) return null;
+
         final prefs = await SharedPreferences.getInstance();
-        bool? hasSeenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
-        if (hasSeenOnBoarding == true) {
-          final session = supabaseAuth.currentSession;
-          if (session != null && session.isExpired) {
+        final seenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
+        if (!seenOnBoarding) return ScreensNames.onBoarding;
+
+        final supabaseAuth = Supabase.instance.client.auth;
+        final currentSession = supabaseAuth.currentSession;
+
+        if (currentSession == null) {
+          return ScreensNames.signIn;
+        }
+
+        if (currentSession.isExpired) {
+          try {
             await supabaseAuth.refreshSession();
+            print(currentSession);
             return ScreensNames.home;
-          } else if (session != null &&
-              !session.isExpired &&
-              state.uri.path == ScreensNames.splash) {
-            return ScreensNames.home;
-          } else if (session == null && state.uri.path == ScreensNames.splash) {
+          } catch (_) {
             return ScreensNames.signIn;
           }
-        } else if (hasSeenOnBoarding == false &&
-            state.uri.path == ScreensNames.splash) {
-          return ScreensNames.onBoarding;
         }
-        return null;
+        return ScreensNames.home;
       },
     );
   }

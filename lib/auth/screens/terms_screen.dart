@@ -7,34 +7,44 @@ class TermsScreen extends StatelessWidget {
   const TermsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          foregroundColor: Theme.of(context).colorScheme.inverseSurface,
-          leading: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              //TODO: fix the shape of the button
-              child: ReusableBackButton()),
-          title: Text(
-            AppLocalizations.of(context)!.termsAndConditions,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          centerTitle: true,
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Markdown(
-                data: AppLocalizations.of(context)!.termsText,
-                styleSheet: MarkdownStyleSheet(
-                  p: Theme.of(context)
-                      .textTheme
-                      .displayMedium!
-                      .copyWith(height: 1.5),
+  Widget build(BuildContext context) => SafeArea(
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(double.infinity, 100),
+            child: Container(
+              color: Theme.of(context).colorScheme.surface,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ReusableBackButton(),
+                    Text(
+                      AppLocalizations.of(context)!.termsAndConditions,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    SizedBox(width: 24)
+                  ],
                 ),
               ),
             ),
-          ],
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Markdown(
+                  data: AppLocalizations.of(context)!.termsText,
+                  styleSheet: MarkdownStyleSheet(
+                    p: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(height: 1.5),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 }

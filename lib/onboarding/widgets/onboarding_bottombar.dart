@@ -18,19 +18,21 @@ class OnBoardingBottomBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (currentPage > 0.5 && currentPage <= 2.0)
-                TextButton(
-                  onPressed: () async => await cubit.goToPreviousPage(),
-                  child: Text(
-                    AppLocalizations.of(context)!.prev,
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.tertiary),
-                  ),
-                )
-              else
-                const SizedBox(
-                  width: 64,
-                ),
+              currentPage > 0.5 && currentPage <= 2.0
+                  ? TextButton(
+                      onPressed: () async => await cubit.goToPreviousPage(),
+                      child: Text(
+                        AppLocalizations.of(context)!.prev,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.tertiary),
+                      ),
+                    )
+                  : const SizedBox(
+                      width: 64,
+                    ),
               SmoothPageIndicator(
                 controller: cubit.pageController,
                 count: 3,

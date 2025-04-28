@@ -8,7 +8,6 @@ class ReusableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: fix button disappear when the state is disabled
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(double.infinity, 55),

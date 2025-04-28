@@ -15,10 +15,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   final SupabaseClient _supabase = Supabase.instance.client;
   AsyncValue<List<Map<String, dynamic>>>? products;
+  List<Map<String, dynamic>>? newProducts;
   AsyncValue<List<Product>> cartItems = AsyncValue.data(data: []);
 
   Future<void> fetchCartItems() async {
-    products = AsyncValue.loading();
+    cartItems = AsyncValue.loading();
     emit(CartStateChanged());
 
     try {
@@ -31,7 +32,7 @@ class HomeCubit extends Cubit<HomeState> {
               .map((item) => Product.fromProducts(item['products']))
               .toList());
     } catch (exception) {
-      products = AsyncValue.error(error: exception.toString());
+      cartItems = AsyncValue.error(error: exception.toString());
     } finally {
       emit(CartStateChanged());
     }
@@ -61,14 +62,12 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> showCartDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return CartDialog();
-      },
-    );
-  }
+  Future<void> showCartDialog(BuildContext context) async => await showDialog(
+        context: context,
+        builder: (context) {
+          return CartDialog();
+        },
+      );
 
   Future<void> fetchProducts() async {
     products = AsyncValue.loading();
@@ -77,10 +76,17 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       final response = await _supabase.from('products').select('*');
       products = AsyncValue.data(data: response);
+      getNewProducts();
     } catch (exception) {
       products = AsyncValue.error(error: exception.toString());
     } finally {
       emit(HomeStateChanged());
     }
   }
+
+  List<Map<String, dynamic>>? getNewProducts() => newProducts = products!.data!
+      .where((column) => DateTime.parse(column['added_at']).isAfter(
+            DateTime.now().subtract(Duration(days: 30)),
+          ))
+      .toList();
 }

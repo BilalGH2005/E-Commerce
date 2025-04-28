@@ -13,7 +13,7 @@ class ReusableErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 500, minHeight: double.infinity),
+        constraints: BoxConstraints(maxWidth: 768, minHeight: double.infinity),
         child: Padding(
           padding: const EdgeInsets.all(50),
           child: Column(

@@ -18,6 +18,7 @@ class CartDialog extends StatelessWidget {
         constraints: BoxConstraints(
             minWidth: 150, maxWidth: 800, minHeight: 200, maxHeight: 600),
         child: BlocBuilder<HomeCubit, HomeState>(
+          buildWhen: (_, state) => state is CartStateChanged,
           builder: (context, state) {
             final cartItems = context.read<HomeCubit>().cartItems;
             return Dialog(

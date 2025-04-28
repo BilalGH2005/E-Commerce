@@ -1,7 +1,6 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:e_commerce/core/utils/screens_names.dart';
-import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/routes/app_router.dart';
+import '../../core/utils/snackbar_util.dart';
 
 part 'auth_state.dart';
 
@@ -22,61 +22,82 @@ class AuthCubit extends Cubit<AuthState> {
   int authStatus = 0;
   bool isPasswordObscure = true, isConfirmPasswordObscure = true;
 
-  Future<void> authentication(
-      {required GlobalKey<FormState> formKey, required String screen}) async {
-    authStatus = 1;
-    emit(AuthStateChanged());
-    if (!formKey.currentState!.validate()) {
-      authStatus = 0;
-      emit(AuthStateChanged());
-      return;
-    }
-    formKey.currentState!.save();
-    //TOD0: imp(3) - make a web-view and a domain for captcha
-    // final turnstile = CloudflareTurnstile.invisible(
-    //     siteKey:
-    //     dotenv.env['TURNSTILE_SITE_KEY']!);
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  Future<void> signIn({
+    required GlobalKey<FormState> formKey,
+  }) async {
+    if (!_validateForm(formKey)) return;
+    final context = AppRouter.navigatorKey.currentContext;
     try {
-      // final token = await turnstile.getToken();
-      // print(token);
-      switch (screen) {
-        case ScreensNames.signIn:
-          await _supabaseAuth.signInWithPassword(
-              // captchaToken: token,
-              password: passwordTextController.text,
-              email: emailTextController.text);
-        //TODO: customize the sign up email message
-        case ScreensNames.signUp:
-          await _supabaseAuth.signUp(
-              // captchaToken: token,
-              email: emailTextController.text,
-              password: passwordTextController.text,
-              emailRedirectTo: 'myapp://auth');
-          SnackBarUtil.showSuccessfulSnackBar(context!,
-              AppLocalizations.of(context)!.checkEmailForVerification);
-          break;
-        //TODO: make the reset password logic and email message
-        case ScreensNames.resetPassword:
-          await _supabaseAuth.resetPasswordForEmail(
-              // captchaToken: token,
-              //TOD0: imp(1) - redirect user to reset the password
-              emailTextController.text);
-          SnackBarUtil.showSuccessfulSnackBar(
-              context!, AppLocalizations.of(context)!.resetPasswordEmailSent);
-      }
+      await _supabaseAuth.signInWithPassword(
+        email: emailTextController.text,
+        password: passwordTextController.text,
+      );
+      // SnackBarUtil.showSuccessfulSnackBar(
+      //     context!, AppLocalizations.of(context)!.signedInSuccessfully);
     } on AuthException catch (exception) {
       SnackBarUtil.showErrorSnackBar(context!, exception.message);
-    }
-    // on TurnstileException catch (exception) {
-    //   SnackBarUtil.showErrorSnackBar(context, exception.message);
-    // }
-    catch (exception) {
+    } on SocketException catch (_) {
+      SnackBarUtil.showErrorSnackBar(
+          context!, AppLocalizations.of(context)!.noInternetConnection);
+    } catch (exception) {
       SnackBarUtil.showErrorSnackBar(context!, exception.toString());
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
-      // turnstile.dispose();
+    }
+  }
+
+  Future<void> signUp({
+    required GlobalKey<FormState> formKey,
+  }) async {
+    if (!_validateForm(formKey)) return;
+    final context = AppRouter.navigatorKey.currentContext;
+    try {
+      await _supabaseAuth.signUp(
+        email: emailTextController.text,
+        password: passwordTextController.text,
+        emailRedirectTo: 'myapp://auth',
+      );
+      SnackBarUtil.showSuccessfulSnackBar(
+        context!,
+        AppLocalizations.of(context)!.checkEmailForVerification,
+      );
+    } on AuthException catch (exception) {
+      SnackBarUtil.showErrorSnackBar(context!, exception.message);
+    } on SocketException catch (_) {
+      SnackBarUtil.showErrorSnackBar(
+          context!, AppLocalizations.of(context)!.noInternetConnection);
+    } catch (exception) {
+      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+    } finally {
+      authStatus = 0;
+      emit(AuthStateChanged());
+    }
+  }
+
+  Future<void> resetPassword({
+    required GlobalKey<FormState> formKey,
+  }) async {
+    if (!_validateForm(formKey)) return;
+    final context = AppRouter.navigatorKey.currentContext;
+    try {
+      await _supabaseAuth.resetPasswordForEmail(
+        emailTextController.text,
+      );
+      SnackBarUtil.showSuccessfulSnackBar(
+        context!,
+        AppLocalizations.of(context)!.resetPasswordEmailSent,
+      );
+    } on AuthException catch (exception) {
+      SnackBarUtil.showErrorSnackBar(context!, exception.message);
+    } on SocketException catch (_) {
+      SnackBarUtil.showErrorSnackBar(
+          context!, AppLocalizations.of(context)!.noInternetConnection);
+    } catch (exception) {
+      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+    } finally {
+      authStatus = 0;
+      emit(AuthStateChanged());
     }
   }
 
@@ -97,6 +118,21 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthStateChanged());
   }
 
+// ---------------------------------- Authentication Helpers ---------------------------------- //
+  bool _validateForm(GlobalKey<FormState> formKey) {
+    if (!formKey.currentState!.validate()) {
+      authStatus = 0;
+      emit(AuthStateChanged());
+      return false;
+    }
+
+    formKey.currentState!.save();
+    authStatus = 1;
+    emit(AuthStateChanged());
+    return true;
+  }
+
+// ---------------------------------- Authentication Validators ---------------------------------- //
   static String? passwordValidator(String? value) {
     final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value == null || value.trim().isEmpty) {

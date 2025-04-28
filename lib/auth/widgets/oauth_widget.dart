@@ -50,7 +50,7 @@ class OAuthWidget extends StatelessWidget {
               tooltip: AppLocalizations.of(context)!.appleOAuth,
               colorFilter: isDarkTheme
                   ? ColorFilter.mode(
-                      ConstColors.kWhite,
+                      ConstColors.white,
                       BlendMode.srcIn,
                     )
                   : null,
@@ -62,7 +62,7 @@ class OAuthWidget extends StatelessWidget {
               tooltip: AppLocalizations.of(context)!.facebookOAuth,
               colorFilter: isDarkTheme
                   ? ColorFilter.mode(
-                      ConstColors.kWhite,
+                      ConstColors.white,
                       BlendMode.srcIn,
                     )
                   : null,

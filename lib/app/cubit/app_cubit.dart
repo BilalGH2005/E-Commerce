@@ -23,13 +23,9 @@ class AppCubit extends Cubit<AppState> {
   bool? isArabic = false;
   AsyncValue<List<Map<String, dynamic>>>? products;
 
-  Future<void> checkIfNewUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    seenGettingStarted = prefs.getBool('seenGettingStarted') ?? false;
-  }
-
-  Future<void> getThemeAndLocale() async {
+  Future<void> getAppDetails() async {
     final prefs = await SharedPreferences.getInstance();
+    seenGettingStarted = prefs.getBool('seenGettingStarted') ?? false;
     isDarkTheme = prefs.getBool('isDarkTheme') ?? false;
     isArabic = prefs.getBool('isArabic') ?? false;
   }
@@ -38,15 +34,16 @@ class AppCubit extends Cubit<AppState> {
       _authListener = _supabaseAuth.onAuthStateChange.listen((data) {
         final BuildContext? context = AppRouter.navigatorKey.currentContext;
         final AuthChangeEvent event = data.event;
-        if (context == null) return;
+
         if (event == AuthChangeEvent.signedIn) {
-          if (seenGettingStarted!) {
-            context.goNamed(ScreensNames.home);
-          } else {
-            context.goNamed(ScreensNames.gettingStarted);
-          }
-        } else if (event == AuthChangeEvent.signedOut) {
-          context.goNamed(ScreensNames.signIn);
+          context!.goNamed(seenGettingStarted!
+              ? ScreensNames.home
+              : ScreensNames.gettingStarted);
+          return;
+        }
+
+        if (event == AuthChangeEvent.signedOut) {
+          context!.goNamed(ScreensNames.signIn);
         }
       });
 
@@ -54,16 +51,12 @@ class AppCubit extends Cubit<AppState> {
     final prefs = await SharedPreferences.getInstance();
     isDarkTheme = newValue;
     emit(AppThemeChanged());
-    await prefs.setBool('isDarkTheme', newValue!);
+    await prefs.setBool('isDarkTheme', isDarkTheme!);
   }
 
   Future<void> localeValue(String? newValue) async {
     final prefs = await SharedPreferences.getInstance();
-    if (newValue == 'English') {
-      isArabic = false;
-    } else {
-      isArabic = true;
-    }
+    isArabic = newValue != 'English';
     emit(AppThemeChanged());
     await prefs.setBool('isArabic', isArabic!);
   }

@@ -1,5 +1,4 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
-import 'package:e_commerce/core/utils/screens_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,7 +18,7 @@ class ResetPasswordScreen extends StatelessWidget {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(
-              maxWidth: 500, /*minHeight: double.infinity*/
+              maxWidth: 768, /*minHeight: double.infinity*/
             ),
             child: Form(
               key: formKey,
@@ -53,17 +52,16 @@ class ResetPasswordScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               AuthField(
-                                controller: cubit.emailTextController,
-                                label: AppLocalizations.of(context)!
-                                    .enterYourEmailAddress,
-                                prefixIcon: Icons.email,
-                                validator: (value) =>
-                                    AuthCubit.emailValidator(value),
-                                onSubmitted: (_) async =>
-                                    await cubit.authentication(
+                                  controller: cubit.emailTextController,
+                                  label: AppLocalizations.of(context)!
+                                      .enterYourEmailAddress,
+                                  prefixIcon: Icons.email,
+                                  validator: (value) =>
+                                      AuthCubit.emailValidator(value),
+                                  onSubmitted: (_) async =>
+                                      await cubit.resetPassword(
                                         formKey: formKey,
-                                        screen: ScreensNames.resetPassword),
-                              ),
+                                      )),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -97,9 +95,9 @@ class ResetPasswordScreen extends StatelessWidget {
                               ),
                               ReusableButton(
                                 onPressed: isLoading
-                                    ? () async => await cubit.authentication(
-                                        formKey: formKey,
-                                        screen: ScreensNames.resetPassword)
+                                    ? () async => await cubit.resetPassword(
+                                          formKey: formKey,
+                                        )
                                     : null,
                                 label: isLoading
                                     ? Text(AppLocalizations.of(context)!.submit,

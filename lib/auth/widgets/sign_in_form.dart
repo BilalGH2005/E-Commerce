@@ -62,8 +62,9 @@ Widget signInForm(BuildContext context, GlobalKey<FormState> formKey) {
                         prefixIcon: Icons.lock,
                         validator: (value) =>
                             AuthCubit.passwordValidator(value),
-                        onSubmitted: (_) async => await cubit.authentication(
-                            formKey: formKey, screen: ScreensNames.signIn),
+                        onSubmitted: (_) async => await cubit.signIn(
+                          formKey: formKey,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -86,8 +87,7 @@ Widget signInForm(BuildContext context, GlobalKey<FormState> formKey) {
                       ),
                       ReusableButton(
                         onPressed: isLoading
-                            ? () async => await cubit.authentication(
-                                formKey: formKey, screen: ScreensNames.signIn)
+                            ? () async => await cubit.signIn(formKey: formKey)
                             : null,
                         label: isLoading
                             ? Text(
@@ -105,12 +105,14 @@ Widget signInForm(BuildContext context, GlobalKey<FormState> formKey) {
             ),
             const SizedBox(height: 74),
             SizedBox(
-              // width: 236,
+              width: 236,
               height: 154,
               child: OAuthWidget(
                 label: AppLocalizations.of(context)!.createAnAccount,
                 buttonText: AppLocalizations.of(context)!.signUp,
-                onPressed: () => context.pushNamed(ScreensNames.signUp),
+                onPressed: () async {
+                  await context.pushNamed(ScreensNames.signUp);
+                },
               ),
             ),
           ],

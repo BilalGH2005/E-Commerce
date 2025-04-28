@@ -52,7 +52,7 @@ class CustomButton extends StatelessWidget {
             child: Text(
               label,
               style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                  fontWeight: FontWeight.w500, color: ConstColors.kWhite),
+                  fontWeight: FontWeight.w500, color: ConstColors.white),
             ),
           ),
           Container(
@@ -67,7 +67,7 @@ class CustomButton extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: ConstColors.kBlack.withAlpha(77),
+                  color: ConstColors.black.withAlpha(77),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: Offset(0, 3),

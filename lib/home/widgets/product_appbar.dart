@@ -20,9 +20,10 @@ class ProductAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: BlocBuilder<HomeCubit, HomeState>(
+            buildWhen: (_, state) => state is CartStateChanged,
             builder: (context, state) {
-              final cartItemCount =
-                  context.read<HomeCubit>().cartItems.data!.length;
+              final cubit = context.read<HomeCubit>();
+              final cartItemCount = cubit.cartItems.data!.length;
               return Badge(
                 label: Text(cartItemCount.toString()),
                 isLabelVisible: cartItemCount > 0,
@@ -33,8 +34,8 @@ class ProductAppBar extends StatelessWidget implements PreferredSizeWidget {
                         Theme.of(context).colorScheme.surfaceContainer,
                   ),
                   onPressed: () async {
-                    context.read<HomeCubit>().fetchCartItems();
-                    await context.read<HomeCubit>().showCartDialog(context);
+                    cubit.fetchCartItems();
+                    await cubit.showCartDialog(context);
                   },
                   icon: const Icon(Icons.shopping_cart_outlined),
                   color: Theme.of(context).colorScheme.inverseSurface,

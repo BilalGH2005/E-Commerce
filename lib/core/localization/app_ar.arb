@@ -72,5 +72,9 @@
     "facebookOAuth": "تسجيل دخول عبر Facebook",
     "cart": "سلة التسوق",
     "addToCart": "الإضافة إلى سلة التسوق",
-    "yourCartIsEmpty": "سلة التسوق فارغة"
+    "yourCartIsEmpty": "سلة التسوق فارغة",
+    "newProduct": "جديد!",
+    "refresh": "تحديث الصفحة",
+    "noInternetConnection": "لا يوجد إتصال بالإنترنت",
+    "signedInSuccessfully":"تم تسجيل الدخول بنجاح"
 }

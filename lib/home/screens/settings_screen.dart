@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
       body: Center(
         child: ConstrainedBox(
           constraints:
-              BoxConstraints(maxWidth: 500, minHeight: double.infinity),
+              BoxConstraints(maxWidth: 768, minHeight: double.infinity),
           child: Padding(
             padding: const EdgeInsets.only(top: 32.0, left: 8, right: 8),
             child: BlocBuilder<AppCubit, AppState>(
@@ -75,7 +75,7 @@ class SettingsScreen extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .displaySmall!
-                                  .copyWith(color: ConstColors.kWhite),
+                                  .copyWith(color: ConstColors.white),
                             ),
                           ),
                         ),

@@ -81,52 +81,52 @@ Widget signUpForm(BuildContext context, GlobalKey<FormState> formKey) {
                                 value: value,
                                 passwordTextController:
                                     cubit.passwordTextController),
-                        onSubmitted: (_) async => await cubit.authentication(
+                        onSubmitted: (_) async => await cubit.signUp(
                           formKey: formKey,
-                          screen: ScreensNames.signIn,
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RichText(
-                            text: TextSpan(
-                              text:
-                                  AppLocalizations.of(context)!.termsAgreement,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiaryFixed),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: AppLocalizations.of(context)!.ourTerms,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall!
-                                      .copyWith(
+                          Flexible(
+                            child: RichText(
+                              text: TextSpan(
+                                text: AppLocalizations.of(context)!
+                                    .termsAgreement,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .primaryFixed,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      context.pushNamed(ScreensNames.terms);
-                                    },
-                                ),
-                              ],
+                                            .tertiaryFixed),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text:
+                                        AppLocalizations.of(context)!.ourTerms,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryFixed,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        context.pushNamed(ScreensNames.terms);
+                                      },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                       ReusableButton(
                         onPressed: isLoading
-                            ? () async => await cubit.authentication(
-                                formKey: formKey, screen: ScreensNames.signUp)
+                            ? () async => await cubit.signUp(formKey: formKey)
                             : null,
                         label: isLoading
                             ? Text(AppLocalizations.of(context)!.createAccount,
@@ -148,7 +148,8 @@ Widget signUpForm(BuildContext context, GlobalKey<FormState> formKey) {
               child: OAuthWidget(
                 label: AppLocalizations.of(context)!.alreadyHaveAnAccount,
                 buttonText: AppLocalizations.of(context)!.signIn,
-                onPressed: () => context.pushNamed(ScreensNames.signIn),
+                onPressed: () async =>
+                    await context.pushNamed(ScreensNames.signIn),
               ),
             ),
           ],

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class ReusableCachedImage extends StatelessWidget {
   final String imageUrl;
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
   const ReusableCachedImage({
     super.key,
     required this.imageUrl,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
   });
 
   @override

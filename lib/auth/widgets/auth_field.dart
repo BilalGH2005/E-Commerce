@@ -49,7 +49,6 @@ class AuthField extends StatelessWidget {
           filled: true,
           label: Text(
             label,
-            //TODO: set label color to grey without getting the float text color to change
             style: TextStyle(
               fontFamily: context.watch<AppCubit>().isArabic!
                   ? 'Tajawal'

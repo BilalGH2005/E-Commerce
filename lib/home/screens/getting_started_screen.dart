@@ -41,7 +41,7 @@ class GettingStartedScreen extends StatelessWidget {
                 ),
               ),
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 500),
+                constraints: BoxConstraints(maxWidth: 768),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -60,7 +60,7 @@ class GettingStartedScreen extends StatelessWidget {
                     ),
                     Center(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 500),
+                        constraints: BoxConstraints(maxWidth: 768),
                         child: ReusableButton(
                           onPressed: () async {
                             final prefs = await SharedPreferences.getInstance();

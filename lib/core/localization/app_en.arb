@@ -27,7 +27,7 @@
   "submit": "Submit",
   "createAnAccountTitle": "Create an\naccount",
   "confirmPassword": "Confirm password",
-  "termsAgreement": "By clicking the Create Account button, you\nagree to ",
+  "termsAgreement": "By clicking the Create Account button, you agree to ",
   "ourTerms": "our terms",
   "alreadyHaveAnAccount": "I already have an account",
   "signIn": "Sign in",
@@ -72,5 +72,9 @@
   "facebookOAuth": "Sign in with Facebook",
   "cart": "Cart",
   "addToCart": "Add to cart",
-  "yourCartIsEmpty": "Your cart is empty"
+  "yourCartIsEmpty": "Your cart is empty",
+  "newProduct": "NEW!",
+  "refresh": "Refresh",
+  "noInternetConnection": "No internet connection",
+  "signedInSuccessfully":"Signed in successfully"
 }
