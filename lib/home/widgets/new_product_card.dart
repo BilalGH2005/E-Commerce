@@ -48,7 +48,7 @@ class NewProductCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Text(
-                      "\$${product.price}",
+                      '\$${product.price}',
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],

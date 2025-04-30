@@ -4,6 +4,7 @@ import 'package:e_commerce/home/models/product.dart';
 import 'package:e_commerce/home/widgets/cart_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fuzzy/fuzzy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/routes/app_router.dart';
@@ -14,12 +15,15 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   final SupabaseClient _supabase = Supabase.instance.client;
-  AsyncValue<List<Map<String, dynamic>>>? products;
-  List<Map<String, dynamic>>? newProducts;
-  AsyncValue<List<Product>> cartItems = AsyncValue.data(data: []);
+  AsyncValue<List<Product>> products = AsyncValue.data(data: []);
+  List<Product>? newProducts;
+  AsyncValue<List<Product>>? cartProducts;
+  AsyncValue<List<Product>> searchProductsList = AsyncValue.data(data: []);
+  late Fuzzy _fuzzy;
+  final TextEditingController searchController = TextEditingController();
 
   Future<void> fetchCartItems() async {
-    cartItems = AsyncValue.loading();
+    cartProducts = AsyncValue.loading();
     emit(CartStateChanged());
 
     try {
@@ -27,12 +31,12 @@ class HomeCubit extends Cubit<HomeState> {
           .from('cart_items')
           .select('*, products(*)')
           .eq('user_id', _supabase.auth.currentUser!.id);
-      cartItems = AsyncValue.data(
+      cartProducts = AsyncValue.data(
           data: (response as List)
               .map((item) => Product.fromProducts(item['products']))
               .toList());
     } catch (exception) {
-      cartItems = AsyncValue.error(error: exception.toString());
+      cartProducts = AsyncValue.error(error: exception.toString());
     } finally {
       emit(CartStateChanged());
     }
@@ -75,7 +79,9 @@ class HomeCubit extends Cubit<HomeState> {
 
     try {
       final response = await _supabase.from('products').select('*');
-      products = AsyncValue.data(data: response);
+      products = AsyncValue.data(
+          data:
+              (response as List).map((e) => Product.fromProducts(e)).toList());
       getNewProducts();
     } catch (exception) {
       products = AsyncValue.error(error: exception.toString());
@@ -84,9 +90,55 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  List<Map<String, dynamic>>? getNewProducts() => newProducts = products!.data!
-      .where((column) => DateTime.parse(column['added_at']).isAfter(
-            DateTime.now().subtract(Duration(days: 30)),
-          ))
-      .toList();
+  List<Product>? getNewProducts() {
+    return products.data!
+        .where((product) => product.addedAt.isAfter(
+              DateTime.now().subtract(const Duration(days: 30)),
+            ))
+        .toList();
+  }
+
+// ---------------------------------- Search Pane ---------------------------------- //
+  Future<void> initializeFuzzySearch() async {
+    _fuzzy = Fuzzy<Product>(
+      products.data!,
+      options: FuzzyOptions(
+        keys: [
+          WeightedKey<Product>(
+            name: 'name',
+            weight: 0.6,
+            getter: (product) => product.name,
+          ),
+          WeightedKey<Product>(
+            name: 'description',
+            weight: 0.3,
+            getter: (product) => product.description,
+          ),
+          WeightedKey<Product>(
+            name: 'category',
+            weight: 0.1,
+            getter: (product) => product.category,
+          ),
+        ],
+        threshold: 1,
+      ),
+    );
+    searchProductsList = AsyncValue.data(data: products.data!);
+    emit(SearchStateChanged());
+  }
+
+  void searchProducts(String query) {
+    searchProductsList = AsyncValue.loading();
+    emit(SearchStateChanged());
+
+    try {
+      final results = _fuzzy.search(query);
+      searchProductsList =
+          AsyncValue.data(data: results.map((e) => e.item as Product).toList());
+    } catch (exception) {
+      searchProductsList = AsyncValue.error(error: exception.toString());
+    } finally {
+      emit(SearchStateChanged());
+    }
+  }
 }

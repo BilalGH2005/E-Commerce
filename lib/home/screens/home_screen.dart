@@ -26,14 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (_, state) => state is HomeStateChanged,
-      builder: (context, state) {
-        final cubit = context.read<HomeCubit>();
-        return Scaffold(
-          appBar: HomeAppBar(),
-          body: AsyncBuilder(
-            value: cubit.products!,
+    return Scaffold(
+      appBar: HomeAppBar(),
+      body: BlocBuilder<HomeCubit, HomeState>(
+        buildWhen: (_, state) => state is HomeStateChanged,
+        builder: (context, state) {
+          final cubit = context.read<HomeCubit>();
+          return AsyncBuilder(
+            value: cubit.products,
             loading: (context) => const ShimmerWidget(),
             data: (context, products) => Dashboard(products: products),
             error: (context, error) => ReusableErrorWidget(
@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
               /*error: AppLocalizations.of(context)!.somethingWentWrong,*/
               buttonLabel: AppLocalizations.of(context)!.retry,
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

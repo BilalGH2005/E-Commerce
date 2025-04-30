@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../core/reusable_widgets/reusable_cached_image.dart';
 import '../models/product.dart';
 
-class CartItem extends StatelessWidget {
+class CartProduct extends StatelessWidget {
   final Product product;
-  const CartItem({super.key, required this.product});
+  const CartProduct({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {

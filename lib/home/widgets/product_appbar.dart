@@ -23,7 +23,7 @@ class ProductAppBar extends StatelessWidget implements PreferredSizeWidget {
             buildWhen: (_, state) => state is CartStateChanged,
             builder: (context, state) {
               final cubit = context.read<HomeCubit>();
-              final cartItemCount = cubit.cartItems.data!.length;
+              final cartItemCount = cubit.cartProducts!.data!.length;
               return Badge(
                 label: Text(cartItemCount.toString()),
                 isLabelVisible: cartItemCount > 0,

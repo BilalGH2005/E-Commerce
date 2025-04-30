@@ -8,3 +8,5 @@ final class HomeInitial extends HomeState {}
 final class HomeStateChanged extends HomeState {}
 
 final class CartStateChanged extends HomeState {}
+
+final class SearchStateChanged extends HomeState {}

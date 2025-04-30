@@ -1,3 +1,4 @@
+import 'package:e_commerce/admin/widgets/choose_image_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/reusable_widgets/reusable_button.dart';
 import '../../core/reusable_widgets/reusable_dropdown_button.dart';
 import '../cubit/admin_cubit.dart';
-import '../widgets/choose_image_button.dart';
 import '../widgets/product_field.dart';
 
 class AdminScreen extends StatelessWidget {
@@ -92,7 +92,7 @@ class AdminScreen extends StatelessWidget {
                           textInputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: 20),
-                        ChooseImageButton(
+                        ChooseImageWidget(
                           onPressed: () async {
                             final isMobile = defaultTargetPlatform ==
                                     TargetPlatform.android ||

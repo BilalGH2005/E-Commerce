@@ -4,7 +4,6 @@ import 'package:e_commerce/home/widgets/new_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/product.dart';
 
 class NewProductsCarousel extends StatelessWidget {
   const NewProductsCarousel({super.key});
@@ -46,7 +45,7 @@ class NewProductsCarousel extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: NewProductCard(
-                          product: Product.fromProducts(newProducts[index]),
+                          product: newProducts[index],
                         ),
                       );
                     },
