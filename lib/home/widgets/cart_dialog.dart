@@ -1,12 +1,11 @@
-import 'package:e_commerce/core/reusable_widgets/reusable_back_button.dart';
 import 'package:e_commerce/core/utils/async.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/app_back_button.dart';
+import 'package:e_commerce/core/widgets/app_error_widget.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:e_commerce/home/widgets/cart_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/reusable_widgets/reusable_error_widget.dart';
 
 class CartDialog extends StatelessWidget {
   const CartDialog({super.key});
@@ -35,7 +34,7 @@ class CartDialog extends StatelessWidget {
                         Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: ReusableBackButton()),
+                            child: AppBackButton()),
                       ],
                     ),
                     Expanded(
@@ -47,9 +46,9 @@ class CartDialog extends StatelessWidget {
                     ),
                   ],
                 ),
-                error: (context, error) => ReusableErrorWidget(
-                    error: AppLocalizations.of(context)!.somethingWentWrong,
-                    buttonLabel: AppLocalizations.of(context)!.retry),
+                error: (context, error) => AppErrorWidget(
+                    error: localization(context).somethingWentWrong,
+                    buttonLabel: localization(context).retry),
               ),
             );
           },

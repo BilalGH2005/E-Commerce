@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ReusableDropdownButton extends StatelessWidget {
+class AppDropdownButton extends StatelessWidget {
   final String? value;
   final void Function(String?)? onChanged;
   final List<String> items;
-  const ReusableDropdownButton({
+  const AppDropdownButton({
     super.key,
     required this.value,
     required this.onChanged,

@@ -1,12 +1,12 @@
-import 'package:e_commerce/core/utils/asset_images_paths.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
+import 'package:e_commerce/onboarding/widgets/onboarding_appbar.dart';
+import 'package:e_commerce/onboarding/widgets/onboarding_bottombar.dart';
+import 'package:e_commerce/onboarding/widgets/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../cubit/onboarding_cubit.dart';
-import '../widgets/onboarding_appbar.dart';
-import '../widgets/onboarding_bottombar.dart';
-import '../widgets/onboarding_page.dart';
+import '../../core/constants/assets.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -22,20 +22,19 @@ class OnBoardingScreen extends StatelessWidget {
               controller: context.watch<OnBoardingCubit>().pageController,
               children: [
                 OnBoardingPage(
-                  imagePath: AssetImagesPaths.kOnBoardingScreen1,
-                  title: AppLocalizations.of(context)!.chooseProducts,
-                  subTitle:
-                      AppLocalizations.of(context)!.chooseProductsSubtitle,
+                  imagePath: Assets.kOnBoardingScreen1,
+                  title: localization(context).chooseProducts,
+                  subTitle: localization(context).chooseProductsSubtitle,
                 ),
                 OnBoardingPage(
-                  imagePath: AssetImagesPaths.kOnBoardingScreen2,
-                  title: AppLocalizations.of(context)!.makePayments,
-                  subTitle: AppLocalizations.of(context)!.makePaymentsSubtitle,
+                  imagePath: Assets.kOnBoardingScreen2,
+                  title: localization(context).makePayments,
+                  subTitle: localization(context).makePaymentsSubtitle,
                 ),
                 OnBoardingPage(
-                  imagePath: AssetImagesPaths.kOnBoardingScreen3,
-                  title: AppLocalizations.of(context)!.getYourOrder,
-                  subTitle: AppLocalizations.of(context)!.getYourOrderSubtitle,
+                  imagePath: Assets.kOnBoardingScreen3,
+                  title: localization(context).getYourOrder,
+                  subTitle: localization(context).getYourOrderSubtitle,
                 ),
               ],
             ),

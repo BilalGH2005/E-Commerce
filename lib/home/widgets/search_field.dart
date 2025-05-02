@@ -1,8 +1,8 @@
+import 'package:e_commerce/app/cubit/app_cubit.dart';
+import 'package:e_commerce/core/utils/localization.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../app/cubit/app_cubit.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});
@@ -19,14 +19,16 @@ class SearchField extends StatelessWidget {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           onChanged: (newValue) => cubit.searchProducts(newValue),
-          onSubmitted: (newValue) => cubit.searchProducts(newValue),
           controller: cubit.searchController,
           style: Theme.of(context).textTheme.displaySmall,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear),
-              onPressed: () => cubit.searchController.clear(),
+              onPressed: () {
+                cubit.searchController.clear();
+                cubit.searchProducts('');
+              },
             ),
             fillColor: Theme.of(context).colorScheme.surfaceContainer,
             enabledBorder: OutlineInputBorder(
@@ -42,7 +44,7 @@ class SearchField extends StatelessWidget {
               ),
             ),
             filled: true,
-            hintText: 'Search products...',
+            hintText: localization(context).searchHere,
             hintStyle: TextStyle(
               fontFamily: context.watch<AppCubit>().isArabic!
                   ? 'Tajawal'

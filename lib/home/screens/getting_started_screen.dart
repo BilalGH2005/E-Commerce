@@ -1,11 +1,10 @@
-import 'package:e_commerce/core/utils/screens_names.dart';
+import 'package:e_commerce/core/constants/assets.dart';
+import 'package:e_commerce/core/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../core/reusable_widgets/reusable_button.dart';
-import '../../core/utils/asset_images_paths.dart';
 
 class GettingStartedScreen extends StatelessWidget {
   const GettingStartedScreen({super.key});
@@ -17,7 +16,7 @@ class GettingStartedScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(AssetImagesPaths.kGettingStarted),
+            image: AssetImage(Assets.kGettingStarted),
             fit: BoxFit.cover,
           ),
         ),
@@ -46,12 +45,12 @@ class GettingStartedScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.youWantAuthentic,
+                      localization(context).youWantAuthentic,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Text(
-                      AppLocalizations.of(context)!.findItHereBuyItNow,
+                      localization(context).findItHereBuyItNow,
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
@@ -61,13 +60,13 @@ class GettingStartedScreen extends StatelessWidget {
                     Center(
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: 768),
-                        child: ReusableButton(
+                        child: AppButton(
                           onPressed: () async {
                             final prefs = await SharedPreferences.getInstance();
                             await prefs.setBool('seenGettingStarted', true);
                             context.goNamed(ScreensNames.home);
                           },
-                          label: Text(AppLocalizations.of(context)!.getStarted,
+                          label: Text(localization(context).getStarted,
                               style: Theme.of(context).textTheme.bodyMedium),
                         ),
                       ),

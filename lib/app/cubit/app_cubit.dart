@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:e_commerce/core/utils/screens_names.dart';
+import 'package:e_commerce/core/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../core/routes/app_router.dart';
-import '../../core/utils/async.dart';
 
 part 'app_state.dart';
 
@@ -30,20 +28,19 @@ class AppCubit extends Cubit<AppState> {
     isArabic = prefs.getBool('isArabic') ?? false;
   }
 
-  StreamSubscription<AuthState> addAuthEventsListener() =>
+  StreamSubscription<AuthState> addAuthEventsListener(BuildContext context) =>
       _authListener = _supabaseAuth.onAuthStateChange.listen((data) {
-        final BuildContext? context = AppRouter.navigatorKey.currentContext;
         final AuthChangeEvent event = data.event;
 
         if (event == AuthChangeEvent.signedIn) {
-          context!.goNamed(seenGettingStarted!
+          context.goNamed(seenGettingStarted!
               ? ScreensNames.home
               : ScreensNames.gettingStarted);
           return;
         }
 
         if (event == AuthChangeEvent.signedOut) {
-          context!.goNamed(ScreensNames.signIn);
+          context.goNamed(ScreensNames.signIn);
         }
       });
 
@@ -64,7 +61,6 @@ class AppCubit extends Cubit<AppState> {
   // StreamSubscription<Uri?> _addUriListener() =>
   //     _uriListener = uriLinkStream.listen(
   //       (Uri? uri) async {
-  //         final BuildContext? context = AppRouter.navigatorKey.currentContext;
   //         if (context == null) return;
   //         context.goNamed(ScreensNames.signIn);
   //       },

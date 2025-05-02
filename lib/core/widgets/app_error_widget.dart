@@ -1,12 +1,11 @@
+import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'reusable_button.dart';
-
-class ReusableErrorWidget extends StatelessWidget {
+class AppErrorWidget extends StatelessWidget {
   final String error, buttonLabel;
-  const ReusableErrorWidget(
+  const AppErrorWidget(
       {super.key, required this.error, required this.buttonLabel});
 
   @override
@@ -25,7 +24,7 @@ class ReusableErrorWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.displayMedium,
               ),
               const SizedBox(height: 14),
-              ReusableButton(
+              AppButton(
                 onPressed: () async {
                   await context.read<HomeCubit>().fetchProducts();
                 },

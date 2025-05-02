@@ -1,11 +1,13 @@
 import 'package:e_commerce/admin/cubit/admin_cubit.dart';
 import 'package:e_commerce/admin/widgets/chosen_images.dart';
+import 'package:e_commerce/core/utils/duration_extension.dart';
+import 'package:e_commerce/core/utils/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChooseImageWidget extends StatelessWidget {
+class ChoosingImageWidget extends StatelessWidget {
   final void Function()? onPressed;
-  const ChooseImageWidget({super.key, required this.onPressed});
+  const ChoosingImageWidget({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class ChooseImageWidget extends StatelessWidget {
                       size: 60,
                     ),
                     Text(
-                      'Choose an image...',
+                      localization(context).chooseAnImage,
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],
@@ -43,7 +45,7 @@ class ChooseImageWidget extends StatelessWidget {
             : SizedBox(
                 height: 120,
                 child: AnimatedSize(
-                  duration: const Duration(milliseconds: 100),
+                  duration: 100.ms,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -51,7 +53,7 @@ class ChooseImageWidget extends StatelessWidget {
                         ...selectedImages.map(
                           (image) {
                             return AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 100),
+                              duration: 100.ms,
                               child: Padding(
                                 key: ValueKey(image!.path),
                                 padding:

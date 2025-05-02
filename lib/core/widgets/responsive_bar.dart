@@ -1,17 +1,17 @@
 import 'package:e_commerce/admin/screens/admin_screen.dart';
-import 'package:e_commerce/core/utils/screens_names.dart';
+import 'package:e_commerce/core/constants/screens_names.dart';
+import 'package:e_commerce/core/utils/localization.dart';
 import 'package:e_commerce/home/screens/home_screen.dart';
 import 'package:e_commerce/home/screens/profile_screen.dart';
 import 'package:e_commerce/home/screens/search_screen.dart';
 import 'package:e_commerce/home/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
-class NavigationBars extends StatelessWidget {
+class ResponsiveBar extends StatelessWidget {
   final Widget child;
-  const NavigationBars({required this.child, super.key});
+  const ResponsiveBar({required this.child, super.key});
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
@@ -43,7 +43,6 @@ void _onItemSelected(int index, BuildContext context) {
       break;
     case 2:
       context.goNamed(ScreensNames.admin);
-      FocusScope.of(context).requestFocus();
       break;
     case 3:
       context.goNamed(ScreensNames.profile);
@@ -80,7 +79,7 @@ class BottomNavBar extends StatelessWidget {
         HomeScreen(),
         const SearchScreen(),
         AdminScreen(),
-        const ProfileScreen(),
+        ProfileScreen(),
         const SettingsScreen(),
       ];
 
@@ -90,7 +89,7 @@ class BottomNavBar extends StatelessWidget {
             padding: EdgeInsets.only(top: 12.0),
             child: Icon(Icons.home_outlined),
           ),
-          title: AppLocalizations.of(context)!.home,
+          title: localization(context).home,
           activeColorPrimary: Theme.of(context).colorScheme.primary,
           inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
         ),
@@ -99,7 +98,7 @@ class BottomNavBar extends StatelessWidget {
             padding: EdgeInsets.only(top: 12.0),
             child: Icon(Icons.search),
           ),
-          title: AppLocalizations.of(context)!.search,
+          title: localization(context).search,
           activeColorPrimary: Theme.of(context).colorScheme.primary,
           inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
         ),
@@ -112,7 +111,7 @@ class BottomNavBar extends StatelessWidget {
             Icons.admin_panel_settings_outlined,
             color: Theme.of(context).colorScheme.inverseSurface,
           ),
-          title: AppLocalizations.of(context)!.admin,
+          title: localization(context).admin,
           activeColorPrimary: Theme.of(context).colorScheme.primary,
           inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
         ),
@@ -121,7 +120,7 @@ class BottomNavBar extends StatelessWidget {
             padding: EdgeInsets.only(top: 12.0),
             child: Icon(Icons.person_outline),
           ),
-          title: AppLocalizations.of(context)!.profile,
+          title: localization(context).profile,
           activeColorPrimary: Theme.of(context).colorScheme.primary,
           inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
         ),
@@ -130,7 +129,7 @@ class BottomNavBar extends StatelessWidget {
             padding: EdgeInsets.only(top: 12.0),
             child: Icon(Icons.settings_outlined),
           ),
-          title: AppLocalizations.of(context)!.settings,
+          title: localization(context).settings,
           activeColorPrimary: Theme.of(context).colorScheme.primary,
           inactiveColorPrimary: Theme.of(context).colorScheme.inverseSurface,
         ),
@@ -169,23 +168,23 @@ class SideBar extends StatelessWidget {
                 destinations: [
                   NavigationRailDestination(
                     icon: const Icon(Icons.home_outlined),
-                    label: Text(AppLocalizations.of(context)!.home),
+                    label: Text(localization(context).home),
                   ),
                   NavigationRailDestination(
                     icon: const Icon(Icons.search),
-                    label: Text(AppLocalizations.of(context)!.search),
+                    label: Text(localization(context).search),
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.admin_panel_settings_outlined),
-                    label: Text(AppLocalizations.of(context)!.admin),
+                    label: Text(localization(context).admin),
                   ),
                   NavigationRailDestination(
                     icon: const Icon(Icons.person_outline),
-                    label: Text(AppLocalizations.of(context)!.profile),
+                    label: Text(localization(context).profile),
                   ),
                   NavigationRailDestination(
                     icon: const Icon(Icons.settings_outlined),
-                    label: Text(AppLocalizations.of(context)!.settings),
+                    label: Text(localization(context).settings),
                   ),
                 ],
               ),

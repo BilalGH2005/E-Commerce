@@ -1,28 +1,27 @@
+import 'package:e_commerce/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import 'const_colors.dart';
 
 class LightTheme {
   final Locale locale;
 
   LightTheme(this.locale);
   ThemeData get lightTheme => ThemeData.light().copyWith(
-        scaffoldBackgroundColor: ConstColors.white,
-        primaryColor: ConstColors.lightPrimary,
+        scaffoldBackgroundColor: AppColors.white,
+        primaryColor: AppColors.lightPrimary,
         colorScheme: const ColorScheme.light().copyWith(
-          primary: ConstColors.lightPrimary,
-          secondary: ConstColors.secondary,
-          surface: ConstColors.white,
-          inverseSurface: ConstColors.black,
-          primaryFixed: ConstColors.lightPrimaryFixed,
-          onSurface: ConstColors.black,
-          surfaceContainer: ConstColors.lightSurfaceContainer,
-          onInverseSurface: ConstColors.lightOnInverseSurface,
-          tertiary: ConstColors.lightTertiary,
-          tertiaryFixed: ConstColors.lightTertiaryFixed,
-          tertiaryFixedDim: ConstColors.lightTertiaryFixedDim,
-          error: ConstColors.red,
-          errorContainer: ConstColors.lightPrimary,
+          primary: AppColors.lightPrimary,
+          secondary: AppColors.secondary,
+          surface: AppColors.white,
+          inverseSurface: AppColors.black,
+          primaryFixed: AppColors.lightPrimaryFixed,
+          onSurface: AppColors.black,
+          surfaceContainer: AppColors.lightSurfaceContainer,
+          onInverseSurface: AppColors.lightOnInverseSurface,
+          tertiary: AppColors.lightTertiary,
+          tertiaryFixed: AppColors.lightTertiaryFixed,
+          tertiaryFixedDim: AppColors.lightTertiaryFixedDim,
+          error: AppColors.red,
+          errorContainer: AppColors.lightPrimary,
         ),
         textTheme: _getTextTheme(),
       );
@@ -36,73 +35,73 @@ class LightTheme {
     return const TextTheme().copyWith(
       headlineLarge: TextStyle(
         fontFamily: headlineFontFamily,
-        color: ConstColors.lightPrimary,
+        color: AppColors.lightPrimary,
         fontWeight: FontWeight.bold,
         fontSize: 40,
       ),
       bodyLarge: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.bold,
         fontSize: 36,
       ),
       displayLarge: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.white,
+        color: AppColors.white,
         fontWeight: FontWeight.w600,
         fontSize: 34,
       ),
       labelMedium: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.white,
+        color: AppColors.white,
         fontWeight: FontWeight.w800,
         fontSize: 24,
       ),
       bodyMedium: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.white,
+        color: AppColors.white,
         fontWeight: FontWeight.w600,
         fontSize: 20,
       ),
       titleLarge: TextStyle(
         fontFamily: headlineFontFamily,
-        color: ConstColors.secondary,
+        color: AppColors.secondary,
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
       headlineMedium: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.w600,
         fontSize: 18,
       ),
       displayMedium: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.normal,
         fontSize: 16,
       ),
       displaySmall: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.normal,
         fontSize: 14,
       ),
       labelSmall: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.w500,
         fontSize: 12,
       ),
       bodySmall: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.normal,
         fontSize: 12,
       ),
       titleSmall: TextStyle(
         fontFamily: fontFamily,
-        color: ConstColors.black,
+        color: AppColors.black,
         fontWeight: FontWeight.normal,
         fontSize: 10,
       ),

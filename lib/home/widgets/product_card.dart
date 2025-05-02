@@ -1,7 +1,6 @@
+import 'package:e_commerce/core/widgets/cached_image.dart';
 import 'package:e_commerce/home/models/product.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/reusable_widgets/reusable_cached_image.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -18,7 +17,7 @@ class ProductCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 3,
-              child: ReusableCachedImage(
+              child: CachedImage(
                 imageUrl: product.imageUrl,
                 width: double.infinity,
               ),

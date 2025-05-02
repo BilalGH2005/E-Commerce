@@ -1,6 +1,5 @@
+import 'package:e_commerce/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/themes/const_colors.dart';
 
 class CustomButton extends StatelessWidget {
   final List<Color> colors;
@@ -52,7 +51,7 @@ class CustomButton extends StatelessWidget {
             child: Text(
               label,
               style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                  fontWeight: FontWeight.w500, color: ConstColors.white),
+                  fontWeight: FontWeight.w500, color: AppColors.white),
             ),
           ),
           Container(
@@ -67,7 +66,7 @@ class CustomButton extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: ConstColors.black.withAlpha(77),
+                  color: AppColors.black.withAlpha(77),
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: Offset(0, 3),

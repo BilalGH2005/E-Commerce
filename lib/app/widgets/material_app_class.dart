@@ -1,15 +1,14 @@
 import 'package:e_commerce/admin/cubit/admin_cubit.dart';
 import 'package:e_commerce/app/cubit/app_cubit.dart';
+import 'package:e_commerce/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/core/routes/app_router.dart';
 import 'package:e_commerce/core/themes/dark_theme.dart';
 import 'package:e_commerce/core/themes/light_theme.dart';
+import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import '../../auth/cubit/auth_cubit.dart';
-import '../../home/cubit/home_cubit.dart';
 
 class MaterialAppClass extends StatelessWidget {
   const MaterialAppClass({super.key});
@@ -22,7 +21,7 @@ class MaterialAppClass extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()
             ..getAppDetails()
-            ..addAuthEventsListener(),
+            ..addAuthEventsListener(context),
           lazy: false,
         ),
         BlocProvider(

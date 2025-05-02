@@ -1,4 +1,5 @@
 import 'package:e_commerce/core/utils/async.dart';
+import 'package:e_commerce/core/utils/duration_extension.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:e_commerce/home/models/product.dart';
 import 'package:e_commerce/home/widgets/cart_dialog.dart';
@@ -7,20 +8,49 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuzzy/fuzzy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../core/routes/app_router.dart';
-
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   final SupabaseClient _supabase = Supabase.instance.client;
-  AsyncValue<List<Product>> products = AsyncValue.data(data: []);
+
+  // ---------------------------------- Home Pane ---------------------------------- //
+  late AsyncValue<List<Product>> products;
   List<Product>? newProducts;
+
+  Future<void> fetchProducts() async {
+    products = AsyncValue.loading();
+    emit(HomeStateChanged());
+
+    try {
+      final response = await _supabase.from('products').select('*');
+      products = AsyncValue.data(
+          data:
+              (response as List).map((e) => Product.fromProducts(e)).toList());
+      newProducts = getNewProducts();
+    } catch (exception) {
+      products = AsyncValue.error(error: exception.toString());
+    } finally {
+      emit(HomeStateChanged());
+    }
+  }
+
+  List<Product>? getNewProducts() {
+    return products.data!
+        .where(
+            (product) => product.addedAt.isAfter(DateTime.now().subtract(30.d)))
+        .toList();
+  }
+
+  static double carouselProductsNumber(double width) {
+    if (width < 768) return 1 / 1.5; // Mobile
+    if (width < 1024) return 1 / 2.5; // Tablet
+    return 1 / 3.5; // Desktop
+  }
+
+  // ---------------------------------- Cart Pane ---------------------------------- //
   AsyncValue<List<Product>>? cartProducts;
-  AsyncValue<List<Product>> searchProductsList = AsyncValue.data(data: []);
-  late Fuzzy _fuzzy;
-  final TextEditingController searchController = TextEditingController();
 
   Future<void> fetchCartItems() async {
     cartProducts = AsyncValue.loading();
@@ -42,27 +72,27 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> addToCart(Product product) async {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  Future<void> addToCart(
+      {required BuildContext context, required Product product}) async {
     try {
       await _supabase.from('cart_items').insert({
         "product_id": product.id,
         "user_id": _supabase.auth.currentUser!.id
       });
     } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+      SnackBarUtil.showErrorSnackBar(context, exception.toString());
     }
   }
 
-  Future<void> removeFromCart(Product product) async {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  Future<void> removeFromCart(
+      {required BuildContext context, required Product product}) async {
     try {
       await _supabase
           .from('cart_items')
           .delete()
           .eq(_supabase.auth.currentUser!.id, product.id);
     } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+      SnackBarUtil.showErrorSnackBar(context, exception.toString());
     }
   }
 
@@ -73,32 +103,11 @@ class HomeCubit extends Cubit<HomeState> {
         },
       );
 
-  Future<void> fetchProducts() async {
-    products = AsyncValue.loading();
-    emit(HomeStateChanged());
-
-    try {
-      final response = await _supabase.from('products').select('*');
-      products = AsyncValue.data(
-          data:
-              (response as List).map((e) => Product.fromProducts(e)).toList());
-      getNewProducts();
-    } catch (exception) {
-      products = AsyncValue.error(error: exception.toString());
-    } finally {
-      emit(HomeStateChanged());
-    }
-  }
-
-  List<Product>? getNewProducts() {
-    return products.data!
-        .where((product) => product.addedAt.isAfter(
-              DateTime.now().subtract(const Duration(days: 30)),
-            ))
-        .toList();
-  }
-
 // ---------------------------------- Search Pane ---------------------------------- //
+  AsyncValue<List<Product>> searchProductsList = AsyncValue.data(data: []);
+  final TextEditingController searchController = TextEditingController();
+  late Fuzzy _fuzzy;
+
   Future<void> initializeFuzzySearch() async {
     _fuzzy = Fuzzy<Product>(
       products.data!,
@@ -120,7 +129,7 @@ class HomeCubit extends Cubit<HomeState> {
             getter: (product) => product.category,
           ),
         ],
-        threshold: 1,
+        threshold: 0.3,
       ),
     );
     searchProductsList = AsyncValue.data(data: products.data!);
@@ -140,5 +149,11 @@ class HomeCubit extends Cubit<HomeState> {
     } finally {
       emit(SearchStateChanged());
     }
+  }
+
+  static int searchScreenColumns(double width) {
+    if (width < 768) return 1; // Mobile
+    if (width < 1024) return 2; // Tablet
+    return 3; // Desktop
   }
 }

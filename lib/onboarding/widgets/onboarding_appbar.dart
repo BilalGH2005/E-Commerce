@@ -1,7 +1,7 @@
+import 'package:e_commerce/core/utils/localization.dart';
 import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -40,9 +40,9 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
                   minimumSize: const Size(0, 0),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                onPressed: () async => await cubit.goToSignIn(),
+                onPressed: () async => await cubit.goToSignIn(context),
                 child: Text(
-                  AppLocalizations.of(context)!.skip,
+                  localization(context).skip,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ),

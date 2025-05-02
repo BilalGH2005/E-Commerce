@@ -1,12 +1,11 @@
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/cached_image.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:e_commerce/home/models/product.dart';
+import 'package:e_commerce/home/widgets/custom_button.dart';
 import 'package:e_commerce/home/widgets/product_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/reusable_widgets/reusable_cached_image.dart';
-import '../widgets/custom_button.dart';
 
 class ProductScreen extends StatelessWidget {
   final Product product;
@@ -21,7 +20,7 @@ class ProductScreen extends StatelessWidget {
           final bool isWideScreen = constraints.maxWidth > 700;
           final screenHeight = MediaQuery.sizeOf(context).height;
 
-          final imageSection = ReusableCachedImage(
+          final imageSection = CachedImage(
             imageUrl: product.imageUrl,
             height: isWideScreen ? screenHeight : screenHeight * 0.4,
             width: double.infinity,
@@ -39,7 +38,7 @@ class ProductScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  AppLocalizations.of(context)!.productDetails,
+                  localization(context).productDetails,
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall!
@@ -58,10 +57,12 @@ class ProductScreen extends StatelessWidget {
                         const Color(0xFF0B3689),
                         const Color(0xFF3F92FF)
                       ],
-                      label: AppLocalizations.of(context)!.addToCart,
+                      label: localization(context).addToCart,
                       icon: Icons.shopping_cart_outlined,
                       onPressed: () {
-                        context.read<HomeCubit>().addToCart(product);
+                        context
+                            .read<HomeCubit>()
+                            .addToCart(context: context, product: product);
                         context.read<HomeCubit>().fetchCartItems();
                       },
                     ),
@@ -71,7 +72,7 @@ class ProductScreen extends StatelessWidget {
                         const Color(0xFF31B769),
                         const Color(0xFF71F9A9)
                       ],
-                      label: AppLocalizations.of(context)!.buyNow,
+                      label: localization(context).buyNow,
                       icon: Icons.touch_app_outlined,
                       onPressed: () {},
                     ),

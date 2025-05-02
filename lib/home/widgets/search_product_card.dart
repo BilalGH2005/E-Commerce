@@ -1,7 +1,6 @@
+import 'package:e_commerce/core/widgets/cached_image.dart';
+import 'package:e_commerce/home/models/product.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/reusable_widgets/reusable_cached_image.dart';
-import '../models/product.dart';
 
 class SearchProductCard extends StatelessWidget {
   final Product product;
@@ -10,7 +9,6 @@ class SearchProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         shape: BoxShape.rectangle,
@@ -21,7 +19,7 @@ class SearchProductCard extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: ReusableCachedImage(
+            child: CachedImage(
               imageUrl: product.imageUrl,
               width: double.infinity,
               height: 100,

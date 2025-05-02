@@ -1,7 +1,6 @@
+import 'package:e_commerce/core/widgets/cached_image.dart';
+import 'package:e_commerce/home/models/product.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/reusable_widgets/reusable_cached_image.dart';
-import '../models/product.dart';
 
 class CartProduct extends StatelessWidget {
   final Product product;
@@ -24,7 +23,7 @@ class CartProduct extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ReusableCachedImage(
+                CachedImage(
                   imageUrl: product.imageUrl,
                   width: 125,
                   height: 125,

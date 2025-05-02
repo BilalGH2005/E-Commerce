@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ReusableButton extends StatelessWidget {
+class AppButton extends StatelessWidget {
   final void Function()? onPressed;
   final Widget label;
-  const ReusableButton(
-      {super.key, required this.onPressed, required this.label});
+  const AppButton({super.key, required this.onPressed, required this.label});
 
   @override
   Widget build(BuildContext context) {

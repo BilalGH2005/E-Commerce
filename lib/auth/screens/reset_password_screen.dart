@@ -1,10 +1,9 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/auth/widgets/auth_field.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/reusable_widgets/reusable_button.dart';
-import '../widgets/auth_field.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({super.key});
@@ -35,7 +34,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.forgotPasswordTitle,
+                          localization(context).forgotPasswordTitle,
                           textAlign: TextAlign.start,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
@@ -52,16 +51,16 @@ class ResetPasswordScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               AuthField(
-                                  controller: cubit.emailTextController,
-                                  label: AppLocalizations.of(context)!
-                                      .enterYourEmailAddress,
-                                  prefixIcon: Icons.email,
-                                  validator: (value) =>
-                                      AuthCubit.emailValidator(value),
-                                  onSubmitted: (_) async =>
-                                      await cubit.resetPassword(
-                                        formKey: formKey,
-                                      )),
+                                controller: cubit.emailTextController,
+                                label:
+                                    localization(context).enterYourEmailAddress,
+                                prefixIcon: Icons.email,
+                                validator: (value) => AuthCubit.emailValidator(
+                                    context: context, value: value),
+                                onSubmitted: (_) async =>
+                                    await cubit.resetPassword(
+                                        context: context, formKey: formKey),
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -78,7 +77,7 @@ class ResetPasswordScreen extends StatelessWidget {
                                           ),
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: AppLocalizations.of(context)!
+                                          text: localization(context)
                                               .passwordResetMessage,
                                           style: Theme.of(context)
                                               .textTheme
@@ -93,14 +92,13 @@ class ResetPasswordScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              ReusableButton(
+                              AppButton(
                                 onPressed: isLoading
                                     ? () async => await cubit.resetPassword(
-                                          formKey: formKey,
-                                        )
+                                        context: context, formKey: formKey)
                                     : null,
                                 label: isLoading
-                                    ? Text(AppLocalizations.of(context)!.submit,
+                                    ? Text(localization(context).submit,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium)

@@ -1,13 +1,12 @@
 import 'package:e_commerce/app/cubit/app_cubit.dart';
-import 'package:e_commerce/core/themes/const_colors.dart';
-import 'package:e_commerce/core/utils/asset_images_paths.dart';
+import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/auth/widgets/oauth_button.dart';
+import 'package:e_commerce/core/constants/assets.dart';
+import 'package:e_commerce/core/themes/app_colors.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/utils/snackbar_util.dart';
-import '../cubit/auth_cubit.dart';
-import 'oauth_button.dart';
 
 class OAuthWidget extends StatelessWidget {
   const OAuthWidget({
@@ -28,7 +27,7 @@ class OAuthWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          AppLocalizations.of(context)!.orContinueWith,
+          localization(context).orContinueWith,
           style: Theme.of(context)
               .textTheme
               .labelSmall!
@@ -38,31 +37,31 @@ class OAuthWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             OAuthButton(
-              iconPath: AssetImagesPaths.kGoogleIcon,
+              iconPath: Assets.kGoogleIcon,
               onPressed: () async =>
                   await context.read<AuthCubit>().googleOAuth(),
-              tooltip: AppLocalizations.of(context)!.googleOAuth,
+              tooltip: localization(context).googleOAuth,
             ),
             OAuthButton(
-              iconPath: AssetImagesPaths.kAppleIcon,
+              iconPath: Assets.kAppleIcon,
               onPressed: () => SnackBarUtil.showNotificationSnackBar(
-                  context, AppLocalizations.of(context)!.appleAccountsSoon),
-              tooltip: AppLocalizations.of(context)!.appleOAuth,
+                  context, localization(context).appleAccountsSoon),
+              tooltip: localization(context).appleOAuth,
               colorFilter: isDarkTheme
                   ? ColorFilter.mode(
-                      ConstColors.white,
+                      AppColors.white,
                       BlendMode.srcIn,
                     )
                   : null,
             ),
             OAuthButton(
-              iconPath: AssetImagesPaths.kFacebookIcon,
+              iconPath: Assets.kFacebookIcon,
               onPressed: () => SnackBarUtil.showNotificationSnackBar(
-                  context, AppLocalizations.of(context)!.facebookAccountsSoon),
-              tooltip: AppLocalizations.of(context)!.facebookOAuth,
+                  context, localization(context).facebookAccountsSoon),
+              tooltip: localization(context).facebookOAuth,
               colorFilter: isDarkTheme
                   ? ColorFilter.mode(
-                      ConstColors.white,
+                      AppColors.white,
                       BlendMode.srcIn,
                     )
                   : null,

@@ -4,19 +4,11 @@ import 'package:e_commerce/home/widgets/new_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class NewProductsCarousel extends StatelessWidget {
   const NewProductsCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double getItemsPerScreen() {
-      final width = MediaQuery.of(context).size.width;
-      if (width < 768) return 1.5; // Mobile
-      if (width < 1024) return 2.5; // Tablet
-      return 3.5; // Desktop
-    }
-
     final newProducts = context.read<HomeCubit>().newProducts;
     return newProducts == null
         ? const SizedBox.shrink()
@@ -52,7 +44,8 @@ class NewProductsCarousel extends StatelessWidget {
                     options: CarouselOptions(
                       height: 150,
                       autoPlay: true,
-                      viewportFraction: 1 / getItemsPerScreen(),
+                      viewportFraction: HomeCubit.carouselProductsNumber(
+                          MediaQuery.sizeOf(context).width),
                       enableInfiniteScroll: true,
                     ),
                   ),

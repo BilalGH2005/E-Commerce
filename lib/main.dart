@@ -1,8 +1,7 @@
+import 'package:e_commerce/app/widgets/material_app_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'app/widgets/material_app_class.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

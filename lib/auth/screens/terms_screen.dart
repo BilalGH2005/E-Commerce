@@ -1,6 +1,6 @@
-import 'package:e_commerce/core/reusable_widgets/reusable_back_button.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/app_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TermsScreen extends StatelessWidget {
@@ -18,9 +18,9 @@ class TermsScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ReusableBackButton(),
+                    AppBackButton(),
                     Text(
-                      AppLocalizations.of(context)!.termsAndConditions,
+                      localization(context).termsAndConditions,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(width: 24)
@@ -34,7 +34,7 @@ class TermsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Markdown(
-                  data: AppLocalizations.of(context)!.termsText,
+                  data: localization(context).termsText,
                   styleSheet: MarkdownStyleSheet(
                     p: Theme.of(context)
                         .textTheme

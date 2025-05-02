@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
-class ReusableCachedImage extends StatelessWidget {
+class CachedImage extends StatelessWidget {
   final String imageUrl;
   final double? height;
   final double? width;
-  const ReusableCachedImage({
+  const CachedImage({
     super.key,
     required this.imageUrl,
     this.width,
@@ -22,8 +23,19 @@ class ReusableCachedImage extends StatelessWidget {
         child: CachedNetworkImage(
           fit: BoxFit.cover,
           imageUrl: imageUrl,
-          placeholder: (context, url) =>
-              const Center(child: CircularProgressIndicator()),
+          placeholder: (context, url) => Center(
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
           errorWidget: (context, url, error) => Center(
             child: SizedBox(
               height: 150,

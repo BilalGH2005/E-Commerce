@@ -1,5 +1,5 @@
 import 'package:e_commerce/auth/widgets/sign_in_form.dart';
-import 'package:e_commerce/core/utils/asset_images_paths.dart';
+import 'package:e_commerce/core/constants/assets.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class SignInScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(AssetImagesPaths.kGettingStarted),
+                          image: AssetImage(Assets.kGettingStarted),
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -1,10 +1,9 @@
+import 'package:e_commerce/core/constants/assets.dart';
+import 'package:e_commerce/core/utils/localization.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../core/utils/asset_images_paths.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -21,7 +20,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AssetImagesPaths.kAppLogo,
+            Assets.kAppLogo,
             height: 31,
             width: 38,
           ),
@@ -38,7 +37,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: IconButton.filled(
-              tooltip: AppLocalizations.of(context)!.refresh,
+              tooltip: localization(context).refresh,
               style: IconButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
               ),

@@ -1,7 +1,7 @@
+import 'package:e_commerce/core/utils/localization.dart';
 import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingBottomBar extends StatelessWidget {
@@ -22,7 +22,7 @@ class OnBoardingBottomBar extends StatelessWidget {
                   ? TextButton(
                       onPressed: () async => await cubit.goToPreviousPage(),
                       child: Text(
-                        AppLocalizations.of(context)!.prev,
+                        localization(context).prev,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
@@ -49,7 +49,7 @@ class OnBoardingBottomBar extends StatelessWidget {
                   ? TextButton(
                       onPressed: () async => await cubit.goToNextPage(),
                       child: Text(
-                        AppLocalizations.of(context)!.next,
+                        localization(context).next,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
@@ -58,9 +58,9 @@ class OnBoardingBottomBar extends StatelessWidget {
                       ),
                     )
                   : TextButton(
-                      onPressed: () async => await cubit.goToSignIn(),
+                      onPressed: () async => await cubit.goToSignIn(context),
                       child: Text(
-                        AppLocalizations.of(context)!.getStarted,
+                        localization(context).getStarted,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!

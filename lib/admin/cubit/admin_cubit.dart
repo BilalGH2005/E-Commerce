@@ -1,29 +1,27 @@
+import 'package:e_commerce/admin/widgets/images_picker_sheet.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../core/routes/app_router.dart';
-import '../../core/utils/snackbar_util.dart';
-import '../widgets/images_picker_sheet.dart';
 
 part 'admin_state.dart';
 
 class AdminCubit extends Cubit<AdminState> {
   AdminCubit() : super(AdminInitial());
+
   final SupabaseClient _supabase = Supabase.instance.client;
+  final TextEditingController nameTextController = TextEditingController(),
+      descriptionTextController = TextEditingController(),
+      priceTextController = TextEditingController();
   String? selectedValue = 'Men';
-  String? imageUrl;
   int adminStatus = 0;
   List<XFile?> selectedImages = [];
 
   Future<void> insertProduct({
+    required BuildContext context,
     required GlobalKey<FormState> formKey,
-    required String name,
-    required String description,
-    required String price,
-    required String imageUrl,
   }) async {
     adminStatus = 1;
     emit(AdminStateChanged());
@@ -33,16 +31,14 @@ class AdminCubit extends Cubit<AdminState> {
       return;
     }
     formKey.currentState!.save();
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
-    if (context == null) return;
     try {
       final response = await _supabase.from('products').insert([
         {
-          'name': name,
-          'price': price,
-          'description': description,
+          'name': nameTextController.text,
+          'price': priceTextController.text,
+          'description': descriptionTextController.text,
           'category': selectedValue,
-          'image_url': imageUrl,
+          'image_url': '',
         }
       ]);
       SnackBarUtil.showSuccessfulSnackBar(context, response);
@@ -87,7 +83,8 @@ class AdminCubit extends Cubit<AdminState> {
   }
 
   Future<void> pickFromGallery() async {
-    final List<XFile> image = await ImagePicker().pickMultiImage();
+    final List<XFile> image = await ImagePicker().pickMultiImage(
+        maxWidth: 600, maxHeight: 600, limit: 5, imageQuality: 50);
     selectedImages.addAll(image);
     emit(ImagesStateChanged());
   }
@@ -102,19 +99,17 @@ class AdminCubit extends Cubit<AdminState> {
     emit(ImagesStateChanged());
   }
 
-  // ---------------------------------- Admin Validators ---------------------------------- //
-  static String? nameValidator(String? value) {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  static String? nameValidator({required BuildContext context, String? value}) {
     if (value == null || value.trim().isEmpty) {
-      return AppLocalizations.of(context!)!.nameRequired;
+      return localization(context).nameRequired;
     }
     return null;
   }
 
-  static String? priceValidator(String? value) {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  static String? priceValidator(
+      {required BuildContext context, String? value}) {
     if (value == null || value.trim().isEmpty) {
-      return AppLocalizations.of(context!)!.priceRequired;
+      return localization(context).priceRequired;
     }
     return null;
   }

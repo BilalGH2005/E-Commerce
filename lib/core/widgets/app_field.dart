@@ -1,9 +1,8 @@
+import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../app/cubit/app_cubit.dart';
-
-class ProductField extends StatelessWidget {
+class AppField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final Icon? prefixIcon;
@@ -12,7 +11,7 @@ class ProductField extends StatelessWidget {
   final int? maxLines;
   final TextInputAction? textInputAction;
   final void Function(String)? onSubmitted;
-  const ProductField({
+  const AppField({
     super.key,
     required this.controller,
     required this.label,

@@ -1,8 +1,7 @@
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/cached_image.dart';
+import 'package:e_commerce/home/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/reusable_widgets/reusable_cached_image.dart';
-import '../models/product.dart';
 
 class NewProductCard extends StatelessWidget {
   final Product product;
@@ -11,7 +10,7 @@ class NewProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Banner(
-      message: AppLocalizations.of(context)!.newProduct,
+      message: localization(context).newProduct,
       location: BannerLocation.topStart,
       child: Container(
         decoration: BoxDecoration(
@@ -23,7 +22,7 @@ class NewProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: ReusableCachedImage(
+              child: CachedImage(
                 imageUrl: product.imageUrl,
                 width: double.infinity,
               ),

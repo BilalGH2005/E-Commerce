@@ -1,7 +1,6 @@
+import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../app/cubit/app_cubit.dart';
 
 class AuthField extends StatelessWidget {
   final TextEditingController controller;

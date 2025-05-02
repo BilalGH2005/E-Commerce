@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/utils/asset_images_paths.dart';
+import 'package:e_commerce/core/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(AssetImagesPaths.kAppLogo),
+                  SvgPicture.asset(Assets.kAppLogo),
                   const SizedBox(
                     width: 10,
                   ),
@@ -30,7 +30,7 @@ class SplashScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(AssetImagesPaths.kAppLogo),
+                  SvgPicture.asset(Assets.kAppLogo),
                   const SizedBox(
                     height: 15,
                   ),

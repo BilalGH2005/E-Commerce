@@ -76,5 +76,8 @@
   "newProduct": "NEW!",
   "refresh": "Refresh",
   "noInternetConnection": "No internet connection",
-  "signedInSuccessfully":"Signed in successfully"
+  "signedInSuccessfully":"Signed in successfully",
+  "noProductsFound": "No matching products found",
+  "searchHere": "Search here...",
+  "chooseAnImage":  "Choose an image..."
 }

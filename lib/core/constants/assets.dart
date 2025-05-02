@@ -1,4 +1,4 @@
-abstract class AssetImagesPaths {
+abstract class Assets {
   static const String kAppLogo = 'assets/images/app_logo.svg';
   static const String kOnBoardingScreen1 =
       'assets/images/onboarding_screen1.svg';

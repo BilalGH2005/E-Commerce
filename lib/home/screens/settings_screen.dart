@@ -1,11 +1,10 @@
 import 'package:e_commerce/app/cubit/app_cubit.dart';
-import 'package:e_commerce/core/themes/const_colors.dart';
+import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/core/themes/app_colors.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/app_dropdown_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../auth/cubit/auth_cubit.dart';
-import '../../core/reusable_widgets/reusable_dropdown_button.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -18,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
           constraints:
               BoxConstraints(maxWidth: 768, minHeight: double.infinity),
           child: Padding(
-            padding: const EdgeInsets.only(top: 32.0, left: 8, right: 8),
+            padding: const EdgeInsets.all(12.0),
             child: BlocBuilder<AppCubit, AppState>(
               builder: (context, state) {
                 final cubit = context.read<AppCubit>();
@@ -36,19 +35,19 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                       leading: Text(
-                        AppLocalizations.of(context)!.switchAppTheme,
+                        localization(context).switchAppTheme,
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                     ),
                     ListTile(
                       leading: Text(
-                        AppLocalizations.of(context)!.chooseAppLanguage,
+                        localization(context).chooseAppLanguage,
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: ReusableDropdownButton(
+                      child: AppDropdownButton(
                         items: ['English', 'العربية'],
                         value: cubit.isArabic! ? 'العربية' : 'English',
                         onChanged: (newValue) async =>
@@ -71,11 +70,11 @@ class SettingsScreen extends StatelessWidget {
                               await context.read<AuthCubit>().signOut();
                             },
                             child: Text(
-                              AppLocalizations.of(context)!.signOut,
+                              localization(context).signOut,
                               style: Theme.of(context)
                                   .textTheme
                                   .displaySmall!
-                                  .copyWith(color: ConstColors.white),
+                                  .copyWith(color: AppColors.white),
                             ),
                           ),
                         ),

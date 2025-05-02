@@ -1,13 +1,12 @@
 import 'package:e_commerce/core/utils/async.dart';
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/widgets/app_error_widget.dart';
+import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:e_commerce/home/widgets/home_appbar.dart';
+import 'package:e_commerce/home/widgets/home_content.dart';
+import 'package:e_commerce/home/widgets/shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../core/reusable_widgets/reusable_error_widget.dart';
-import '../cubit/home_cubit.dart';
-import '../widgets/dashboard.dart';
-import '../widgets/shimmer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,11 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
           return AsyncBuilder(
             value: cubit.products,
             loading: (context) => const ShimmerWidget(),
-            data: (context, products) => Dashboard(products: products),
-            error: (context, error) => ReusableErrorWidget(
-              error: error.toString(),
-              /*error: AppLocalizations.of(context)!.somethingWentWrong,*/
-              buttonLabel: AppLocalizations.of(context)!.retry,
+            data: (context, products) => HomeContent(products: products),
+            error: (context, error) => AppErrorWidget(
+              // error: error.toString(),
+              error: localization(context).somethingWentWrong,
+              buttonLabel: localization(context).retry,
             ),
           );
         },

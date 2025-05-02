@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../core/routes/app_router.dart';
-import '../../core/utils/snackbar_util.dart';
 
 part 'auth_state.dart';
 
@@ -23,24 +21,22 @@ class AuthCubit extends Cubit<AuthState> {
   bool isPasswordObscure = true, isConfirmPasswordObscure = true;
 
   Future<void> signIn({
+    required BuildContext context,
     required GlobalKey<FormState> formKey,
   }) async {
     if (!_validateForm(formKey)) return;
-    final context = AppRouter.navigatorKey.currentContext;
     try {
       await _supabaseAuth.signInWithPassword(
         email: emailTextController.text,
         password: passwordTextController.text,
       );
-      // SnackBarUtil.showSuccessfulSnackBar(
-      //     context!, AppLocalizations.of(context)!.signedInSuccessfully);
     } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.message);
+      SnackBarUtil.showErrorSnackBar(context, exception.message);
     } on SocketException catch (_) {
       SnackBarUtil.showErrorSnackBar(
-          context!, AppLocalizations.of(context)!.noInternetConnection);
+          context, localization(context).noInternetConnection);
     } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+      SnackBarUtil.showErrorSnackBar(context, exception.toString());
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
@@ -48,10 +44,10 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signUp({
+    required BuildContext context,
     required GlobalKey<FormState> formKey,
   }) async {
     if (!_validateForm(formKey)) return;
-    final context = AppRouter.navigatorKey.currentContext;
     try {
       await _supabaseAuth.signUp(
         email: emailTextController.text,
@@ -59,16 +55,16 @@ class AuthCubit extends Cubit<AuthState> {
         emailRedirectTo: 'myapp://auth',
       );
       SnackBarUtil.showSuccessfulSnackBar(
-        context!,
-        AppLocalizations.of(context)!.checkEmailForVerification,
+        context,
+        localization(context).checkEmailForVerification,
       );
     } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.message);
+      SnackBarUtil.showErrorSnackBar(context, exception.message);
     } on SocketException catch (_) {
       SnackBarUtil.showErrorSnackBar(
-          context!, AppLocalizations.of(context)!.noInternetConnection);
+          context, localization(context).noInternetConnection);
     } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+      SnackBarUtil.showErrorSnackBar(context, exception.toString());
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
@@ -76,25 +72,25 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> resetPassword({
+    required BuildContext context,
     required GlobalKey<FormState> formKey,
   }) async {
     if (!_validateForm(formKey)) return;
-    final context = AppRouter.navigatorKey.currentContext;
     try {
       await _supabaseAuth.resetPasswordForEmail(
         emailTextController.text,
       );
       SnackBarUtil.showSuccessfulSnackBar(
-        context!,
-        AppLocalizations.of(context)!.resetPasswordEmailSent,
+        context,
+        localization(context).resetPasswordEmailSent,
       );
     } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.message);
+      SnackBarUtil.showErrorSnackBar(context, exception.message);
     } on SocketException catch (_) {
       SnackBarUtil.showErrorSnackBar(
-          context!, AppLocalizations.of(context)!.noInternetConnection);
+          context, localization(context).noInternetConnection);
     } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context!, exception.toString());
+      SnackBarUtil.showErrorSnackBar(context, exception.toString());
     } finally {
       authStatus = 0;
       emit(AuthStateChanged());
@@ -118,60 +114,57 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthStateChanged());
   }
 
-// ---------------------------------- Authentication Helpers ---------------------------------- //
   bool _validateForm(GlobalKey<FormState> formKey) {
     if (!formKey.currentState!.validate()) {
       authStatus = 0;
       emit(AuthStateChanged());
       return false;
     }
-
     formKey.currentState!.save();
     authStatus = 1;
     emit(AuthStateChanged());
     return true;
   }
 
-// ---------------------------------- Authentication Validators ---------------------------------- //
-  static String? passwordValidator(String? value) {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  static String? passwordValidator(
+      {required BuildContext context, String? value}) {
     if (value == null || value.trim().isEmpty) {
-      return AppLocalizations.of(context!)!.passwordRequired;
+      return localization(context).passwordRequired;
     }
     if (value.length < 8) {
-      return AppLocalizations.of(context!)!.passwordLength;
+      return localization(context).passwordLength;
     }
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return AppLocalizations.of(context!)!.passwordUppercase;
+      return localization(context).passwordUppercase;
     }
     if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return AppLocalizations.of(context!)!.passwordLowercase;
+      return localization(context).passwordLowercase;
     }
     if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return AppLocalizations.of(context!)!.passwordNumber;
+      return localization(context).passwordNumber;
     }
     return null;
   }
 
-  static String? emailValidator(String? value) {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
+  static String? emailValidator(
+      {required BuildContext context, String? value}) {
     if (value == null || value.trim().isEmpty) {
-      return AppLocalizations.of(context!)!.emailRequired;
+      return localization(context).emailRequired;
     }
     if (!RegExp(
             r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|io|us)$")
         .hasMatch(value)) {
-      return AppLocalizations.of(context!)!.emailInvalid;
+      return localization(context).emailInvalid;
     }
     return null;
   }
 
   static String? confirmPasswordValidator(
-      {required String? value,
+      {required BuildContext context,
+      required String? value,
       required TextEditingController passwordTextController}) {
-    final BuildContext? context = AppRouter.navigatorKey.currentContext;
     if (value != passwordTextController.text) {
-      return AppLocalizations.of(context!)!.passwordsDoNotMatch;
+      return localization(context).passwordsDoNotMatch;
     }
     return null;
   }
