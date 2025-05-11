@@ -17,7 +17,6 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isRTL = Directionality.of(context) == TextDirection.rtl;
-
     return InkWell(
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(isRTL ? 8 : 30),
@@ -69,7 +68,7 @@ class CustomButton extends StatelessWidget {
                   color: AppColors.black.withAlpha(77),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),

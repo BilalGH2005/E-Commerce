@@ -16,7 +16,7 @@ class OnBoardingScreen extends StatelessWidget {
         create: (BuildContext context) => OnBoardingCubit(),
         child: Builder(
           builder: (context) => Scaffold(
-            appBar: const OnBoardingAppBar(),
+            appBar: OnBoardingAppBar(),
             bottomNavigationBar: const OnBoardingBottomBar(),
             body: PageView(
               controller: context.watch<OnBoardingCubit>().pageController,

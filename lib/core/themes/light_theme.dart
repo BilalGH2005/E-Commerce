@@ -8,6 +8,25 @@ class LightTheme {
   ThemeData get lightTheme => ThemeData.light().copyWith(
         scaffoldBackgroundColor: AppColors.white,
         primaryColor: AppColors.lightPrimary,
+        brightness: Brightness.light,
+        inputDecorationTheme: const InputDecorationTheme().copyWith(
+          labelStyle: TextStyle(
+              fontFamily:
+                  locale.languageCode == 'ar' ? 'Tajawal' : 'Montserrat',
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColors.lightTertiaryFixed),
+          floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
+            if (states.contains(WidgetState.focused)) {
+              return const TextStyle(
+                  color: AppColors.lightPrimary, fontSize: 12);
+            }
+            return const TextStyle(
+                color: AppColors.lightTertiaryFixed, fontSize: 12);
+          }),
+          fillColor: AppColors.lightSurfaceContainer,
+          filled: true,
+        ),
         colorScheme: const ColorScheme.light().copyWith(
           primary: AppColors.lightPrimary,
           secondary: AppColors.secondary,

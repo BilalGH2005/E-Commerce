@@ -1,9 +1,10 @@
-import 'package:e_commerce/core/utils/async.dart';
 import 'package:e_commerce/core/utils/duration_extension.dart';
+import 'package:e_commerce/core/utils/responsive_builder.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:e_commerce/home/models/product.dart';
 import 'package:e_commerce/home/widgets/cart_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_async_value/async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuzzy/fuzzy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -44,9 +45,10 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   static double carouselProductsNumber(double width) {
-    if (width < 768) return 1 / 1.5; // Mobile
-    if (width < 1024) return 1 / 2.5; // Tablet
-    return 1 / 3.5; // Desktop
+    final deviceType = getDeviceType(width);
+    if (deviceType == DeviceType.mobile) return 1 / 1.5;
+    if (deviceType == DeviceType.tablet) return 1 / 2.5;
+    return 1 / 3.5;
   }
 
   // ---------------------------------- Cart Pane ---------------------------------- //
@@ -99,7 +101,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> showCartDialog(BuildContext context) async => await showDialog(
         context: context,
         builder: (context) {
-          return CartDialog();
+          return const CartDialog();
         },
       );
 
@@ -152,8 +154,9 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   static int searchScreenColumns(double width) {
-    if (width < 768) return 1; // Mobile
-    if (width < 1024) return 2; // Tablet
-    return 3; // Desktop
+    final deviceType = getDeviceType(width);
+    if (deviceType == DeviceType.mobile) return 1;
+    if (deviceType == DeviceType.tablet) return 2;
+    return 3;
   }
 }

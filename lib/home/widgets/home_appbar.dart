@@ -1,5 +1,6 @@
 import 'package:e_commerce/core/constants/assets.dart';
 import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/responsive_builder.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWideScreen = MediaQuery.sizeOf(context).width >= 768;
+    final width = MediaQuery.sizeOf(context).width;
     return AppBar(
       backgroundColor: Theme.of(context).colorScheme.surface,
       title: Row(
@@ -33,9 +34,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       actions: [
-        if (isWideScreen)
+        if (getDeviceType(width) == DeviceType.tablet)
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: IconButton.filled(
               tooltip: localization(context).refresh,
               style: IconButton.styleFrom(

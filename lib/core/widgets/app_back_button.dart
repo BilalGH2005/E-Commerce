@@ -6,14 +6,12 @@ class AppBackButton extends StatelessWidget {
   const AppBackButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      tooltip: localization(context).back,
-      onPressed: () => context.pop(),
-      icon: Icon(
-        Icons.arrow_back_ios,
-        color: Theme.of(context).colorScheme.inverseSurface,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => IconButton(
+        tooltip: localization(context).back,
+        onPressed: () => context.pop(),
+        icon: Icon(
+          Icons.arrow_back_ios,
+          color: Theme.of(context).colorScheme.inverseSurface,
+        ),
+      );
 }

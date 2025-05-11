@@ -1,5 +1,6 @@
 import 'package:e_commerce/admin/cubit/admin_cubit.dart';
 import 'package:e_commerce/admin/widgets/choosing_image_widget.dart';
+import 'package:e_commerce/core/constants/breakpoints.dart';
 import 'package:e_commerce/core/utils/localization.dart';
 import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_dropdown_button.dart';
@@ -23,8 +24,9 @@ class AdminScreen extends StatelessWidget {
           final bool isLoading = cubit.adminStatus == 0;
           return Center(
             child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxWidth: 768, minHeight: double.infinity),
+              constraints: BoxConstraints(
+                  maxWidth: Breakpoints.tabletWidth,
+                  minHeight: double.infinity),
               child: SingleChildScrollView(
                 child: Form(
                   key: formKey,
@@ -108,8 +110,7 @@ class AdminScreen extends StatelessWidget {
                               ? Text(localization(context).add,
                                   style: Theme.of(context).textTheme.bodyMedium)
                               : CircularProgressIndicator(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                         ),
                       ],

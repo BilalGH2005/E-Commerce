@@ -8,6 +8,29 @@ class DarkTheme {
   ThemeData get darkTheme => ThemeData.dark().copyWith(
         scaffoldBackgroundColor: AppColors.darkSurface,
         primaryColor: AppColors.darkPrimary,
+        brightness: Brightness.dark,
+        inputDecorationTheme: const InputDecorationTheme().copyWith(
+          labelStyle: TextStyle(
+              fontFamily:
+                  locale.languageCode == 'ar' ? 'Tajawal' : 'Montserrat',
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColors.darkTertiaryFixed),
+          floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
+            if (states.contains(WidgetState.focused)) {
+              return const TextStyle(
+                  color: AppColors.darkPrimary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300);
+            }
+            return const TextStyle(
+                color: AppColors.darkTertiaryFixed,
+                fontSize: 12,
+                fontWeight: FontWeight.w300);
+          }),
+          fillColor: AppColors.darkSurfaceContainer,
+          filled: true,
+        ),
         colorScheme: const ColorScheme.dark().copyWith(
           primary: AppColors.darkPrimary,
           secondary: AppColors.secondary,

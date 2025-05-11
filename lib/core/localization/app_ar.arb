@@ -67,9 +67,9 @@
     "productDetails": "تفاصيل المنتج",
     "buyNow": "الشراء الاّن",
     "back": "رجوع",
-    "googleOAuth": "تسجيل دخول عبر Google",
-    "appleOAuth": "تسجيل دخول عبر Apple",
-    "facebookOAuth": "تسجيل دخول عبر Facebook",
+    "googleOAuth": "أكمل عبر Google",
+    "appleOAuth": "أكمل عبر Apple",
+    "facebookOAuth": "أكمل عبر Facebook",
     "cart": "سلة التسوق",
     "addToCart": "الإضافة إلى سلة التسوق",
     "yourCartIsEmpty": "سلة التسوق فارغة",
@@ -79,5 +79,6 @@
     "signedInSuccessfully":"تم تسجيل الدخول بنجاح",
     "noProductsFound": "لا توجد منتجات مطابقة",
     "searchHere": "ابحث هنا...",
-    "chooseAnImage":  "اختر صورة..."
+    "chooseAnImage":  "اختر صورة...",
+    "newProducts": "منتجات\nجديد"
 }

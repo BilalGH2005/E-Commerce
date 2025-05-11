@@ -10,7 +10,7 @@ class TermsScreen extends StatelessWidget {
   Widget build(BuildContext context) => SafeArea(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size(double.infinity, 100),
+            preferredSize: const Size(double.infinity, 100),
             child: Container(
               color: Theme.of(context).colorScheme.surface,
               child: Padding(
@@ -18,12 +18,12 @@ class TermsScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppBackButton(),
+                    const AppBackButton(),
                     Text(
                       localization(context).termsAndConditions,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    SizedBox(width: 24)
+                    const SizedBox(width: 24)
                   ],
                 ),
               ),

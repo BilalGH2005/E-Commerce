@@ -1,26 +1,36 @@
-import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppField extends StatelessWidget {
   final TextEditingController controller;
-  final String label;
+  final String? label;
   final Icon? prefixIcon;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final int? maxLines;
   final TextInputAction? textInputAction;
+  final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
+  final bool? isObscure;
+  final Widget? suffixIcon;
+  final double borderRadius;
+  final bool? autoFocus;
+  final String? hintText;
   const AppField({
     super.key,
     required this.controller,
-    required this.label,
+    this.label,
     this.prefixIcon,
     this.validator,
     this.keyboardType,
     this.maxLines,
     this.textInputAction,
     this.onSubmitted,
+    this.onChanged,
+    this.isObscure,
+    this.suffixIcon,
+    this.borderRadius = 10,
+    this.autoFocus,
+    this.hintText,
   });
 
   @override
@@ -28,6 +38,8 @@ class AppField extends StatelessWidget {
         onTapOutside: (PointerDownEvent event) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
+        autofocus: autoFocus ?? false,
+        onChanged: onChanged,
         onFieldSubmitted: onSubmitted,
         style: Theme.of(context).textTheme.displaySmall,
         textInputAction: textInputAction,
@@ -37,42 +49,35 @@ class AppField extends StatelessWidget {
         validator: validator,
         decoration: InputDecoration(
           prefixIcon: prefixIcon,
-          fillColor: Theme.of(context).colorScheme.surfaceContainer,
           alignLabelWithHint: true,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
+              width: 1.5,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
             borderSide: BorderSide(
+              width: 1.5,
               color: Theme.of(context).colorScheme.error,
             ),
           ),
-          filled: true,
-          label: Text(
-            label,
-            style: TextStyle(
-                fontFamily: context.watch<AppCubit>().isArabic!
-                    ? 'Tajawal'
-                    : 'Montserrat',
-                fontWeight: FontWeight.w500,
-                fontSize: 12),
-          ),
+          label: label != null ? Text(label!) : null,
+          hintText: hintText,
         ),
       );
 }

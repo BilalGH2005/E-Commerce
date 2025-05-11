@@ -1,9 +1,9 @@
 import 'package:e_commerce/core/constants/screens_names.dart';
 import 'package:e_commerce/core/utils/duration_extension.dart';
+import 'package:e_commerce/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'onboarding_state.dart';
 
@@ -31,9 +31,9 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
       );
 
   Future<void> goToSignIn(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('seenOnBoarding', true);
-    context.goNamed(ScreensNames.signIn);
+    await sharedPreferences.setBool('seenOnBoarding', true);
+    print(sharedPreferences.getBool('seenOnBoarding'));
+    context.goNamed(ScreensNames.auth);
   }
 
   @override

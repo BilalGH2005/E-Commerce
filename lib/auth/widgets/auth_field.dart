@@ -7,8 +7,8 @@ class AuthField extends StatelessWidget {
   final String label;
   final IconData prefixIcon;
   final String? Function(String?) validator;
-  final bool? isObscure;
   final TextInputType? keyboardType;
+  final bool? isObscure;
   final Widget? suffixIcon;
   final TextInputAction? textInputAction;
   final void Function(String)? onSubmitted;
@@ -49,9 +49,8 @@ class AuthField extends StatelessWidget {
           label: Text(
             label,
             style: TextStyle(
-              fontFamily: context.watch<AppCubit>().isArabic!
-                  ? 'Tajawal'
-                  : 'Montserrat',
+              fontFamily:
+                  context.watch<AppCubit>().isArabic ? 'Tajawal' : 'Montserrat',
               fontWeight: FontWeight.w500,
               fontSize: 12,
             ),
@@ -61,7 +60,7 @@ class AuthField extends StatelessWidget {
               .titleSmall!
               .copyWith(color: Theme.of(context).colorScheme.error),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.tertiaryFixedDim,
             ),
@@ -73,13 +72,13 @@ class AuthField extends StatelessWidget {
             ),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.error,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.error,
             ),

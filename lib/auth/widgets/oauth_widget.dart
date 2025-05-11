@@ -22,7 +22,7 @@ class OAuthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = context.watch<AppCubit>().isDarkTheme!;
+    final isDarkTheme = context.watch<AppCubit>().isDarkTheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -48,7 +48,7 @@ class OAuthWidget extends StatelessWidget {
                   context, localization(context).appleAccountsSoon),
               tooltip: localization(context).appleOAuth,
               colorFilter: isDarkTheme
-                  ? ColorFilter.mode(
+                  ? const ColorFilter.mode(
                       AppColors.white,
                       BlendMode.srcIn,
                     )
@@ -60,7 +60,7 @@ class OAuthWidget extends StatelessWidget {
                   context, localization(context).facebookAccountsSoon),
               tooltip: localization(context).facebookOAuth,
               colorFilter: isDarkTheme
-                  ? ColorFilter.mode(
+                  ? const ColorFilter.mode(
                       AppColors.white,
                       BlendMode.srcIn,
                     )

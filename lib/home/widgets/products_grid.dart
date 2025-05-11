@@ -8,7 +8,7 @@ class ProductsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SliverAnimatedGrid(
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 164,
           mainAxisExtent: 250,
           crossAxisSpacing: 12.0,
@@ -19,7 +19,7 @@ class ProductsGrid extends StatelessWidget {
           sizeFactor: animation,
           child: FadeTransition(
             opacity: animation,
-            child: ProductCard(
+            child: ProductCardBuilder(
               product: products[index],
             ),
           ),

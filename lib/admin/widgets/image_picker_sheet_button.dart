@@ -11,21 +11,19 @@ class ImagePickerSheetButton extends StatelessWidget {
       required this.text});
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon),
-            SizedBox(height: 6),
-            Text(text, style: Theme.of(context).textTheme.displaySmall),
-          ],
+  Widget build(BuildContext context) => InkWell(
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon),
+              const SizedBox(height: 6),
+              Text(text, style: Theme.of(context).textTheme.displaySmall),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

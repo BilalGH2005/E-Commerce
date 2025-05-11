@@ -32,15 +32,17 @@ class AdminCubit extends Cubit<AdminState> {
     }
     formKey.currentState!.save();
     try {
-      final response = await _supabase.from('products').insert([
-        {
-          'name': nameTextController.text,
-          'price': priceTextController.text,
-          'description': descriptionTextController.text,
-          'category': selectedValue,
-          'image_url': '',
-        }
-      ]);
+      final response = await _supabase.from('products').insert(
+        [
+          {
+            'name': nameTextController.text,
+            'price': priceTextController.text,
+            'description': descriptionTextController.text,
+            'category': selectedValue,
+            'image_url': '',
+          }
+        ],
+      );
       SnackBarUtil.showSuccessfulSnackBar(context, response);
     } catch (exception) {
       SnackBarUtil.showErrorSnackBar(context, exception.toString());
@@ -69,7 +71,6 @@ class AdminCubit extends Cubit<AdminState> {
   //       String imageUrl = Supabase.instance.client.storage
   //           .from('products_images')
   //           .getPublicUrl(fileName);
-  //       print('Uploaded: $imageUrl');
   //     }
   //   }
   // }
@@ -91,7 +92,7 @@ class AdminCubit extends Cubit<AdminState> {
 
   Future<void> showImagePickerSheet(BuildContext context) async {
     showModalBottomSheet(
-        context: context, builder: (context) => ImagesPickerSheet());
+        context: context, builder: (context) => const ImagesPickerSheet());
   }
 
   void removeImage(XFile image) {

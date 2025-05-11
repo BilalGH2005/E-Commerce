@@ -1,82 +1,64 @@
 import 'package:e_commerce/admin/screens/admin_screen.dart';
-import 'package:e_commerce/core/constants/screens_names.dart';
+import 'package:e_commerce/app/cubit/app_cubit.dart';
 import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/responsive_builder.dart';
 import 'package:e_commerce/home/screens/home_screen.dart';
 import 'package:e_commerce/home/screens/profile_screen.dart';
 import 'package:e_commerce/home/screens/search_screen.dart';
 import 'package:e_commerce/home/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class ResponsiveBar extends StatelessWidget {
-  final Widget child;
-  const ResponsiveBar({required this.child, super.key});
+  final StatefulNavigationShell navigationShell;
+  const ResponsiveBar(this.navigationShell, {super.key});
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) {
-          return constraints.maxWidth > 768
-              ? SideBar(child: child)
-              : BottomNavBar(child: child);
-        },
+  Widget build(BuildContext context) => ResponsiveBuilder(
+        mobile: (context) => BottomNavBar(navigationShell),
+        tablet: (context) => SideBar(navigationShell),
       );
 }
 
-int _getSelectedIndex(BuildContext context) {
-  final String location = GoRouterState.of(context).uri.toString();
-  if (location == ScreensNames.home) return 0;
-  if (location == ScreensNames.search) return 1;
-  if (location == ScreensNames.admin) return 2;
-  if (location == ScreensNames.profile) return 3;
-  if (location == ScreensNames.settings) return 4;
-  return 0;
-}
-
-void _onItemSelected(int index, BuildContext context) {
-  switch (index) {
-    case 0:
-      context.goNamed(ScreensNames.home);
-      break;
-    case 1:
-      context.goNamed(ScreensNames.search);
-      break;
-    case 2:
-      context.goNamed(ScreensNames.admin);
-      break;
-    case 3:
-      context.goNamed(ScreensNames.profile);
-      break;
-    case 4:
-      context.goNamed(ScreensNames.settings);
-      break;
-  }
-}
+void onTap(index, StatefulNavigationShell navigationShell) => navigationShell
+    .goBranch(index, initialLocation: index == navigationShell.currentIndex);
 
 class BottomNavBar extends StatelessWidget {
-  final Widget child;
-  const BottomNavBar({required this.child, super.key});
+  final StatefulNavigationShell navigationShell;
+  const BottomNavBar(this.navigationShell, {super.key});
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-        child: Scaffold(
-          body: child,
-          bottomNavigationBar: PersistentTabView(
-            context,
-            controller: PersistentTabController(
-                initialIndex: _getSelectedIndex(context)),
-            screens: _buildScreens(),
-            items: _navBarItems(context),
-            navBarStyle: NavBarStyle.style15,
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            navBarHeight: 60,
-            onItemSelected: (index) => _onItemSelected(index, context),
-          ),
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Theme.of(context).colorScheme.surface,
+      statusBarIconBrightness: context.read<AppCubit>().isDarkTheme
+          ? Brightness.light
+          : Brightness.dark,
+    ));
+
+    return SafeArea(
+      child: Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: PersistentTabView(
+          context,
+          controller: PersistentTabController(
+              initialIndex: navigationShell.currentIndex),
+          screens: _buildScreens(),
+          items: _navBarItems(context),
+          navBarStyle: NavBarStyle.style15,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          navBarHeight: 60,
+          onItemSelected: (index) => onTap(index, navigationShell),
         ),
-      );
+      ),
+    );
+  }
 
   List<Widget> _buildScreens() => [
-        HomeScreen(),
+        const HomeScreen(),
         const SearchScreen(),
         AdminScreen(),
         ProfileScreen(),
@@ -137,8 +119,8 @@ class BottomNavBar extends StatelessWidget {
 }
 
 class SideBar extends StatelessWidget {
-  final Widget child;
-  const SideBar({required this.child, super.key});
+  final StatefulNavigationShell navigationShell;
+  const SideBar(this.navigationShell, {super.key});
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -159,9 +141,8 @@ class SideBar extends StatelessWidget {
                 selectedIconTheme: Theme.of(context)
                     .iconTheme
                     .copyWith(color: Theme.of(context).colorScheme.primary),
-                selectedIndex: _getSelectedIndex(context),
-                onDestinationSelected: (index) =>
-                    _onItemSelected(index, context),
+                selectedIndex: navigationShell.currentIndex,
+                onDestinationSelected: (index) => onTap(index, navigationShell),
                 minWidth: 100,
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 leading: const SizedBox(height: 24),
@@ -175,7 +156,7 @@ class SideBar extends StatelessWidget {
                     label: Text(localization(context).search),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.admin_panel_settings_outlined),
+                    icon: const Icon(Icons.admin_panel_settings_outlined),
                     label: Text(localization(context).admin),
                   ),
                   NavigationRailDestination(
@@ -192,7 +173,7 @@ class SideBar extends StatelessWidget {
                 width: 1, color: Theme.of(context).colorScheme.tertiary,
                 // thickness: 1,
               ),
-              Expanded(child: child),
+              Expanded(child: navigationShell),
             ],
           ),
         ),

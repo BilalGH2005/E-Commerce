@@ -67,9 +67,9 @@
   "productDetails": "Product Details",
   "buyNow": "Buy now",
   "back": "Back",
-  "googleOAuth": "Sign in with Google",
-  "appleOAuth": "Sign in with Apple",
-  "facebookOAuth": "Sign in with Facebook",
+  "googleOAuth": "Continue with Google",
+  "appleOAuth": "Continue with Apple",
+  "facebookOAuth": "Continue with Facebook",
   "cart": "Cart",
   "addToCart": "Add to cart",
   "yourCartIsEmpty": "Your cart is empty",
@@ -79,5 +79,6 @@
   "signedInSuccessfully":"Signed in successfully",
   "noProductsFound": "No matching products found",
   "searchHere": "Search here...",
-  "chooseAnImage":  "Choose an image..."
+  "chooseAnImage":  "Choose an image...",
+  "newProducts": "New\nProducts"
 }

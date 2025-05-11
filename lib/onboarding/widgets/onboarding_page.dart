@@ -12,7 +12,7 @@ class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 34.0, vertical: 28),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

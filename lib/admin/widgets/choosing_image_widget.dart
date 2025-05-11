@@ -16,7 +16,7 @@ class ChoosingImageWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.only(left: 8, right: 12),
+        padding: const EdgeInsets.only(left: 8, right: 12),
         width: double.infinity,
         height: 132,
         decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class ChoosingImageWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.camera_alt_outlined,
                       size: 60,
                     ),

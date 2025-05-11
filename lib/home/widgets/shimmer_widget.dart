@@ -10,7 +10,7 @@ class ShimmerWidget extends StatelessWidget {
         child: GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 5,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 164,
             mainAxisExtent: 250,
             crossAxisSpacing: 12.0,

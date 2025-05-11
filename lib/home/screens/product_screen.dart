@@ -1,4 +1,7 @@
+import 'package:e_commerce/core/constants/breakpoints.dart';
+import 'package:e_commerce/core/themes/app_colors.dart';
 import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/responsive_builder.dart';
 import 'package:e_commerce/core/widgets/cached_image.dart';
 import 'package:e_commerce/home/cubit/home_cubit.dart';
 import 'package:e_commerce/home/models/product.dart';
@@ -15,111 +18,133 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const ProductAppBar(),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final bool isWideScreen = constraints.maxWidth > 700;
-          final screenHeight = MediaQuery.sizeOf(context).height;
-
-          final imageSection = CachedImage(
-            imageUrl: product.imageUrl,
-            height: isWideScreen ? screenHeight : screenHeight * 0.4,
-            width: double.infinity,
-          );
-
-          final detailsSection = Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.name,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.inverseSurface),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  localization(context).productDetails,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  product.description,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  children: [
-                    CustomButton(
-                      colors: [
-                        const Color(0xFF0B3689),
-                        const Color(0xFF3F92FF)
-                      ],
-                      label: localization(context).addToCart,
-                      icon: Icons.shopping_cart_outlined,
-                      onPressed: () {
-                        context
-                            .read<HomeCubit>()
-                            .addToCart(context: context, product: product);
-                        context.read<HomeCubit>().fetchCartItems();
-                      },
-                    ),
-                    const SizedBox(width: 10),
-                    CustomButton(
-                      colors: [
-                        const Color(0xFF31B769),
-                        const Color(0xFF71F9A9)
-                      ],
-                      label: localization(context).buyNow,
-                      icon: Icons.touch_app_outlined,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-
-          return isWideScreen
-              ? Center(
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(maxWidth: 1000, minHeight: screenHeight),
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 5,
-                            child: detailsSection,
-                          ),
-                          const SizedBox(width: 24),
-                          Expanded(
-                            flex: 5,
-                            child: imageSection,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        imageSection,
-                        const SizedBox(height: 24),
-                        detailsSection,
-                      ],
-                    ),
-                  ),
-                );
-        },
+      body: ResponsiveBuilder(
+        mobile: (context) => _MobileLayout(product: product),
+        tablet: (context) => _TabletLayout(product: product),
       ),
+    );
+  }
+}
+
+class _MobileLayout extends StatelessWidget {
+  final Product product;
+  const _MobileLayout({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          CachedImage(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.4,
+            imageUrl: product.imageUrl,
+          ),
+          const SizedBox(height: 24),
+          _ProductDetails(product: product),
+        ],
+      ),
+    );
+  }
+}
+
+class _TabletLayout extends StatelessWidget {
+  final Product product;
+  const _TabletLayout({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: Breakpoints.desktopWidth,
+          minHeight: double.infinity,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: _ProductDetails(product: product)),
+              const SizedBox(width: 24),
+              Expanded(
+                child: CachedImage(
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageUrl: product.imageUrl,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProductDetails extends StatelessWidget {
+  final Product product;
+  const _ProductDetails({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            product.name,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.inverseSurface,
+                ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            localization(context).productDetails,
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            product.description,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: 24),
+          _ActionButtons(product: product),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionButtons extends StatelessWidget {
+  final Product product;
+  const _ActionButtons({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CustomButton(
+          colors: [AppColors.blue, AppColors.lightBlue],
+          label: localization(context).addToCart,
+          icon: Icons.shopping_cart_outlined,
+          onPressed: () => context
+              .read<HomeCubit>()
+              .addToCart(context: context, product: product),
+          // context.read<HomeCubit>().fetchCartItems();
+        ),
+        const SizedBox(width: 10),
+        CustomButton(
+          colors: [AppColors.green, AppColors.lightGreen],
+          label: localization(context).buyNow,
+          icon: Icons.touch_app_outlined,
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

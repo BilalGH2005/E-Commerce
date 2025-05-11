@@ -16,14 +16,14 @@ class HomeContent extends StatelessWidget {
         onRefresh: () async => await context.read<HomeCubit>().fetchProducts(),
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: NewProductsCarousel(),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 16),
             ),
             SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               sliver: ProductsGrid(products: products),
             ),
           ],
