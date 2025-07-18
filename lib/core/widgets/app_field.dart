@@ -12,7 +12,6 @@ class AppField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final bool? isObscure;
   final Widget? suffixIcon;
-  final double borderRadius;
   final bool? autoFocus;
   final String? hintText;
   const AppField({
@@ -28,7 +27,6 @@ class AppField extends StatelessWidget {
     this.onChanged,
     this.isObscure,
     this.suffixIcon,
-    this.borderRadius = 10,
     this.autoFocus,
     this.hintText,
   });
@@ -43,34 +41,36 @@ class AppField extends StatelessWidget {
         onFieldSubmitted: onSubmitted,
         style: Theme.of(context).textTheme.displaySmall,
         textInputAction: textInputAction,
-        maxLines: maxLines,
+        obscureText: isObscure ?? false,
+        maxLines: (isObscure ?? false) ? 1 : maxLines,
         controller: controller,
         keyboardType: keyboardType,
         validator: validator,
         decoration: InputDecoration(
           prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
           alignLabelWithHint: true,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               width: 1.5,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.tertiary,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
               width: 1.5,
               color: Theme.of(context).colorScheme.error,

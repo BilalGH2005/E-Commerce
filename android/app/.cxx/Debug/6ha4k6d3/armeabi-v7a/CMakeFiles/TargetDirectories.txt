@@ -1,0 +1,2 @@
+D:/Bilal/Projects/e_commerce/android/app/.cxx/Debug/6ha4k6d3/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Bilal/Projects/e_commerce/android/app/.cxx/Debug/6ha4k6d3/armeabi-v7a/CMakeFiles/rebuild_cache.dir

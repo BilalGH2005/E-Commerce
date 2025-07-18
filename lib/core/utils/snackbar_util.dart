@@ -1,88 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 class SnackBarUtil {
-  static void showErrorSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            Icon(
-              Icons.error,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                message,
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(color: Theme.of(context).colorScheme.surface),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  static void showError(String message) {
+    _showSnackBar(message, ToastificationType.error);
   }
 
-  static void showNotificationSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            Icon(
-              Icons.error,
-              color: Theme.of(context).colorScheme.tertiaryFixed,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                message,
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(color: Theme.of(context).colorScheme.surface),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  static void showInfo(String message) {
+    _showSnackBar(message, ToastificationType.info);
   }
 
-  static void showSuccessfulSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.inverseSurface,
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            const Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                message,
-                maxLines: 2,
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(color: Theme.of(context).colorScheme.surface),
-              ),
-            ),
-          ],
-        ),
+  static void showSuccess(String message) {
+    _showSnackBar(message, ToastificationType.success);
+  }
+
+  static void _showSnackBar(
+      String message, ToastificationType toastificationType) {
+    toastification.dismissAll();
+    toastification.show(
+      alignment: Alignment.topRight,
+      description: Text(
+        message, /*
+            style: TextStyle()
+                .copyWith(color: Theme.of(context!).colorScheme.tertiaryFixed)*/
       ),
+      type: toastificationType,
+      style: ToastificationStyle.fillColored,
+      autoCloseDuration: Duration(seconds: 3),
+      showProgressBar: true,
     );
+    // borderSide: BorderSide(
+    //   color: Theme.of(context).colorScheme.tertiary,
+    // ),
+    // backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
   }
 }

@@ -1,11 +1,11 @@
-import 'package:e_commerce/core/constants/breakpoints.dart';
+import 'package:e_commerce/core/constants/app_breakpoints.dart';
 import 'package:flutter/material.dart';
 
 enum DeviceType { mobile, tablet, desktop }
 
 DeviceType getDeviceType(double width) {
-  if (width >= Breakpoints.desktopWidth) return DeviceType.desktop;
-  if (width >= Breakpoints.tabletWidth) return DeviceType.tablet;
+  if (width >= AppBreakpoints.kDesktopWidth) return DeviceType.desktop;
+  if (width >= AppBreakpoints.kTabletWidth) return DeviceType.tablet;
   return DeviceType.mobile;
 }
 

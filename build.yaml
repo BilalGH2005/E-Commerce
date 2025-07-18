@@ -1,0 +1,6 @@
+targets:
+  $default:
+    sources:
+      - lib/shop/data/models/filtered_products_model.dart
+      - lib/shop/data/models/shop_metadata_model.dart
+      - lib/shop/data/models/product_filters.dart

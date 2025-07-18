@@ -1,52 +1,55 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:app_links/app_links.dart';
-import 'package:e_commerce/app/cubit/app_cubit.dart';
-import 'package:e_commerce/core/constants/app_links.dart';
-import 'package:e_commerce/core/constants/screens_names.dart';
-import 'package:e_commerce/core/router/app_router.dart';
+import 'package:e_commerce/auth/data/repos/auth_repo.dart';
 import 'package:e_commerce/core/utils/localization.dart';
-import 'package:e_commerce/core/utils/snackbar_util.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/constants/app_routes.dart';
+import '../../core/cubit/app_cubit.dart';
+import '../../core/router/app_router.dart';
+
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthStateCubit> {
-  AuthCubit() : super(AuthInitial());
+class AuthCubit extends Cubit<AuthCubitState> {
+  final AuthRepo authRepo;
 
-  final _supabaseAuth = Supabase.instance.client.auth;
+  AuthCubit(this.authRepo) : super(AuthInitial()) {
+    _addAuthEventsListener();
+    _addUriListener();
+  }
+
   late final StreamSubscription<AuthState> _authListener;
   late final StreamSubscription<Uri?> _uriListener;
-  final TextEditingController emailTextController = TextEditingController(),
-      passwordTextController = TextEditingController(),
-      confirmPasswordTextController = TextEditingController();
-  int authStatus = 0;
-  bool isPasswordObscure = true,
-      isConfirmPasswordObscure = true,
-      isSignIn = true;
+  final signInFormKey = GlobalKey<FormState>();
+  final signUpFormKey = GlobalKey<FormState>();
+  final forgetPasswordFormKey = GlobalKey<FormState>();
+  final resetPasswordFormKey = GlobalKey<FormState>();
+  final emailFieldController = TextEditingController();
+  final passwordFieldController = TextEditingController();
+  final confirmPasswordFieldController = TextEditingController();
+  bool isLoading = false;
 
-  StreamSubscription<AuthState> addAuthEventsListener() =>
-      _authListener = _supabaseAuth.onAuthStateChange.listen(
+  StreamSubscription<AuthState> _addAuthEventsListener() =>
+      _authListener = Supabase.instance.client.auth.onAuthStateChange.listen(
         (data) {
-          final context = rootNavigatorKey.currentContext;
+          final context = navigatorKey.currentContext;
           switch (data.event) {
             case AuthChangeEvent.signedIn:
               if (!context!.read<AppCubit>().seenGettingStarted) {
-                context.goNamed(ScreensNames.gettingStarted);
+                context.goNamed(AppRoutes.gettingStarted.name);
               } else {
-                context.goNamed(ScreensNames.home);
+                context.goNamed(AppRoutes.home.name);
               }
               break;
             case AuthChangeEvent.signedOut:
-              context!.goNamed(ScreensNames.auth);
+              context!.goNamed(AppRoutes.auth.name);
               break;
             case AuthChangeEvent.passwordRecovery:
-              context!.goNamed(ScreensNames.resetPasswordForm);
+              context!.goNamed(AppRoutes.resetPassword.name, extra: this);
               break;
             default:
               break;
@@ -54,129 +57,127 @@ class AuthCubit extends Cubit<AuthStateCubit> {
         },
       );
 
-  StreamSubscription<Uri?> addUriListener() =>
+  StreamSubscription<Uri?> _addUriListener() =>
       _uriListener = AppLinks().uriLinkStream.listen((uri) {
         // GoRouter.redirect and supabase handles the redirection
       });
 
-  void toggleAuth(BuildContext context) {
+  bool isSignIn = true;
+
+  void toggleAuth() {
     isSignIn = !isSignIn;
-    emit(AuthStateChanged());
+    emit(AuthFormChanged());
   }
 
-  Future<void> signIn({
-    required BuildContext context,
-    required GlobalKey<FormState> formKey,
-  }) async {
-    if (!_validateForm(formKey)) return;
-    try {
-      await _supabaseAuth.signInWithPassword(
-        email: emailTextController.text,
-        password: passwordTextController.text,
-      );
-    } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.message);
-    } on SocketException catch (_) {
-      SnackBarUtil.showErrorSnackBar(
-          context, localization(context).noInternetConnection);
-    } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.toString());
-    } finally {
-      authStatus = 0;
-      emit(AuthStateChanged());
-    }
-  }
+  Future<void> signInWithPassword() async {
+    if (!signInFormKey.currentState!.validate()) return;
+    isLoading = true;
+    emit(AuthLoading());
 
-  Future<void> signUp({
-    required BuildContext context,
-    required GlobalKey<FormState> formKey,
-  }) async {
-    if (!_validateForm(formKey)) return;
-    try {
-      await _supabaseAuth.signUp(
-        email: emailTextController.text,
-        password: passwordTextController.text,
-        emailRedirectTo:
-            kIsWeb ? AppDeepLinks.webRedirectLink : AppDeepLinks.mobileDeeplink,
-      );
-      SnackBarUtil.showSuccessfulSnackBar(
-        context,
-        localization(context).checkEmailForVerification,
-      );
-    } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.message);
-    } on SocketException catch (_) {
-      SnackBarUtil.showErrorSnackBar(
-          context, localization(context).noInternetConnection);
-    } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.toString());
-    } finally {
-      authStatus = 0;
-      emit(AuthStateChanged());
-    }
-  }
-
-  Future<void> resetPassword({
-    required BuildContext context,
-    required GlobalKey<FormState> formKey,
-  }) async {
-    if (!_validateForm(formKey)) return;
-    try {
-      await _supabaseAuth.resetPasswordForEmail(emailTextController.text,
-          redirectTo: kIsWeb
-              ? AppDeepLinks.webRedirectLink
-              : AppDeepLinks.mobileDeeplink);
-      SnackBarUtil.showSuccessfulSnackBar(
-        context,
-        localization(context).resetPasswordEmailSent,
-      );
-    } on AuthException catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.message);
-    } on SocketException catch (_) {
-      SnackBarUtil.showErrorSnackBar(
-          context, localization(context).noInternetConnection);
-    } catch (exception) {
-      SnackBarUtil.showErrorSnackBar(context, exception.toString());
-    } finally {
-      authStatus = 0;
-      emit(AuthStateChanged());
-    }
-  }
-
-  Future<void> googleOAuth() async {
-    await _supabaseAuth.signInWithOAuth(
-      OAuthProvider.google,
-      redirectTo:
-          kIsWeb ? AppDeepLinks.webRedirectLink : AppDeepLinks.mobileDeeplink,
-      authScreenLaunchMode:
-          kIsWeb ? LaunchMode.platformDefault : LaunchMode.externalApplication,
+    final result = await authRepo.signInWithPassword(
+      email: emailFieldController.text.trim(),
+      password: passwordFieldController.text.trim(),
     );
+
+    isLoading = false;
+
+    if (result.isData) {
+      emit(AuthSuccessSignIn());
+    } else {
+      emit(AuthFailure(errorCode: result.error!));
+    }
   }
 
-  Future<void> signOut() async {
-    await _supabaseAuth.signOut();
+  Future<void> signUp() async {
+    if (!signUpFormKey.currentState!.validate()) return;
+    isLoading = true;
+    emit(AuthLoading());
+
+    final result = await authRepo.signUp(
+        email: emailFieldController.text.trim(),
+        password: passwordFieldController.text.trim());
+
+    isLoading = false;
+
+    if (result.isData) {
+      emit(AuthSuccessSignUp());
+    } else {
+      emit(AuthFailure(errorCode: result.error!));
+    }
   }
+
+  Future<void> resetPasswordForEmail() async {
+    if (!forgetPasswordFormKey.currentState!.validate()) return;
+    isLoading = true;
+    emit(AuthLoading());
+
+    final result = await authRepo.resetPasswordForEmail(
+      email: emailFieldController.text.trim(),
+    );
+
+    isLoading = false;
+
+    if (result.isData) {
+      emit(AuthResetPasswordRequested());
+    } else {
+      emit(AuthFailure(errorCode: result.error!));
+    }
+  }
+
+  Future<void> googleSignIn() async {
+    final result = await authRepo.googleSignIn();
+
+    if (result.isData) {
+      emit(AuthSuccessSignIn());
+    } else {
+      emit(AuthFailure(errorCode: result.error!));
+    }
+  }
+
+  Future<void> updateUserPassword() async {
+    if (!resetPasswordFormKey.currentState!.validate()) return;
+
+    isLoading = true;
+    emit(AuthLoading());
+
+    final result = await authRepo.updateUserPassword(
+        newPassword: passwordFieldController.text.trim());
+
+    isLoading = false;
+
+    if (result.isData) {
+      emit(AuthResetPasswordSuccess());
+    } else {
+      emit(AuthFailure(errorCode: result.error!));
+    }
+  }
+
+  bool isPasswordFieldObscure = true;
 
   void togglePasswordObscure() {
-    isPasswordObscure = !isPasswordObscure;
-    emit(AuthStateChanged());
+    isPasswordFieldObscure = !isPasswordFieldObscure;
+    emit(AuthFormChanged());
   }
 
-  void toggleConfirmPasswordObscure() {
+  bool isConfirmPasswordObscure = true;
+
+  void toggleConfirmPasswordFieldObscure() {
     isConfirmPasswordObscure = !isConfirmPasswordObscure;
-    emit(AuthStateChanged());
+    emit(AuthFormChanged());
   }
 
-  bool _validateForm(GlobalKey<FormState> formKey) {
-    if (!formKey.currentState!.validate()) {
-      authStatus = 0;
-      emit(AuthStateChanged());
-      return false;
+// ---------------------------------- Validators ---------------------------------- //
+  static String? emailValidator(
+      {required BuildContext context, String? value}) {
+    if (value == null || value.trim().isEmpty) {
+      return localization(context).emailRequired;
     }
-    formKey.currentState!.save();
-    authStatus = 1;
-    emit(AuthStateChanged());
-    return true;
+    if (!RegExp(
+            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|io|us)$")
+        .hasMatch(value)) {
+      return localization(context).emailInvalid;
+    }
+    return null;
   }
 
   static String? passwordValidator(
@@ -199,24 +200,11 @@ class AuthCubit extends Cubit<AuthStateCubit> {
     return null;
   }
 
-  static String? emailValidator(
-      {required BuildContext context, String? value}) {
-    if (value == null || value.trim().isEmpty) {
-      return localization(context).emailRequired;
-    }
-    if (!RegExp(
-            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|io|us)$")
-        .hasMatch(value)) {
-      return localization(context).emailInvalid;
-    }
-    return null;
-  }
-
-  static String? confirmPasswordValidator(
-      {required BuildContext context,
-      required String? value,
-      required TextEditingController passwordTextController}) {
-    if (value != passwordTextController.text) {
+  String? confirmPasswordValidator({
+    required BuildContext context,
+    required String? value,
+  }) {
+    if (value != passwordFieldController.text) {
       return localization(context).passwordsDoNotMatch;
     }
     return null;
@@ -224,6 +212,9 @@ class AuthCubit extends Cubit<AuthStateCubit> {
 
   @override
   Future<void> close() {
+    emailFieldController.dispose();
+    passwordFieldController.dispose();
+    confirmPasswordFieldController.dispose();
     _authListener.cancel();
     _uriListener.cancel();
     return super.close();

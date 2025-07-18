@@ -9,9 +9,6 @@ class AppBackButton extends StatelessWidget {
   Widget build(BuildContext context) => IconButton(
         tooltip: localization(context).back,
         onPressed: () => context.pop(),
-        icon: Icon(
-          Icons.arrow_back_ios,
-          color: Theme.of(context).colorScheme.inverseSurface,
-        ),
+        icon: Icon(Icons.arrow_back_ios_new_outlined),
       );
 }
