@@ -15,14 +15,16 @@ class SnackBarUtil {
   }
 
   static void _showSnackBar(
-      String message, ToastificationType toastificationType) {
+    String message,
+    ToastificationType toastificationType,
+  ) {
     toastification.dismissAll();
     toastification.show(
       alignment: Alignment.topRight,
       description: Text(
-        message, /*
+        message /*
             style: TextStyle()
-                .copyWith(color: Theme.of(context!).colorScheme.tertiaryFixed)*/
+                .copyWith(color: colorScheme(context).tertiaryFixed)*/,
       ),
       type: toastificationType,
       style: ToastificationStyle.fillColored,
@@ -30,8 +32,8 @@ class SnackBarUtil {
       showProgressBar: true,
     );
     // borderSide: BorderSide(
-    //   color: Theme.of(context).colorScheme.tertiary,
+    //   color: colorScheme(context).tertiary,
     // ),
-    // backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+    // backgroundColor: colorScheme(context).surfaceContainer,
   }
 }

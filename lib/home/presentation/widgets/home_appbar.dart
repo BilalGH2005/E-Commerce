@@ -1,10 +1,9 @@
 import 'package:e_commerce/core/constants/app_breakpoints.dart';
-import 'package:e_commerce/core/constants/app_images.dart';
-import 'package:e_commerce/core/utils/localization.dart';
-import 'package:e_commerce/home/cubit/home_cubit.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../core/constants/assets.gen.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -16,20 +15,13 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: colorScheme(context).surface,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            AppImages.kAppLogo,
-            height: 31,
-            width: 38,
-          ),
+          SvgPicture.asset(Assets.icons.appLogo, height: 31, width: 38),
           const SizedBox(width: 5),
-          Text(
-            'E-Commerce',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          Text('Stylish', style: textTheme(context).headlineMedium),
         ],
       ),
       centerTitle: true,
@@ -40,11 +32,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: IconButton.filled(
               tooltip: localization(context).refresh,
               style: IconButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+                backgroundColor: colorScheme(context).surfaceContainer,
               ),
-              onPressed: () => context.read<HomeCubit>().initializeHome(),
+              onPressed: () {},
               icon: const Icon(Icons.refresh_outlined),
-              color: Theme.of(context).colorScheme.inverseSurface,
+              color: colorScheme(context).inverseSurface,
             ),
           ),
       ],

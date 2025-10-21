@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shop/data/models/filtered_products_model.dart';
+import '../../core/models/product.dart';
 import '../presentation/widgets/cart_dialog.dart';
 
 part 'cart_state.dart';

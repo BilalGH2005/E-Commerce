@@ -1,8 +1,9 @@
-import 'package:e_commerce/cart/cubit/cart_cubit.dart';
-import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/constants/app_routes.dart';
 
 class ProductDetailsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -13,21 +14,24 @@ class ProductDetailsAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CartCubit>();
-    final cartItemCount = cubit.cartProducts?.data?.length ?? 0;
+    // final cubit = context.read<CartCubit>();
+    // final cartItemCount = cubit.cartProducts?.data?.length ?? 0;
     return AppBar(
       leading: AppBackButton(),
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Badge(
-            label: Text(cartItemCount.toString()),
-            isLabelVisible: cartItemCount > 0,
+            // TODO: remove static values
+            label: Text(2.toString()),
+            isLabelVisible: 2 > 0,
             child: IconButton.filled(
+              style: IconButton.styleFrom(
+                backgroundColor: colorScheme(context).surfaceContainer,
+              ),
               tooltip: localization(context).cart,
-              onPressed: () async {
-                cubit.fetchCartItems();
-                await cubit.showCartDialog(context);
+              onPressed: () {
+                context.goNamed(AppRoutes.cart.name);
               },
               icon: const Icon(Icons.shopping_cart_outlined),
             ),

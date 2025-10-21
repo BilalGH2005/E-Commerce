@@ -7,18 +7,18 @@ part of 'shop_metadata_model.dart';
 // **************************************************************************
 
 ShopMetadata _$ShopMetadataFromJson(Map<String, dynamic> json) => ShopMetadata(
-      minPrice: (json['min_price'] as num).toDouble(),
-      maxPrice: (json['max_price'] as num).toDouble(),
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => SimpleCategory.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      colors: (json['colors'] as List<dynamic>)
-          .map((e) => SimpleColor.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      sizes: (json['sizes'] as List<dynamic>)
-          .map((e) => Size.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
+  minPrice: (json['min_price'] as num).toDouble(),
+  maxPrice: (json['max_price'] as num).toDouble(),
+  categories: (json['categories'] as List<dynamic>)
+      .map((e) => SimpleCategory.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  colors: (json['colors'] as List<dynamic>)
+      .map((e) => JsonColor.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  sizes: (json['sizes'] as List<dynamic>)
+      .map((e) => JsonSize.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
 Map<String, dynamic> _$ShopMetadataToJson(ShopMetadata instance) =>
     <String, dynamic>{
@@ -30,34 +30,7 @@ Map<String, dynamic> _$ShopMetadataToJson(ShopMetadata instance) =>
     };
 
 SimpleCategory _$SimpleCategoryFromJson(Map<String, dynamic> json) =>
-    SimpleCategory(
-      id: json['id'] as String,
-      name: json['name'] as String,
-    );
+    SimpleCategory(id: json['id'] as String, name: json['name'] as String);
 
 Map<String, dynamic> _$SimpleCategoryToJson(SimpleCategory instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
-
-SimpleColor _$SimpleColorFromJson(Map<String, dynamic> json) => SimpleColor(
-      id: json['id'] as String,
-      hexCode: json['hex_code'] as String,
-    );
-
-Map<String, dynamic> _$SimpleColorToJson(SimpleColor instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'hex_code': instance.hexCode,
-    };
-
-Size _$SizeFromJson(Map<String, dynamic> json) => Size(
-      id: json['id'] as String,
-      name: json['name'] as String,
-    );
-
-Map<String, dynamic> _$SizeToJson(Size instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
+    <String, dynamic>{'id': instance.id, 'name': instance.name};

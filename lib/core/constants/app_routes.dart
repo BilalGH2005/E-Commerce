@@ -11,7 +11,8 @@ enum AppRoutes {
   shop(name: 'shop', path: '/shop'),
   profile(name: 'profile', path: '/profile'),
   settings(name: 'settings', path: '/settings'),
-  productDetails(name: 'productDetails', path: '/product_details/:product_id');
+  productDetails(name: 'productDetails', path: '/product_details/:product_id'),
+  collection(name: 'collection', path: '/collection/:collection_id');
 
   const AppRoutes({required this.name, required this.path});
 

@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:e_commerce/shop/data/models/filtered_products_model.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../core/models/product.dart';
 
 abstract class CartRepo {
   Future<AsyncResult<List<Product>, void>> fetchCartItems();

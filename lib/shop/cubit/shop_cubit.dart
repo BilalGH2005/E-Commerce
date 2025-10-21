@@ -1,11 +1,11 @@
-import 'package:e_commerce/shop/data/models/filtered_products_model.dart';
 import 'package:e_commerce/shop/data/models/shop_metadata_model.dart';
 import 'package:e_commerce/shop/data/repos/shop_repo.dart';
-import 'package:e_commerce/shop/presentation/widgets/products_filters_bottom_sheet.dart';
+import 'package:e_commerce/shop/presentation/screens/products_filters_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../data/models/filtered_products_model.dart';
 import '../data/models/product_filters.dart';
 
 part 'shop_state.dart';
@@ -64,13 +64,11 @@ class ShopCubit extends Cubit<ShopState> {
         draftFilters.withoutPage() == appliedFilters.withoutPage();
 
     if (!initialGet && filtersUnchanged) return;
-
     final filters = draftFilters.copyWith(page: 1);
     filteredProducts = PaginatedAsyncValue.loading();
     emit(ShopStateChanged());
 
     final result = await shopRepo.getFilteredProducts(filters: filters);
-
     if (result.isData) {
       filteredProducts = PaginatedAsyncValue.data(data: result.data!);
       appliedFilters = filters.copyWith(page: 2);
@@ -90,8 +88,9 @@ class ShopCubit extends Cubit<ShopState> {
     isLoadingMore = true;
     emit(ShopStateChanged());
 
-    final result =
-        await shopRepo.getFilteredProducts(filters: filtersForNextPage);
+    final result = await shopRepo.getFilteredProducts(
+      filters: filtersForNextPage,
+    );
 
     if (result.isData) {
       filteredProducts = PaginatedAsyncValue.data(
@@ -111,8 +110,9 @@ class ShopCubit extends Cubit<ShopState> {
     emit(ShopStateChanged());
   }
 
-  Future<void> showProductsFiltersBottomSheet(
-      {required BuildContext context}) async {
+  Future<void> showProductsFiltersBottomSheet({
+    required BuildContext context,
+  }) async {
     await showModalBottomSheet(
       context: context,
       showDragHandle: true,
@@ -123,11 +123,9 @@ class ShopCubit extends Cubit<ShopState> {
           child: ProductsFiltersBottomSheet(),
         );
       },
-    ).then(
-      (_) {
-        getFilteredProducts();
-      },
-    );
+    ).then((_) {
+      getFilteredProducts();
+    });
   }
 
   @override

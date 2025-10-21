@@ -1,10 +1,12 @@
-import 'package:e_commerce/core/utils/localization.dart';
+// ignore_for_file: deprecated_member_use
+
 import 'package:e_commerce/core/utils/responsive_builder.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../constants/app_icons.dart';
+import '../constants/assets.gen.dart';
 
 class AppResponsiveBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -13,13 +15,16 @@ class AppResponsiveBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ResponsiveBuilder(
-        mobile: (context) => BottomNavBar(navigationShell),
-        tablet: (context) => SideBar(navigationShell),
-      );
+    mobile: (context) => BottomNavBar(navigationShell),
+    tablet: (context) => SideBar(navigationShell),
+  );
 }
 
-void onTap(index, StatefulNavigationShell navigationShell) => navigationShell
-    .goBranch(index, initialLocation: index == navigationShell.currentIndex);
+void onTap(int index, StatefulNavigationShell navigationShell) =>
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
 
 class BottomNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -37,7 +42,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     // SystemChrome.setSystemUIOverlayStyle(
     //   SystemUiOverlayStyle(
-    //     statusBarColor: Theme.of(context).colorScheme.surface,
+    //     statusBarColor: colorScheme(context).surface,
     //     statusBarIconBrightness: context.read<AppCubit>().isDarkTheme
     //         ? Brightness.light
     //         : Brightness.dark,
@@ -51,62 +56,64 @@ class BottomNavBar extends StatelessWidget {
           currentIndex: navigationShell.currentIndex,
           onTap: _onTap,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          unselectedItemColor: Theme.of(context).colorScheme.inverseSurface,
+          backgroundColor: colorScheme(context).surface,
+          selectedItemColor: colorScheme(context).primary,
+          unselectedItemColor: colorScheme(context).inverseSurface,
           selectedLabelStyle: const TextStyle(fontSize: 12),
           unselectedLabelStyle: const TextStyle(fontSize: 12),
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                AppIcons.home,
-                color: Theme.of(context).colorScheme.inverseSurface,
+                Assets.icons.home,
+                color: colorScheme(context).inverseSurface,
               ),
               activeIcon: SvgPicture.asset(
-                AppIcons.home,
-                color: Theme.of(context).colorScheme.primary,
+                Assets.icons.home,
+                color: colorScheme(context).primary,
               ),
               label: localization(context).home,
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                AppIcons.search,
-                color: Theme.of(context).colorScheme.inverseSurface,
+                Assets.icons.search,
+                color: colorScheme(context).inverseSurface,
               ),
               activeIcon: SvgPicture.asset(
-                AppIcons.search,
-                color: Theme.of(context).colorScheme.primary,
+                Assets.icons.search,
+                color: colorScheme(context).primary,
               ),
               label: localization(context).search,
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset(AppIcons.cart,
-                  color: Theme.of(context).colorScheme.inverseSurface),
+              icon: SvgPicture.asset(
+                Assets.icons.cart,
+                color: colorScheme(context).inverseSurface,
+              ),
               activeIcon: SvgPicture.asset(
-                AppIcons.cart,
-                color: Theme.of(context).colorScheme.primary,
+                Assets.icons.cart,
+                color: colorScheme(context).primary,
               ),
               label: localization(context).cart,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.person_outline,
-                color: Theme.of(context).colorScheme.inverseSurface,
+                color: colorScheme(context).inverseSurface,
               ),
               activeIcon: Icon(
                 Icons.person_outline,
-                color: Theme.of(context).colorScheme.primary,
+                color: colorScheme(context).primary,
               ),
               label: localization(context).profile,
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                AppIcons.settings,
-                color: Theme.of(context).colorScheme.inverseSurface,
+                Assets.icons.settings,
+                color: colorScheme(context).inverseSurface,
               ),
               activeIcon: SvgPicture.asset(
-                AppIcons.settings,
-                color: Theme.of(context).colorScheme.primary,
+                Assets.icons.settings,
+                color: colorScheme(context).primary,
               ),
               label: localization(context).settings,
             ),
@@ -124,58 +131,58 @@ class SideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SafeArea(
-        child: Scaffold(
-          body: Row(
-            children: [
-              NavigationRail(
-                useIndicator: false,
-                labelType: NavigationRailLabelType.all,
-                unselectedIconTheme: Theme.of(context).iconTheme.copyWith(
-                    color: Theme.of(context).colorScheme.inverseSurface),
-                unselectedLabelTextStyle:
-                    Theme.of(context).textTheme.displaySmall,
-                selectedLabelTextStyle: Theme.of(context)
-                    .textTheme
-                    .displaySmall!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-                selectedIconTheme: Theme.of(context)
-                    .iconTheme
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-                selectedIndex: navigationShell.currentIndex,
-                onDestinationSelected: (index) => onTap(index, navigationShell),
-                minWidth: 100,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                leading: const SizedBox(height: 24),
-                destinations: [
-                  NavigationRailDestination(
-                    icon: const Icon(Icons.home_outlined),
-                    label: Text(localization(context).home),
-                  ),
-                  NavigationRailDestination(
-                    icon: const Icon(Icons.search),
-                    label: Text(localization(context).search),
-                  ),
-                  NavigationRailDestination(
-                    icon: const Icon(Icons.admin_panel_settings_outlined),
-                    label: Text(localization(context).admin),
-                  ),
-                  NavigationRailDestination(
-                    icon: const Icon(Icons.person_outline),
-                    label: Text(localization(context).profile),
-                  ),
-                  NavigationRailDestination(
-                    icon: const Icon(Icons.settings_outlined),
-                    label: Text(localization(context).settings),
-                  ),
-                ],
+    child: Scaffold(
+      body: Row(
+        children: [
+          NavigationRail(
+            useIndicator: false,
+            labelType: NavigationRailLabelType.all,
+            unselectedIconTheme: Theme.of(
+              context,
+            ).iconTheme.copyWith(color: colorScheme(context).inverseSurface),
+            unselectedLabelTextStyle: textTheme(context).displaySmall,
+            selectedLabelTextStyle: textTheme(
+              context,
+            ).displaySmall!.copyWith(color: colorScheme(context).primary),
+            selectedIconTheme: Theme.of(
+              context,
+            ).iconTheme.copyWith(color: colorScheme(context).primary),
+            selectedIndex: navigationShell.currentIndex,
+            onDestinationSelected: (index) => onTap(index, navigationShell),
+            minWidth: 100,
+            backgroundColor: colorScheme(context).surface,
+            leading: const SizedBox(height: 24),
+            destinations: [
+              NavigationRailDestination(
+                icon: const Icon(Icons.home_outlined),
+                label: Text(localization(context).home),
               ),
-              VerticalDivider(
-                width: 1, color: Theme.of(context).colorScheme.tertiary,
-                // thickness: 1,
+              NavigationRailDestination(
+                icon: const Icon(Icons.search),
+                label: Text(localization(context).search),
               ),
-              Expanded(child: navigationShell),
+              NavigationRailDestination(
+                icon: const Icon(Icons.admin_panel_settings_outlined),
+                label: Text(localization(context).admin),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.person_outline),
+                label: Text(localization(context).profile),
+              ),
+              NavigationRailDestination(
+                icon: const Icon(Icons.settings_outlined),
+                label: Text(localization(context).settings),
+              ),
             ],
           ),
-        ),
-      );
+          VerticalDivider(
+            width: 1,
+            color: colorScheme(context).tertiary,
+            // thickness: 1,
+          ),
+          Expanded(child: navigationShell),
+        ],
+      ),
+    ),
+  );
 }

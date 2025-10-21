@@ -1,7 +1,7 @@
 import 'package:flutter_async_value/flutter_async_value.dart';
 
+import '../../../core/models/product.dart';
 import '../../../core/utils/auth_failure_mapper.dart';
-import '../../../shop/data/models/filtered_products_model.dart';
 
 abstract class ProfileRepo {
   Future<AsyncResult<Product, String>> getProfileData(String productId);

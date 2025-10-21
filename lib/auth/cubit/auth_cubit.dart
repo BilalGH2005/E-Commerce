@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app_links/app_links.dart';
 import 'package:e_commerce/auth/data/repos/auth_repo.dart';
-import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -33,29 +33,27 @@ class AuthCubit extends Cubit<AuthCubitState> {
   final confirmPasswordFieldController = TextEditingController();
   bool isLoading = false;
 
-  StreamSubscription<AuthState> _addAuthEventsListener() =>
-      _authListener = Supabase.instance.client.auth.onAuthStateChange.listen(
-        (data) {
-          final context = navigatorKey.currentContext;
-          switch (data.event) {
-            case AuthChangeEvent.signedIn:
-              if (!context!.read<AppCubit>().seenGettingStarted) {
-                context.goNamed(AppRoutes.gettingStarted.name);
-              } else {
-                context.goNamed(AppRoutes.home.name);
-              }
-              break;
-            case AuthChangeEvent.signedOut:
-              context!.goNamed(AppRoutes.auth.name);
-              break;
-            case AuthChangeEvent.passwordRecovery:
-              context!.goNamed(AppRoutes.resetPassword.name, extra: this);
-              break;
-            default:
-              break;
-          }
-        },
-      );
+  StreamSubscription<AuthState> _addAuthEventsListener() => _authListener =
+      Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+        final context = navigatorKey.currentContext;
+        switch (data.event) {
+          case AuthChangeEvent.signedIn:
+            if (!context!.read<AppCubit>().seenGettingStarted) {
+              context.goNamed(AppRoutes.gettingStarted.name);
+            } else {
+              context.goNamed(AppRoutes.home.name);
+            }
+            break;
+          case AuthChangeEvent.signedOut:
+            context!.goNamed(AppRoutes.auth.name);
+            break;
+          case AuthChangeEvent.passwordRecovery:
+            context!.goNamed(AppRoutes.resetPassword.name, extra: this);
+            break;
+          default:
+            break;
+        }
+      });
 
   StreamSubscription<Uri?> _addUriListener() =>
       _uriListener = AppLinks().uriLinkStream.listen((uri) {
@@ -94,8 +92,9 @@ class AuthCubit extends Cubit<AuthCubitState> {
     emit(AuthLoading());
 
     final result = await authRepo.signUp(
-        email: emailFieldController.text.trim(),
-        password: passwordFieldController.text.trim());
+      email: emailFieldController.text.trim(),
+      password: passwordFieldController.text.trim(),
+    );
 
     isLoading = false;
 
@@ -141,7 +140,8 @@ class AuthCubit extends Cubit<AuthCubitState> {
     emit(AuthLoading());
 
     final result = await authRepo.updateUserPassword(
-        newPassword: passwordFieldController.text.trim());
+      newPassword: passwordFieldController.text.trim(),
+    );
 
     isLoading = false;
 
@@ -166,22 +166,26 @@ class AuthCubit extends Cubit<AuthCubitState> {
     emit(AuthFormChanged());
   }
 
-// ---------------------------------- Validators ---------------------------------- //
-  static String? emailValidator(
-      {required BuildContext context, String? value}) {
+  // ---------------------------------- Validators ---------------------------------- //
+  static String? emailValidator({
+    required BuildContext context,
+    String? value,
+  }) {
     if (value == null || value.trim().isEmpty) {
       return localization(context).emailRequired;
     }
     if (!RegExp(
-            r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|io|us)$")
-        .hasMatch(value)) {
+      r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|io|us)$",
+    ).hasMatch(value)) {
       return localization(context).emailInvalid;
     }
     return null;
   }
 
-  static String? passwordValidator(
-      {required BuildContext context, String? value}) {
+  static String? passwordValidator({
+    required BuildContext context,
+    String? value,
+  }) {
     if (value == null || value.trim().isEmpty) {
       return localization(context).passwordRequired;
     }

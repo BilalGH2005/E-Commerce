@@ -5,4 +5,4 @@ sealed class ProductDetailsState {}
 
 final class ProductInitial extends ProductDetailsState {}
 
-final class ProductDetailsDataChangedState extends ProductDetailsState {}
+final class ProductDetailsStateChanged extends ProductDetailsState {}

@@ -116,25 +116,27 @@ class SupabaseAuthRepo implements AuthRepo {
     }
   }
 
+  final _googleSignIn = GoogleSignIn.instance;
+
   Future<void> _mobileGoogleSignIn() async {
     final webClientId = dotenv.env['GOOGLE_OAUTH_WEB_CLIENT_ID']!;
     final iosClientId = dotenv.env['GOOGLE_OAUTH_IOS_CLIENT_ID']!;
-    final GoogleSignIn googleSignIn =
-        GoogleSignIn(clientId: iosClientId, serverClientId: webClientId);
 
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final idToken = googleAuth.idToken;
-    final accessToken = googleAuth.accessToken;
+    await _googleSignIn.initialize(
+      clientId: iosClientId,
+      serverClientId: webClientId,
+    );
 
-    if (idToken == null || accessToken == null) {
+    final googleUser = await _googleSignIn.authenticate(scopeHint: ['email']);
+    final idToken = googleUser.authentication.idToken;
+
+    if (idToken == null) {
       throw Exception('Missing Google credentials');
     }
 
     await Supabase.instance.client.auth.signInWithIdToken(
       provider: OAuthProvider.google,
       idToken: idToken,
-      accessToken: accessToken,
     );
   }
 
@@ -148,8 +150,8 @@ class SupabaseAuthRepo implements AuthRepo {
   @override
   Future<AsyncResult<void, String>> signOut() async {
     try {
-      if (await GoogleSignIn().isSignedIn()) {
-        GoogleSignIn().signOut();
+      if (await _googleSignIn.attemptLightweightAuthentication() != null) {
+        await _googleSignIn.signOut();
       }
       await _supabaseAuth.signOut();
 

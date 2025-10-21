@@ -1,13 +1,13 @@
-import 'package:adaptive_grid/adaptive_grid.dart';
+import 'package:e_commerce/shop/data/models/product_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/utils/localization.dart';
+import '../../../core/utils/shortcuts.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_field.dart';
+import '../../../core/widgets/app_item_card.dart';
 import '../../cubit/shop_cubit.dart';
-import 'item_card.dart';
 
 class ShopDataView extends StatelessWidget {
   const ShopDataView({super.key});
@@ -25,11 +25,12 @@ class ShopDataView extends StatelessWidget {
                 Expanded(
                   child: AppField(
                     controller: cubit.queryFieldController,
-                    hintText: localization(context).searchHere,
+                    hintText: localization(context).searchForProducts,
                     autoFocus: true,
                     onChanged: (newValue) {
-                      final newFilters =
-                          cubit.draftFilters.copyWith(searchQuery: newValue);
+                      final newFilters = cubit.draftFilters.copyWith(
+                        searchQuery: newValue,
+                      );
                       cubit.updateFilter(newFilters);
                     },
                     textInputAction: TextInputAction.search,
@@ -48,33 +49,60 @@ class ShopDataView extends StatelessWidget {
                               );
                             },
                           ),
+                    fillColor: colorScheme(context).surface,
                   ),
                 ),
                 const SizedBox(width: 10),
-                IconButton.outlined(
-                  style: IconButton.styleFrom(
-                    fixedSize: Size(double.infinity, 46),
-                    side: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.surfaceContainer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    cubit.showProductsFiltersBottomSheet(context: context);
-                  },
-                  icon: Row(
-                    children: [
-                      const Icon(Icons.filter_list_sharp),
-                      const SizedBox(width: 5),
-                      Text(
-                        localization(context).filters,
-                        style: Theme.of(context).textTheme.displaySmall,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    IconButton.outlined(
+                      style: IconButton.styleFrom(
+                        fixedSize: Size(double.infinity, 46),
+                        side: BorderSide(color: colorScheme(context).tertiary),
+                        backgroundColor: colorScheme(context).surface,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        cubit.showProductsFiltersBottomSheet(context: context);
+                      },
+                      icon: Row(
+                        children: [
+                          const Icon(Icons.filter_list_sharp),
+                          const SizedBox(width: 5),
+                          Text(
+                            localization(context).filters,
+                            style: textTheme(context).displaySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (cubit.appliedFilters.withoutPage() !=
+                        ProductFilters.empty().withoutPage())
+                      Positioned(
+                        right: -4,
+                        top: -4,
+                        child: Container(
+                          width: 50,
+                          height: 15,
+                          decoration: BoxDecoration(
+                            color: colorScheme(context).primary,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: Center(
+                            child: Text(
+                              localization(context).applied,
+                              style: textTheme(context).titleSmall!.copyWith(
+                                color: colorScheme(context).surface,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
@@ -89,45 +117,50 @@ class ShopDataView extends StatelessWidget {
             ),
           ),
           data: (context, filteredProductModel) {
-            if (filteredProductModel.products.isEmpty) {
+            final products = filteredProductModel.products;
+
+            if (products.isEmpty) {
               return SliverFillRemaining(
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 100),
                     child: Text(
                       localization(context).noProductsFound,
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: textTheme(context).headlineMedium,
                     ),
                   ),
                 ),
               );
             }
-            return SliverList(
-              delegate: SliverChildListDelegate.fixed(
-                [
+
+            return SliverToBoxAdapter(
+              child: Column(
+                children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: AdaptiveGrid(
-                      verticalSpacing: 12,
-                      horizontalSpacing: 12,
-                      disableStretch: true,
-                      itemCount: filteredProductModel.products.length,
-                      minimumItemWidth: 150,
-                      itembuilder: (context, index) => ItemCard(
-                        filteredProductModel.products[index],
-                      ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: products.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 152 + 16,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 8,
+                            childAspectRatio: 152 / 314,
+                          ),
+                      itemBuilder: (context, index) =>
+                          AppItemCard(products[index]),
                     ),
                   ),
-                  if (!cubit.filteredProducts.data!.paginationInfo.isLastPage)
+                  if (!filteredProductModel.paginationInfo.isLastPage)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 24),
                       child: Center(
                         child: cubit.isLoadingMore
-                            ? CircularProgressIndicator()
+                            ? const CircularProgressIndicator()
                             : ElevatedButton(
-                                onPressed: () {
-                                  cubit.getMoreFilteredProducts();
-                                },
+                                onPressed: cubit.getMoreFilteredProducts,
                                 child: Text(localization(context).seeMore),
                               ),
                       ),
@@ -143,10 +176,10 @@ class ShopDataView extends StatelessWidget {
                 error: localization(context).somethingWentWrong,
                 labelWidget: Text(
                   localization(context).retry,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: textTheme(context).bodyMedium,
                 ),
                 onPressed: () async {
-                  return cubit.getFilteredProducts(initialGet: true);
+                  await cubit.getFilteredProducts(initialGet: true);
                 },
               ),
             ),

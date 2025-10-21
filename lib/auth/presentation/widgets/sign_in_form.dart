@@ -2,7 +2,7 @@ import 'package:e_commerce/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/oauth_widget.dart';
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
 import 'package:e_commerce/core/constants/app_routes.dart';
-import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +26,7 @@ Widget signInForm({required BuildContext context, Key? key}) {
                   Text(
                     localization(context).welcomeBack,
                     textAlign: TextAlign.start,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge,
+                    style: textTheme(context).bodyLarge,
                   ),
                 ],
               ),
@@ -63,21 +60,15 @@ Widget signInForm({required BuildContext context, Key? key}) {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () =>
-                        context
-                            .pushNamed(
-                            AppRoutes.forgetPassword.name, extra: cubit),
+                    onPressed: () => context.pushNamed(
+                      AppRoutes.forgetPassword.name,
+                      extra: cubit,
+                    ),
                     child: Text(
                       localization(context).forgotPassword,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(
-                          color: Theme
-                              .of(context)
-                              .colorScheme
-                              .primary),
+                      style: textTheme(context).bodySmall!.copyWith(
+                        color: colorScheme(context).primary,
+                      ),
                     ),
                   ),
                 ],
@@ -90,12 +81,9 @@ Widget signInForm({required BuildContext context, Key? key}) {
                 labelWidget: cubit.isLoading
                     ? CircularProgressIndicator()
                     : Text(
-                  localization(context).login,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyMedium,
-                ),
+                        localization(context).login,
+                        style: textTheme(context).bodyMedium,
+                      ),
               ),
               const SizedBox(height: 74),
               OAuthWidget(

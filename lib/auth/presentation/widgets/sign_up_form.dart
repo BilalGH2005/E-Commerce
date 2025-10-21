@@ -1,7 +1,7 @@
 import 'package:e_commerce/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/oauth_widget.dart';
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
-import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/gestures.dart';
@@ -28,7 +28,7 @@ Widget signUpForm({required BuildContext context, Key? key}) {
                   Text(
                     localization(context).createAnAccountTitle,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: textTheme(context).bodyLarge,
                   ),
                 ],
               ),
@@ -48,8 +48,9 @@ Widget signUpForm({required BuildContext context, Key? key}) {
                 isObscure: cubit.isPasswordFieldObscure,
                 textInputAction: TextInputAction.next,
                 suffixIcon: ObscureButton(
-                    isObscure: cubit.isPasswordFieldObscure,
-                    onPressed: () => cubit.togglePasswordObscure()),
+                  isObscure: cubit.isPasswordFieldObscure,
+                  onPressed: () => cubit.togglePasswordObscure(),
+                ),
                 label: localization(context).password,
                 prefixIcon: const Icon(Icons.lock),
                 validator: (value) =>
@@ -61,8 +62,9 @@ Widget signUpForm({required BuildContext context, Key? key}) {
                 isObscure: cubit.isConfirmPasswordObscure,
                 textInputAction: TextInputAction.done,
                 suffixIcon: ObscureButton(
-                    isObscure: cubit.isConfirmPasswordObscure,
-                    onPressed: () => cubit.toggleConfirmPasswordFieldObscure()),
+                  isObscure: cubit.isConfirmPasswordObscure,
+                  onPressed: () => cubit.toggleConfirmPasswordFieldObscure(),
+                ),
                 label: localization(context).confirmPassword,
                 prefixIcon: const Icon(Icons.lock),
                 validator: (value) => cubit.confirmPasswordValidator(
@@ -79,18 +81,16 @@ Widget signUpForm({required BuildContext context, Key? key}) {
                     child: RichText(
                       text: TextSpan(
                         text: localization(context).termsAgreement,
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).colorScheme.tertiaryFixed),
+                        style: textTheme(context).bodySmall!.copyWith(
+                          color: colorScheme(context).tertiaryFixed,
+                        ),
                         children: <TextSpan>[
                           TextSpan(
                             text: localization(context).ourTerms,
-                            style:
-                                Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryFixed,
-                                      decoration: TextDecoration.underline,
-                                    ),
+                            style: textTheme(context).bodySmall!.copyWith(
+                              color: colorScheme(context).primaryFixed,
+                              decoration: TextDecoration.underline,
+                            ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 context.pushNamed(AppRoutes.terms.name);
@@ -104,12 +104,15 @@ Widget signUpForm({required BuildContext context, Key? key}) {
               ),
               SizedBox(height: 35),
               AppButton(
-                onPressed:
-                    cubit.isLoading ? null : () async => await cubit.signUp(),
+                onPressed: cubit.isLoading
+                    ? null
+                    : () async => await cubit.signUp(),
                 labelWidget: cubit.isLoading
                     ? CircularProgressIndicator()
-                    : Text(localization(context).createAccount,
-                        style: Theme.of(context).textTheme.bodyMedium),
+                    : Text(
+                        localization(context).createAccount,
+                        style: textTheme(context).bodyMedium,
+                      ),
               ),
               const SizedBox(height: 40),
               OAuthWidget(

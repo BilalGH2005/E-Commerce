@@ -1,4 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../core/models/json_color.dart';
+import '../../../core/models/json_size.dart';
 
 part 'shop_metadata_model.g.dart';
 
@@ -14,10 +17,10 @@ class ShopMetadata {
   final List<SimpleCategory> categories;
 
   @JsonKey(name: "colors")
-  final List<SimpleColor> colors;
+  final List<JsonColor> colors;
 
   @JsonKey(name: "sizes")
-  final List<Size> sizes;
+  final List<JsonSize> sizes;
 
   ShopMetadata({
     required this.minPrice,
@@ -37,7 +40,6 @@ class ShopMetadata {
 class SimpleCategory {
   @JsonKey(name: "id")
   final String id;
-
   @JsonKey(name: "name")
   final String name;
 
@@ -47,35 +49,4 @@ class SimpleCategory {
       _$SimpleCategoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$SimpleCategoryToJson(this);
-}
-
-@JsonSerializable()
-class SimpleColor {
-  @JsonKey(name: "id")
-  final String id;
-
-  @JsonKey(name: "hex_code")
-  final String hexCode;
-
-  SimpleColor({required this.id, required this.hexCode});
-
-  factory SimpleColor.fromJson(Map<String, dynamic> json) =>
-      _$SimpleColorFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SimpleColorToJson(this);
-}
-
-@JsonSerializable()
-class Size {
-  @JsonKey(name: "id")
-  final String id;
-
-  @JsonKey(name: "name")
-  final String name;
-
-  Size({required this.id, required this.name});
-
-  factory Size.fromJson(Map<String, dynamic> json) => _$SizeFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SizeToJson(this);
 }

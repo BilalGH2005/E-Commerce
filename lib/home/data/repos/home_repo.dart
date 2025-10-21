@@ -1,43 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:e_commerce/core/utils/auth_failure_mapper.dart';
+import 'package:e_commerce/home/data/models/home_metadata_model.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../shop/data/models/filtered_products_model.dart';
 
 abstract class HomeRepo {
-  Future<AsyncResult<List<Product>, void>> getProducts({
-    required int pageSize,
-    required int currentRangeStart,
-  });
-
-  Future<AsyncResult<int, String>> getTotalProductCount();
+  Future<AsyncResult<HomeMetadataModel, String>> getHomeMetadata();
 }
 
 class SupabaseHomeRepo implements HomeRepo {
-  final SupabaseClient _supabase = Supabase.instance.client;
-
   @override
-  Future<AsyncResult<List<Product>, void>> getProducts({
-    required int pageSize,
-    required int currentRangeStart,
-  }) async {
-    try {
-      final nextPage = await _supabase
-          .from('products')
-          .select('*')
-          .range(currentRangeStart, currentRangeStart + pageSize - 1);
-      final convertedList = nextPage.map((e) => Product.fromJson(e)).toList();
-      return AsyncResult.data(data: convertedList);
-    } catch (exception) {
-      debugPrint(exception.toString());
-      return AsyncResult.error(error: null);
-    }
-  }
-
-  @override
-  Future<AsyncResult<int, String>> getTotalProductCount() async {
-    final totalProductsCount =
-        await _supabase.from('products').count(CountOption.exact);
-    return AsyncResult.data(data: totalProductsCount);
+  Future<AsyncResult<HomeMetadataModel, String>> getHomeMetadata() async {
+    return await supabaseRpc(
+      'get_home_metadata',
+      fromJson: (json) => HomeMetadataModel.fromJson(json),
+      get: true,
+    );
   }
 }

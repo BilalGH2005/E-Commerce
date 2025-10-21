@@ -9,33 +9,23 @@ import '../../core/cubit/app_cubit.dart';
 part 'onboarding_state.dart';
 
 class OnBoardingCubit extends Cubit<OnBoardingState> {
-  OnBoardingCubit() : super(OnBoardingInitial()) {
-    _addPageViewListener();
-  }
+  OnBoardingCubit() : super(OnBoardingInitial());
 
   final PageController pageController = PageController();
+
   int currentPage = 0;
 
-  void _addPageViewListener() {
-    int? lastEmittedPage;
-    pageController.addListener(() {
-      final newPage = pageController.page?.round() ?? 0;
-      if (newPage != lastEmittedPage) {
-        currentPage = newPage;
-        lastEmittedPage = newPage;
-        emit(OnBoardingPageChanged());
-      }
-    });
+  void onPageChanged(int index) {
+    currentPage = index;
+    emit(OnBoardingPageChanged());
   }
 
-  Future<void> goToPreviousPage() async =>
-      await pageController.previousPage(
+  Future<void> goToPreviousPage() async => await pageController.previousPage(
         duration: 1.s,
         curve: Curves.decelerate,
       );
 
-  Future<void> goToNextPage() async =>
-      await pageController.nextPage(
+  Future<void> goToNextPage() async => await pageController.nextPage(
         duration: 1.s,
         curve: Curves.decelerate,
       );

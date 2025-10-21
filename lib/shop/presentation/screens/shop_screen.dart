@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/shop/presentation/widgets/shop_data_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
@@ -25,15 +25,14 @@ class ShopScreen extends StatelessWidget {
           return AsyncValueBuilder(
             value: cubit.shopMetadata,
             loading: (_) => Center(child: CircularProgressIndicator()),
-            data: (_, data) => ShopDataView(),
-            error: (_, __) => AppErrorWidget(
+            data: (_, _) => ShopDataView(),
+            error: (_, _) => AppErrorWidget(
               error: localization(context).somethingWentWrong,
               labelWidget: Text(
                 localization(context).retry,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.surface),
+                style: textTheme(
+                  context,
+                ).bodyMedium!.copyWith(color: colorScheme(context).surface),
               ),
               onPressed: () async {
                 await cubit.getShopMetadata();

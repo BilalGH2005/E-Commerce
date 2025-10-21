@@ -26,38 +26,40 @@ abstract class AuthFailureMapper {
 
 Future<AsyncResult<T, String>> supabaseRpc<T>(
   String name, {
-  T Function(Map<String, dynamic> json)? fromJson,
+  T Function(dynamic json)? fromJson,
   Map<String, dynamic>? params,
-
-  /// Key: Error code in supabase, Value, the error code to return
   Map<String, String>? customErrors,
   dynamic get = false,
 }) async {
+  debugPrint('STARTED');
   try {
     final response = await Supabase.instance.client.rpc(
       name,
-      params: params,
+      params: params ?? {},
       get: get,
     );
     debugPrint("RPC RESPONSE $response");
 
-    return AsyncResult.data(data: fromJson == null ? null : fromJson(response));
+    if (fromJson != null) {
+      if (response is List && T.toString().startsWith('List<')) {
+        return AsyncResult.data(data: fromJson(response));
+      } else if (response is Map<String, dynamic>) {
+        return AsyncResult.data(data: fromJson(response));
+      } else {
+        return AsyncResult.error(error: 'invalid_response_type');
+      }
+    }
+
+    return AsyncResult.data(data: null);
   } on PostgrestException catch (exception) {
     if (exception.code == null ||
         customErrors == null ||
         !customErrors.containsKey(exception.code)) {
-      return AsyncResult.error(
-        error: 'other',
-      );
+      return AsyncResult.error(error: 'other');
     }
-
-    return AsyncResult.error(
-      error: customErrors[exception.code!]!,
-    );
+    return AsyncResult.error(error: customErrors[exception.code!]!);
   } catch (exception) {
     debugPrint('RPC Exception: $exception');
-    return AsyncResult.error(
-      error: 'other',
-    );
+    return AsyncResult.error(error: 'other');
   }
 }

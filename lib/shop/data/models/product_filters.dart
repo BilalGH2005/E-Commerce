@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'product_filters.freezed.dart';
 
 @freezed
-class ProductFilters with _$ProductFilters {
+abstract class ProductFilters with _$ProductFilters {
   const factory ProductFilters({
     String? categoryId,
     String? searchQuery,

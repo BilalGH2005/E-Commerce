@@ -1,8 +1,8 @@
 import 'package:e_commerce/core/utils/auth_failure_mapper.dart';
-import 'package:e_commerce/shop/data/models/filtered_products_model.dart';
 import 'package:e_commerce/shop/data/models/shop_metadata_model.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 
+import '../models/filtered_products_model.dart';
 import '../models/product_filters.dart';
 
 abstract class ShopRepo {
@@ -18,7 +18,7 @@ class SupabaseShopRepo implements ShopRepo {
   Future<AsyncResult<ShopMetadata, String>> getShopMetadata() async {
     return await supabaseRpc(
       'get_shop_metadata',
-      fromJson: ShopMetadata.fromJson,
+      fromJson: (json) => ShopMetadata.fromJson(json),
     );
   }
 
@@ -26,15 +26,6 @@ class SupabaseShopRepo implements ShopRepo {
   Future<AsyncResult<FilteredProductsModel, String>> getFilteredProducts({
     required ProductFilters filters,
   }) async {
-    print('Filters:');
-    print('  page: ${filters.page}');
-    print('  searchQuery: ${filters.searchQuery}');
-    print('  categoryId: ${filters.categoryId}');
-    print('  colorId: ${filters.colorId}');
-    print('  sizeId: ${filters.sizeId}');
-    print(
-        '  priceRange: ${filters.priceRange?.start} - ${filters.priceRange?.end}');
-
     return await supabaseRpc(
       'get_filtered_products',
       params: {
@@ -48,7 +39,7 @@ class SupabaseShopRepo implements ShopRepo {
           'max_price': filters.priceRange!.end,
         },
       },
-      fromJson: FilteredProductsModel.fromJson,
+      fromJson: (json) => FilteredProductsModel.fromJson(json),
       get: true,
     );
   }

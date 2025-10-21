@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/utils/localization.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,8 +7,8 @@ class AppBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton(
-        tooltip: localization(context).back,
-        onPressed: () => context.pop(),
-        icon: Icon(Icons.arrow_back_ios_new_outlined),
-      );
+    tooltip: localization(context).back,
+    onPressed: () => context.pop(),
+    icon: Icon(Icons.arrow_back_ios_new_outlined),
+  );
 }

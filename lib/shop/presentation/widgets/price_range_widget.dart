@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/utils/localization.dart';
+import '../../../core/utils/shortcuts.dart';
 import '../../cubit/shop_cubit.dart';
 
 class PriceRangeWidget extends StatelessWidget {
@@ -16,7 +16,7 @@ class PriceRangeWidget extends StatelessWidget {
       children: [
         Text(
           localization(context).priceRange,
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: textTheme(context).headlineMedium,
         ),
         SizedBox(height: 5),
         RangeSlider(
@@ -33,11 +33,13 @@ class PriceRangeWidget extends StatelessWidget {
           min: shopMetadata.minPrice,
           max: shopMetadata.maxPrice,
           divisions: (shopMetadata.maxPrice - shopMetadata.minPrice).round(),
-          values: cubit.draftFilters.priceRange ??
+          values:
+              cubit.draftFilters.priceRange ??
               RangeValues(shopMetadata.minPrice, shopMetadata.maxPrice),
           onChanged: (newRange) {
-            final newFilters =
-                cubit.draftFilters.copyWith(priceRange: newRange);
+            final newFilters = cubit.draftFilters.copyWith(
+              priceRange: newRange,
+            );
             cubit.updateFilter(newFilters);
           },
         ),
@@ -46,12 +48,12 @@ class PriceRangeWidget extends StatelessWidget {
           children: [
             Text(
               '\$${shopMetadata.minPrice.floor().toString()}',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: textTheme(context).headlineMedium,
             ),
             Text(
               '\$${shopMetadata.maxPrice.ceil().toString()}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            )
+              style: textTheme(context).headlineMedium,
+            ),
           ],
         ),
       ],
