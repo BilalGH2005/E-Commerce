@@ -2,9 +2,9 @@
 
 ## 📌 Project
 
-**Stylish**
-Is a Flutter e-commerce app (portfolio project) built with Flutter + Supabase. Clean UI for
-browsing, filtering and buying clothes.
+**Stylish**  
+is a Flutter e-commerce app (portfolio project) built with Flutter + Supabase. Clean UI for
+browsing, filtering, and buying clothes.
 
 ---
 
@@ -18,66 +18,63 @@ integrates features such as authentication, payment flows, and product managemen
 
 ## 🖼 App Screenshots
 
-<p align="center">
-  <img src="assets/readme/auth_screen_1.jpg" alt="auth_screen_1" width="45%" style="border-radius:8px; margin-right:4px;">
-  <img src="assets/readme/auth_screen_2.jpg" alt="auth_screen_2" width="45%" style="border-radius:8px;">
-</p>
+<div align="center" style="display:flex; flex-direction:column; width:100%;">
 
+  <!-- Onboarding Screens -->
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/onboarding_screen_1.jpg" alt="onboarding_screen_1" style="width:49%; border-radius:8px;">
+    <img src="assets/readme/onboarding_screen_2.jpg" alt="onboarding_screen_2" style="width:49%; border-radius:8px;">
+  </div>
+  <p><b>OnBoarding</b><br>A smooth and interactive onboarding experience that guides users through the app’s main features.</p>
 
-**Authentication**
-Simple, focused login UI with email/password fields and a clear way to sign in.
+  <hr style="height:2px; background:#333; border:none;">
 
----
+  <!-- Authentication Screens -->
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/auth_screen_1.jpg" alt="auth_screen_1" style="width:49%; border-radius:8px;">
+    <img src="assets/readme/auth_screen_2.jpg" alt="auth_screen_2" style="width:49%; border-radius:8px;">
+  </div>
+  <p><b>Authentication</b><br>Simple, focused login UI with email/password fields and a clear way to sign in.</p>
 
-<p align="center">
-  <img src="assets/readme/home_screen_1.jpg" alt="home_screen_1" width="45%" style="border-radius:8px; margin-right:4px;">
-  <img src="assets/readme/home_screen_2.jpg" alt="home_screen_2" width="45%" style="border-radius:8px;">
-</p>
+  <hr style="height:2px; background:#333; border:none;">
 
-<p align="center">
-  <img src="assets/readme/home_screen_3.jpg" alt="home_screen_3" width="45%" style="border-radius:8px; margin-right:4px;">
-  <img src="assets/readme/home_screen_4.jpg" alt="home_screen_4" width="45%" style="border-radius:8px;">
-</p>
+  <!-- Home Screens -->
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/home_screen_1.jpg" alt="home_screen_1" style="width:49%; border-radius:8px;">
+    <img src="assets/readme/home_screen_2.jpg" alt="home_screen_2" style="width:49%; border-radius:8px;">
+  </div>
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/home_screen_3.jpg" alt="home_screen_3" style="width:49%; border-radius:8px;">
+    <img src="assets/readme/home_screen_4.jpg" alt="home_screen_4" style="width:49%; border-radius:8px;">
+  </div>
+  <p><b>Home</b><br>Big promotional header that highlights deals, seasonal banners, or featured collections.</p>
 
+  <hr style="height:2px; background:#333; border:none;">
 
-**Home**
-Big promotional header that highlights deals, seasonal banners, or featured collections.
+  <!-- Shop Screens -->
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/shop_screen_1.jpg" alt="shop_screen_1" style="width:49%; border-radius:8px;">
+    <img src="assets/readme/shop_screen_2.jpg" alt="shop_screen_2" style="width:49%; border-radius:8px;">
+  </div>
+  <p><b>Shop — Product Listing</b><br>Grid/list of products with thumbnails, short titles, and prices.</p>
 
----
+  <hr style="height:2px; background:#333; border:none;">
 
-<p align="center">
-  <img src="assets/readme/settings_screen.jpg" alt="settings_screen" width="360" style="border-radius:8px;">
-</p>
+  <!-- Product Details -->
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/product_details_1.jpg" alt="product_details_1" style="width:49%; border-radius:8px;">
+  </div>
+  <p><b>Product Details</b><br>Full product page with images, specs, price, variants, and add-to-cart CTA.</p>
 
-**Settings / Account**
-User profile, preferences, theme options, and logout — all in one tidy settings screen.
+  <hr style="height:2px; background:#333; border:none;">
 
----
+  <!-- Settings / Account -->
+  <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
+    <img src="assets/readme/settings_screen.jpg" alt="settings_screen" style="width:49%; border-radius:8px;">
+  </div>
+  <p><b>Settings / Account</b><br>User profile, preferences, theme options, and logout — all in one tidy settings screen.</p>
 
-<p align="center">
-  <img src="assets/readme/shop_screen_1.jpg" alt="shop_screen_1" width="45%" style="border-radius:8px; margin-right:4px;">
-  <img src="assets/readme/shop_screen_2.jpg" alt="shop_screen_2" width="45%" style="border-radius:8px;">
-</p>
-
-
-**Shop — Product Listing**
-Grid/list of products with thumbnails, short titles and prices.
-
----
-
-<p align="center">
-  <img src="assets/readme/onboarding_screen_1.jpg" alt="onboarding_screen_1" width="45%" style="border-radius:8px; margin-right:4px;">
-  <img src="assets/readme/onboarding_screen_2.jpg" alt="onboarding_screen_2" width="45%" style="border-radius:8px;">
-</p>
-
----
-
-<p align="center">
-  <img src="assets/readme/product_details_1.jpg" alt="product_details_1" width="360" style="border-radius:8px;">
-</p>
-
-**Product Details**
-Full product page with images, specs, price, variants and add-to-cart CTA.
+</div>
 
 ---
 
@@ -104,6 +101,5 @@ Full product page with images, specs, price, variants and add-to-cart CTA.
 
 Clone the repository:
 
-   ```bash
-   git clone https://gitlab.com/bilalgh2005@gmail.com/e_commerce.git
-   ```
+```bash
+git clone https://gitlab.com/bilalgh2005@gmail.com/e_commerce.git

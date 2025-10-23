@@ -24,8 +24,8 @@ Future<void> main() async {
   await _initDependencies();
   await _initEnv();
   await _initSupabase();
-  runApp(const MyApp());
-  // runApp(DevicePreview(builder: (context) => const MyApp()));
+  // runApp(const MyApp());
+  runApp(DevicePreview(builder: (context) => const MyApp()));
   _removeNativeSplashScreen();
 }
 
