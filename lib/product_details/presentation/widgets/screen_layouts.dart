@@ -91,7 +91,7 @@ class TabletLayout extends StatelessWidget {
                 maxCrossAxisExtent: 200,
                 mainAxisSpacing: 12,
                 crossAxisSpacing: 12,
-                childAspectRatio: 0.75,
+                childAspectRatio: 152 / 192,
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) => AppItemCard(product.similarProducts[index]),
