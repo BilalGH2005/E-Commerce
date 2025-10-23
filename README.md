@@ -18,14 +18,14 @@ integrates features such as authentication, payment flows, and product managemen
 
 ## 🖼 App Screenshots
 
-<div align="center" style="display:flex; flex-direction:column; width:100%;">
+<div style="display:flex; flex-direction:column; width:100%;">
 
   <!-- Onboarding Screens -->
   <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
     <img src="assets/readme/onboarding_screen_1.jpg" alt="onboarding_screen_1" style="width:49%; border-radius:8px;">
     <img src="assets/readme/onboarding_screen_2.jpg" alt="onboarding_screen_2" style="width:49%; border-radius:8px;">
   </div>
-  <p><b>OnBoarding</b><br>A smooth and interactive onboarding experience that guides users through the app’s main features.</p>
+  <p style="text-align:left;"><b>OnBoarding</b><br>A smooth and interactive onboarding experience that guides users through the app’s main features.</p>
 
   <hr style="height:2px; background:#333; border:none;">
 
@@ -34,7 +34,7 @@ integrates features such as authentication, payment flows, and product managemen
     <img src="assets/readme/auth_screen_1.jpg" alt="auth_screen_1" style="width:49%; border-radius:8px;">
     <img src="assets/readme/auth_screen_2.jpg" alt="auth_screen_2" style="width:49%; border-radius:8px;">
   </div>
-  <p><b>Authentication</b><br>Simple, focused login UI with email/password fields and a clear way to sign in.</p>
+  <p style="text-align:left;"><b>Authentication</b><br>Simple, focused login UI with email/password fields and a clear way to sign in.</p>
 
   <hr style="height:2px; background:#333; border:none;">
 
@@ -47,7 +47,7 @@ integrates features such as authentication, payment flows, and product managemen
     <img src="assets/readme/home_screen_3.jpg" alt="home_screen_3" style="width:49%; border-radius:8px;">
     <img src="assets/readme/home_screen_4.jpg" alt="home_screen_4" style="width:49%; border-radius:8px;">
   </div>
-  <p><b>Home</b><br>Big promotional header that highlights deals, seasonal banners, or featured collections.</p>
+  <p style="text-align:left;"><b>Home</b><br>Highlights deals, seasonal banners, or featured collections.</p>
 
   <hr style="height:2px; background:#333; border:none;">
 
@@ -56,7 +56,7 @@ integrates features such as authentication, payment flows, and product managemen
     <img src="assets/readme/shop_screen_1.jpg" alt="shop_screen_1" style="width:49%; border-radius:8px;">
     <img src="assets/readme/shop_screen_2.jpg" alt="shop_screen_2" style="width:49%; border-radius:8px;">
   </div>
-  <p><b>Shop — Product Listing</b><br>Grid/list of products with thumbnails, short titles, and prices.</p>
+  <p style="text-align:left;"><b>Shop — Product Listing</b><br>Grid/list of products with thumbnails, short titles, and prices.</p>
 
   <hr style="height:2px; background:#333; border:none;">
 
@@ -64,7 +64,7 @@ integrates features such as authentication, payment flows, and product managemen
   <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
     <img src="assets/readme/product_details_1.jpg" alt="product_details_1" style="width:49%; border-radius:8px;">
   </div>
-  <p><b>Product Details</b><br>Full product page with images, specs, price, variants, and add-to-cart CTA.</p>
+  <p style="text-align:left;"><b>Product Details</b><br>Full product page with images, specs, price, variants, and add-to-cart CTA.</p>
 
   <hr style="height:2px; background:#333; border:none;">
 
@@ -72,7 +72,7 @@ integrates features such as authentication, payment flows, and product managemen
   <div style="display:flex; justify-content:center; gap:1%; margin-bottom:8px;">
     <img src="assets/readme/settings_screen.jpg" alt="settings_screen" style="width:49%; border-radius:8px;">
   </div>
-  <p><b>Settings / Account</b><br>User profile, preferences, theme options, and logout — all in one tidy settings screen.</p>
+  <p style="text-align:left;"><b>Settings / Account</b><br>User profile, preferences, theme options, and logout — all in one tidy settings screen.</p>
 
 </div>
 
@@ -83,8 +83,6 @@ integrates features such as authentication, payment flows, and product managemen
 * User Authentication (Sign Up, Login, Logout, Forgot password)
 * Product Listing and Search
 * Filters (category, price, color, size)
-* Cart and Checkout flows
-* Blog / Inspiration pages (optional)
 
 ---
 
