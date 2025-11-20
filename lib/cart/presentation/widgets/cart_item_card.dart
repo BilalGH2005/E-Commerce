@@ -110,6 +110,9 @@ class CartItemCard extends StatelessWidget {
                                           fontWeight: FontWeight.w500,
                                           decoration:
                                               TextDecoration.lineThrough,
+                                          decorationThickness: isRTL
+                                              ? 10
+                                              : null,
                                         ),
                                   ),
                                 ],

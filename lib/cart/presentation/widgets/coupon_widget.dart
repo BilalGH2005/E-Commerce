@@ -30,7 +30,7 @@ class CouponWidget extends StatelessWidget {
           ? Row(
               children: [
                 Chip(
-                  key: ValueKey('coupon'),
+                  key: ValueKey('Coupon'),
                   color: WidgetStatePropertyAll(colorScheme(context).surface),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.all(Radius.circular(4)),
@@ -53,7 +53,7 @@ class CouponWidget extends StatelessWidget {
           : Form(
               key: cubit.formKey,
               child: AppField(
-                key: ValueKey('appField'),
+                key: ValueKey('AppField'),
                 validator: (value) => CartCubit.couponFieldValidator(
                   context: context,
                   value: value,

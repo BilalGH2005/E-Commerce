@@ -1,12 +1,14 @@
 import 'package:e_commerce/core/constants/app_colors.dart';
+import 'package:e_commerce/core/widgets/app_products_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../../core/constants/assets.gen.dart';
 import '../../../core/utils/shortcuts.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_field.dart';
-import '../../../core/widgets/app_item_card.dart';
 import '../../models/product_filters.dart';
 import '../controllers/shop_cubit.dart';
 
@@ -39,7 +41,14 @@ class ShopDataView extends StatelessWidget {
                     onSubmitted: (_) {
                       cubit.getFilteredProducts();
                     },
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: SvgPicture.asset(
+                      Assets.icons.search,
+                      fit: BoxFit.scaleDown,
+                      colorFilter: ColorFilter.mode(
+                        colorScheme(context).inverseSurface,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                     suffixIcon: cubit.isQueryFieldEmpty
                         ? null
                         : IconButton(
@@ -72,7 +81,14 @@ class ShopDataView extends StatelessWidget {
                       },
                       icon: Row(
                         children: [
-                          const Icon(Icons.filter_list_sharp),
+                          SvgPicture.asset(
+                            Assets.icons.filters,
+                            fit: BoxFit.scaleDown,
+                            colorFilter: ColorFilter.mode(
+                              colorScheme(context).tertiaryFixed,
+                              BlendMode.srcIn,
+                            ),
+                          ),
                           const SizedBox(width: 5),
                           Text(
                             localization(context).filters,
@@ -141,19 +157,11 @@ class ShopDataView extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: GridView.builder(
+                    child: AppProductsGridView(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: products.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 152 + 16,
-                            mainAxisSpacing: 16,
-                            crossAxisSpacing: 8,
-                            childAspectRatio: 152 / 314,
-                          ),
-                      itemBuilder: (context, index) =>
-                          AppItemCard(products[index]),
+                      products: products,
                     ),
                   ),
                   if (!filteredProductModel.paginationInfo.isLastPage)

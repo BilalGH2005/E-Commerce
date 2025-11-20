@@ -12,32 +12,34 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          final cubit = context.read<HomeCubit>();
-          return AsyncValueBuilder(
-            value: cubit.homeMetadataModel,
-            loading: (_) => Center(child: CircularProgressIndicator()),
-            data: (_, homeMetaDataModel) {
-              return HomeDataView(homeMetaDataModel: homeMetaDataModel);
-            },
-            error: (_, _) => Center(
-              child: AppErrorWidget(
-                error: localization(context).somethingWentWrong,
-                labelWidget: Text(
-                  localization(context).retry,
-                  style: textTheme(
-                    context,
-                  ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+    return SafeArea(
+      child: Scaffold(
+        body: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            final cubit = context.read<HomeCubit>();
+            return AsyncValueBuilder(
+              value: cubit.homeMetadataModel,
+              loading: (_) => Center(child: CircularProgressIndicator()),
+              data: (_, homeMetaDataModel) {
+                return HomeDataView(homeMetaDataModel: homeMetaDataModel);
+              },
+              error: (_, _) => Center(
+                child: AppErrorWidget(
+                  error: localization(context).somethingWentWrong,
+                  labelWidget: Text(
+                    localization(context).retry,
+                    style: textTheme(
+                      context,
+                    ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+                  ),
+                  onPressed: () async {
+                    await cubit.getHomeMetadata();
+                  },
                 ),
-                onPressed: () async {
-                  await cubit.getHomeMetadata();
-                },
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

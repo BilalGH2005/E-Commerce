@@ -8,6 +8,8 @@ class AppProductsGridView extends StatelessWidget {
   final int itemCount;
   final List<ProductPreview> products;
   final EdgeInsets padding;
+  final ScrollPhysics? physics;
+  final bool shrinkWrap;
   final bool _isSliver;
 
   const AppProductsGridView.sliver({
@@ -15,62 +17,64 @@ class AppProductsGridView extends StatelessWidget {
     required this.itemCount,
     required this.products,
   }) : _isSliver = true,
+       shrinkWrap = false,
+       physics = null,
        padding = EdgeInsets.zero;
 
   const AppProductsGridView({
     super.key,
     required this.itemCount,
     required this.products,
+    this.physics,
+    this.shrinkWrap = false,
     this.padding = const EdgeInsets.all(10),
   }) : _isSliver = false;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.widthOf(context);
-
-    final delegate = SliverGridDelegateWithMaxCrossAxisExtent(
-      maxCrossAxisExtent: getMaxCrossAxisExtent(width),
-      crossAxisSpacing: getCrossAxisSpacing(width),
-      mainAxisSpacing: getMainAxisSpacing(width),
-      childAspectRatio: 45 / 100,
-    );
     if (_isSliver) {
       return SliverGrid.builder(
-        gridDelegate: delegate,
+        gridDelegate: getGridDelegate(width),
         itemCount: itemCount,
         itemBuilder: (context, index) => AppItemCard(products[index]),
       );
     }
 
     return GridView.builder(
+      shrinkWrap: shrinkWrap,
+      physics: physics,
       padding: padding,
-      gridDelegate: delegate,
+      gridDelegate: getGridDelegate(width),
       itemCount: itemCount,
       itemBuilder: (context, index) => AppItemCard(products[index]),
     );
   }
 
-  static double getScreenPadding(double width) {
-    if (width >= AppBreakpoints.kDesktopWidth) return 160;
-    if (width >= AppBreakpoints.kTabletWidth) return 80;
-    return 32;
-  }
-
-  static double getMaxCrossAxisExtent(double width) {
-    if (width >= AppBreakpoints.kDesktopWidth) return 250;
-    if (width >= AppBreakpoints.kTabletWidth) return 225;
-    return 200;
-  }
-
-  static double getMainAxisSpacing(double width) {
-    if (width >= AppBreakpoints.kDesktopWidth) return 48;
-    if (width >= AppBreakpoints.kTabletWidth) return 32;
-    return 16;
-  }
-
-  static double getCrossAxisSpacing(double width) {
-    if (width >= AppBreakpoints.kDesktopWidth) return 24;
-    if (width >= AppBreakpoints.kTabletWidth) return 16;
-    return 8;
+  static SliverGridDelegateWithMaxCrossAxisExtent getGridDelegate(
+    double width,
+  ) {
+    if (width >= AppBreakpoints.kDesktopWidth) {
+      return SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 250,
+        crossAxisSpacing: 24,
+        mainAxisSpacing: 48,
+        childAspectRatio: 45 / 100,
+      );
+    }
+    if (width >= AppBreakpoints.kTabletWidth) {
+      SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 225,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 32,
+        childAspectRatio: 45 / 100,
+      );
+    }
+    return SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: 200,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 16,
+      childAspectRatio: 45 / 100,
+    );
   }
 }

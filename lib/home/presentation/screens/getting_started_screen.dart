@@ -14,7 +14,6 @@ class GettingStartedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    // TODO: add single child scroll view to prevent render flex
     body: Container(
       decoration: BoxDecoration(
         image: DecorationImage(

@@ -286,141 +286,141 @@ class AppLocalizationsAr extends AppLocalizations {
   String get seeMore => 'عرض المزيد';
 
   @override
-  String get filters => 'filters';
+  String get filters => 'الفلاتر';
 
   @override
-  String get category => 'category';
+  String get category => 'الفئة';
 
   @override
-  String get size => 'size';
+  String get size => 'المقاس';
 
   @override
-  String get color => 'Color';
+  String get color => 'اللون';
 
   @override
-  String get priceRange => 'Price range';
+  String get priceRange => 'نطاق السعر';
 
   @override
-  String get applyFilters => 'Apply Filters';
+  String get applyFilters => 'تطبيق الفلاتر';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'إلغاء';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'إعادة ضبط';
 
   @override
-  String get off => 'Off';
+  String get off => 'خصم';
 
   @override
-  String get deliveryIn => 'Delivery in';
+  String get deliveryIn => 'التوصيل فقط';
 
   @override
-  String get withinOneDay => 'Within One Day!';
+  String get withinOneDay => 'خلال يوم واحد!';
 
   @override
-  String get similarItems => 'Similar Items';
+  String get similarItems => 'منتجات مشابهة';
 
   @override
-  String get applied => 'فعال';
+  String get applied => 'مطبق';
 
   @override
-  String get shopByCategories => 'Shop\nby Categories';
+  String get shopByCategories => 'تسوق\nحسب الفئات';
 
   @override
-  String get collection => 'Collection';
+  String get collection => 'مجموعة';
 
   @override
-  String get bestSeller => 'Best Seller';
+  String get bestSeller => 'الأكثر مبيعًا';
 
   @override
-  String get welcomeToStylish => 'Welcome to Stylish';
+  String get welcomeToStylish => 'مرحبا بك في Stylish';
 
   @override
   String get homeHeadlineText =>
-      'Discover the trends that define you.\nFind your perfect outfit, every day.\nShop, style, and shine with confidence.';
+      'اكتشف الصيحات التي تعكس شخصيتك.\nاعثر على إطلالتك المثالية كل يوم.\nتسوق، نسّق، وتألق بثقة.';
 
   @override
-  String get personalDetails => 'Personal Details';
+  String get personalDetails => 'المعلومات الشخصية';
 
   @override
-  String get emailAddress => 'Email Address';
+  String get emailAddress => 'عنوان البريد الإلكتروني';
 
   @override
-  String get changePassword => 'Change Password';
+  String get changePassword => 'تغيير كلمة المرور';
 
   @override
-  String get businessAddressDetails => 'Business Address Details';
+  String get businessAddressDetails => 'معلومات عنوان العمل';
 
   @override
-  String get phoneNumber => 'Phone Number';
+  String get phoneNumber => 'رقم الهاتف';
 
   @override
-  String get streetAddress => 'Street Address';
+  String get streetAddress => 'عنوان الشارع';
 
   @override
-  String get city => 'City';
+  String get city => 'المدينة';
 
   @override
-  String get country => 'Country';
+  String get country => 'الدولة';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'تعديل';
 
   @override
-  String get totalOrders => 'Total Orders';
+  String get totalOrders => 'إجمالي الطلبات';
 
   @override
-  String get checkout => 'Checkout';
+  String get checkout => 'الدفع';
 
   @override
-  String get cartIsEmpty => 'Your cart is empty — start adding some products!';
+  String get cartIsEmpty => 'سلة التسوق فارغة — ابدأ بإضافة بعض المنتجات!';
 
   @override
-  String get applyCoupon => 'Apply Coupons:';
+  String get applyCoupon => 'تطبيق القسائم:';
 
   @override
-  String get couponCode => 'Coupon Code';
+  String get couponCode => 'رمز القسيمة';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'تطبيق';
 
   @override
-  String get standardShipping => 'Standard Shipping';
+  String get standardShipping => 'الشحن القياسي';
 
   @override
-  String get freeShipping => 'Free Shipping';
+  String get freeShipping => 'الشحن المجاني';
 
   @override
-  String get expressShipping => 'Express Shipping';
+  String get expressShipping => 'الشحن السريع';
 
   @override
-  String get total => 'Total';
+  String get total => 'الإجمالي';
 
   @override
-  String get paymentMethods => 'Payment Methods:';
+  String get paymentMethods => 'طرق الدفع:';
 
   @override
-  String get orderInfo => 'Order Info';
+  String get orderInfo => 'معلومات الطلب';
 
   @override
-  String get shippingCost => 'Shipping cost';
+  String get shippingCost => 'تكلفة الشحن';
 
   @override
-  String get subtotal => 'Subtotal';
+  String get subtotal => 'المجموع الفرعي';
 
   @override
-  String get invalidCouponCode => 'Invalid coupon code.';
+  String get invalidCouponCode => 'رمز القسيمة غير صالح.';
 
   @override
-  String get couponAppliedSuccessfully => 'Coupon applied successfully.';
+  String get couponAppliedSuccessfully => 'تم تطبيق القسيمة بنجاح.';
 
   @override
-  String get couponDiscount => 'Coupon discount';
+  String get couponDiscount => 'خصم القسيمة';
 
   @override
-  String get putYourCouponCodeHere => 'Put your coupon code here';
+  String get putYourCouponCodeHere => 'أدخل رمز القسيمة هنا';
 }

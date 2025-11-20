@@ -18,16 +18,24 @@ import 'core/localization/app_localizations.dart';
 import 'core/utils/bloc_observer.dart';
 import 'core/utils/dependency_injection.dart';
 
+// TODO: fix app router
+// TODO: turn back from forgot password screen to auth screen
+// TODO: Oauth is corrupted
+// TODO: set theme to notification bar in splash
+// TODO:filters bottom sheet overflow on desktop
+// TODO: add single child scroll view to prevent render flex in getting started screen
+// TODO:splash icon size is too big and not appearing on all devices
+// TODO:complete reset password flow
+
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // TODO: splash icon size is too big
   _launchNativeSplashScreen(widgetsBinding);
   _initBlocObserver();
   await _initDependencies();
   await _initEnv();
   await _initSupabase();
-  // runApp(const MyApp());
   _initializeStripe();
+  // runApp(const MyApp());
   runApp(DevicePreview(builder: (context) => const MyApp()));
   _removeNativeSplashScreen();
 }

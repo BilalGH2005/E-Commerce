@@ -100,6 +100,7 @@ class _ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
     final cubit = context.read<ProductDetailsCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,6 +178,7 @@ class _ProductDetails extends StatelessWidget {
                       color: colorScheme(context).tertiaryFixedDim,
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.lineThrough,
+                      decorationThickness: isRTL ? 10 : null,
                     ),
                   ),
                   SizedBox(width: 10),
@@ -276,7 +278,7 @@ class _ProductDetails extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 12),
+        SizedBox(height: 24),
       ],
     );
   }

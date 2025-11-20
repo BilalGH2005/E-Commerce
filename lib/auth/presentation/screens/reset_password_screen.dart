@@ -1,9 +1,11 @@
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
 import 'package:e_commerce/core/constants/app_breakpoints.dart';
+import 'package:e_commerce/core/constants/assets.gen.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/utils/snackbar_util.dart';
 import '../../../core/widgets/app_button.dart';
@@ -57,7 +59,7 @@ class ResetPasswordScreen extends StatelessWidget {
                           onPressed: () => cubit.togglePasswordObscure(),
                         ),
                         label: localization(context).password,
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon: SvgPicture.asset(Assets.icons.lock),
                         validator: (value) => AuthCubit.passwordValidator(
                           context: context,
                           value: value,
@@ -74,7 +76,10 @@ class ResetPasswordScreen extends StatelessWidget {
                               cubit.toggleConfirmPasswordFieldObscure(),
                         ),
                         label: localization(context).confirmPassword,
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon: SvgPicture.asset(
+                          Assets.icons.lock,
+                          fit: BoxFit.scaleDown,
+                        ),
                         validator: (value) => cubit.confirmPasswordValidator(
                           context: context,
                           value: value,

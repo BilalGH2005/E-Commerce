@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:e_commerce/auth/data/repos/auth_repo.dart';
+import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/collection/data/repos/collection_repo.dart';
 import 'package:e_commerce/payment/presentation/controllers/payment_cubit.dart';
 import 'package:e_commerce/product_details/data/repos/product_details_repo.dart';
@@ -34,6 +35,10 @@ Future<void> setupDependencyInjection() async {
   );
 
   // Cubits
+  serviceLocator.registerLazySingleton<AuthCubit>(
+    () => AuthCubit(serviceLocator<AuthRepo>()),
+    dispose: (cubit) => cubit.close(),
+  );
   serviceLocator.registerLazySingleton<ShopCubit>(
     () => ShopCubit(serviceLocator<ShopRepo>()),
     dispose: (cubit) => cubit.close(),

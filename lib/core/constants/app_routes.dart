@@ -9,7 +9,7 @@ enum AppRoutes {
   gettingStarted(name: 'gettingStarted', path: '/getting_started'),
   cart(name: 'cart', path: '/cart'),
   shop(name: 'shop', path: '/shop'),
-  profile(name: 'profile', path: '/profile'),
+  // profile(name: 'profile', path: '/profile'),
   settings(name: 'settings', path: '/settings'),
   productDetails(name: 'productDetails', path: '/product_details/:product_id'),
   collection(name: 'collection', path: '/collection/:collection_id');

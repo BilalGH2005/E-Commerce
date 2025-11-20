@@ -6,6 +6,9 @@ import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../core/constants/assets.gen.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({super.key});
@@ -57,7 +60,14 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 context,
                               ).enterYourEmailAddress,
                               textInputAction: TextInputAction.done,
-                              prefixIcon: const Icon(Icons.email),
+                              prefixIcon: SvgPicture.asset(
+                                Assets.icons.email,
+                                fit: BoxFit.scaleDown,
+                                colorFilter: ColorFilter.mode(
+                                  colorScheme(context).tertiaryFixed,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
                               validator: (value) => AuthCubit.emailValidator(
                                 context: context,
                                 value: value,

@@ -26,11 +26,23 @@ class $AssetsIconsGen {
   /// File path: assets/icons/coupon.svg
   String get coupon => 'assets/icons/coupon.svg';
 
+  /// File path: assets/icons/email.svg
+  String get email => 'assets/icons/email.svg';
+
   /// File path: assets/icons/empty_cart.svg
   String get emptyCart => 'assets/icons/empty_cart.svg';
 
+  /// File path: assets/icons/eye-off.svg
+  String get eyeOff => 'assets/icons/eye-off.svg';
+
+  /// File path: assets/icons/eye.svg
+  String get eye => 'assets/icons/eye.svg';
+
   /// File path: assets/icons/facebook.svg
   String get facebook => 'assets/icons/facebook.svg';
+
+  /// File path: assets/icons/filters.svg
+  String get filters => 'assets/icons/filters.svg';
 
   /// File path: assets/icons/globe.svg
   String get globe => 'assets/icons/globe.svg';
@@ -41,8 +53,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   String get home => 'assets/icons/home.svg';
 
+  /// File path: assets/icons/info.svg
+  String get info => 'assets/icons/info.svg';
+
+  /// File path: assets/icons/lock.svg
+  String get lock => 'assets/icons/lock.svg';
+
   /// File path: assets/icons/pencil.svg
   String get pencil => 'assets/icons/pencil.svg';
+
+  /// File path: assets/icons/person.svg
+  String get person => 'assets/icons/person.svg';
+
+  /// File path: assets/icons/refresh.svg
+  String get refresh => 'assets/icons/refresh.svg';
 
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
@@ -62,12 +86,20 @@ class $AssetsIconsGen {
     apple,
     cart,
     coupon,
+    email,
     emptyCart,
+    eyeOff,
+    eye,
     facebook,
+    filters,
     globe,
     google,
     home,
+    info,
+    lock,
     pencil,
+    person,
+    refresh,
     search,
     settings,
     signOut,

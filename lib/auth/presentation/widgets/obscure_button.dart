@@ -1,6 +1,7 @@
+import 'package:e_commerce/core/constants/assets.gen.dart';
+import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/utils/shortcuts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ObscureButton extends StatelessWidget {
   final bool isObscure;
@@ -18,13 +19,21 @@ class ObscureButton extends StatelessWidget {
     onPressed: onPressed,
     focusNode: FocusNode(skipTraversal: true),
     icon: isObscure
-        ? Icon(
-            Icons.visibility_off_outlined,
-            color: colorScheme(context).tertiaryFixed,
+        ? SvgPicture.asset(
+            Assets.icons.eyeOff,
+            fit: BoxFit.scaleDown,
+            colorFilter: ColorFilter.mode(
+              colorScheme(context).tertiaryFixed,
+              BlendMode.srcIn,
+            ),
           )
-        : Icon(
-            Icons.remove_red_eye_outlined,
-            color: colorScheme(context).tertiaryFixed,
+        : SvgPicture.asset(
+            Assets.icons.eye,
+            fit: BoxFit.scaleDown,
+            colorFilter: ColorFilter.mode(
+              colorScheme(context).tertiaryFixed,
+              BlendMode.srcIn,
+            ),
           ),
   );
 }

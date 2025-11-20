@@ -70,20 +70,22 @@ class FormSwitcher extends StatelessWidget {
   const FormSwitcher({super.key, required this.isSignIn});
 
   @override
-  Widget build(BuildContext context) => AnimatedSwitcher(
-    duration: 600.ms,
-    transitionBuilder: (child, animation) {
-      final slideAnimation = Tween<Offset>(
-        begin: const Offset(0.0, 0.6),
-        end: Offset.zero,
-      ).animate(animation);
-      return SlideTransition(
-        position: slideAnimation,
-        child: FadeTransition(opacity: animation, child: child),
-      );
-    },
-    child: isSignIn
-        ? signInForm(context: context, key: const ValueKey('signIn'))
-        : signUpForm(context: context, key: const ValueKey('signUp')),
-  );
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: 600.ms,
+      transitionBuilder: (child, animation) {
+        final slideAnimation = Tween<Offset>(
+          begin: const Offset(0.2, 0.0),
+          end: Offset.zero,
+        ).animate(animation);
+        return SlideTransition(
+          position: slideAnimation,
+          child: FadeTransition(opacity: animation, child: child),
+        );
+      },
+      child: isSignIn
+          ? signInForm(context: context, key: const ValueKey('signIn'))
+          : signUpForm(context: context, key: const ValueKey('signUp')),
+    );
+  }
 }

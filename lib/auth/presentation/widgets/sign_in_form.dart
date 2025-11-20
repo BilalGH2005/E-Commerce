@@ -7,7 +7,10 @@ import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../core/constants/assets.gen.dart';
 
 Widget signInForm({required BuildContext context, Key? key}) {
   final cubit = context.read<AuthCubit>();
@@ -18,80 +21,97 @@ Widget signInForm({required BuildContext context, Key? key}) {
         key: cubit.signInFormKey,
         child: Padding(
           padding: EdgeInsets.all(30),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    localization(context).welcomeBack,
-                    textAlign: TextAlign.start,
-                    style: textTheme(context).bodyLarge,
-                  ),
-                ],
-              ),
-              SizedBox(height: 25),
-              AppField(
-                controller: cubit.emailFieldController,
-                label: localization(context).email,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                prefixIcon: const Icon(Icons.person),
-                validator: (value) =>
-                    AuthCubit.emailValidator(context: context, value: value),
-              ),
-              SizedBox(height: 20),
-              AppField(
-                controller: cubit.passwordFieldController,
-                isObscure: cubit.isPasswordFieldObscure,
-                textInputAction: TextInputAction.done,
-                suffixIcon: ObscureButton(
-                  isObscure: cubit.isPasswordFieldObscure,
-                  onPressed: () => cubit.togglePasswordObscure(),
+          child: SizedBox(
+            height: 680,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      localization(context).welcomeBack,
+                      textAlign: TextAlign.start,
+                      style: textTheme(context).bodyLarge,
+                    ),
+                  ],
                 ),
-                label: localization(context).password,
-                prefixIcon: const Icon(Icons.lock),
-                validator: (value) =>
-                    AuthCubit.passwordValidator(context: context, value: value),
-                onSubmitted: (_) async => await cubit.signInWithPassword(),
-              ),
-              SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => context.pushNamed(
-                      AppRoutes.forgetPassword.name,
-                      extra: cubit,
-                    ),
-                    child: Text(
-                      localization(context).forgotPassword,
-                      style: textTheme(context).bodySmall!.copyWith(
-                        color: colorScheme(context).primary,
-                      ),
+                SizedBox(height: 25),
+                AppField(
+                  controller: cubit.emailFieldController,
+                  label: localization(context).email,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  prefixIcon: SvgPicture.asset(
+                    Assets.icons.person,
+                    fit: BoxFit.scaleDown,
+                    colorFilter: ColorFilter.mode(
+                      colorScheme(context).tertiaryFixed,
+                      BlendMode.srcIn,
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: 15),
-              AppButton(
-                onPressed: cubit.isLoading
-                    ? null
-                    : () async => await cubit.signInWithPassword(),
-                labelWidget: cubit.isLoading
-                    ? CircularProgressIndicator()
-                    : Text(
-                        localization(context).login,
-                        style: textTheme(context).bodyMedium,
+                  validator: (value) =>
+                      AuthCubit.emailValidator(context: context, value: value),
+                ),
+                SizedBox(height: 20),
+                AppField(
+                  controller: cubit.passwordFieldController,
+                  isObscure: cubit.isPasswordFieldObscure,
+                  textInputAction: TextInputAction.done,
+                  suffixIcon: ObscureButton(
+                    isObscure: cubit.isPasswordFieldObscure,
+                    onPressed: () => cubit.togglePasswordObscure(),
+                  ),
+                  label: localization(context).password,
+                  prefixIcon: SvgPicture.asset(
+                    Assets.icons.lock,
+                    fit: BoxFit.scaleDown,
+                    colorFilter: ColorFilter.mode(
+                      colorScheme(context).tertiaryFixed,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  validator: (value) => AuthCubit.passwordValidator(
+                    context: context,
+                    value: value,
+                  ),
+                  onSubmitted: (_) async => await cubit.signInWithPassword(),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () =>
+                          context.pushNamed(AppRoutes.forgetPassword.name),
+                      child: Text(
+                        localization(context).forgotPassword,
+                        style: textTheme(context).bodySmall!.copyWith(
+                          color: colorScheme(context).primary,
+                        ),
                       ),
-              ),
-              const SizedBox(height: 74),
-              OAuthWidget(
-                label: localization(context).createAnAccount,
-                buttonText: localization(context).signUp,
-                onPressed: () async => cubit.toggleAuth(),
-              ),
-            ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+                AppButton(
+                  onPressed: cubit.isLoading
+                      ? null
+                      : () async => await cubit.signInWithPassword(),
+                  labelWidget: cubit.isLoading
+                      ? CircularProgressIndicator()
+                      : Text(
+                          localization(context).login,
+                          style: textTheme(context).bodyMedium,
+                        ),
+                ),
+                Spacer(),
+                OAuthWidget(
+                  label: localization(context).createAnAccount,
+                  buttonText: localization(context).signUp,
+                  onPressed: () async => cubit.toggleAuth(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -40,85 +40,63 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   SystemUiOverlayStyle(
-    //     statusBarColor: colorScheme(context).surface,
-    //     statusBarIconBrightness: context.read<AppCubit>().isDarkTheme
-    //         ? Brightness.light
-    //         : Brightness.dark,
-    //   ),
-    // );
-
-    return SafeArea(
-      child: Scaffold(
-        body: navigationShell,
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: navigationShell.currentIndex,
-          onTap: _onTap,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: colorScheme(context).surface,
-          selectedItemColor: colorScheme(context).primary,
-          unselectedItemColor: colorScheme(context).inverseSurface,
-          selectedLabelStyle: const TextStyle(fontSize: 12),
-          unselectedLabelStyle: const TextStyle(fontSize: 12),
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                Assets.icons.home,
-                color: colorScheme(context).inverseSurface,
-              ),
-              activeIcon: SvgPicture.asset(
-                Assets.icons.home,
-                color: colorScheme(context).primary,
-              ),
-              label: localization(context).home,
+    return Scaffold(
+      body: navigationShell,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navigationShell.currentIndex,
+        onTap: _onTap,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: colorScheme(context).surface,
+        selectedItemColor: colorScheme(context).primary,
+        unselectedItemColor: colorScheme(context).inverseSurface,
+        selectedLabelStyle: const TextStyle(fontSize: 12),
+        unselectedLabelStyle: const TextStyle(fontSize: 12),
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              Assets.icons.home,
+              color: colorScheme(context).inverseSurface,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                Assets.icons.search,
-                color: colorScheme(context).inverseSurface,
-              ),
-              activeIcon: SvgPicture.asset(
-                Assets.icons.search,
-                color: colorScheme(context).primary,
-              ),
-              label: localization(context).search,
+            activeIcon: SvgPicture.asset(
+              Assets.icons.home,
+              color: colorScheme(context).primary,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                Assets.icons.cart,
-                color: colorScheme(context).inverseSurface,
-              ),
-              activeIcon: SvgPicture.asset(
-                Assets.icons.cart,
-                color: colorScheme(context).primary,
-              ),
-              label: localization(context).cart,
+            label: localization(context).home,
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              Assets.icons.search,
+              color: colorScheme(context).inverseSurface,
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(
-            //     Icons.person_outline,
-            //     color: colorScheme(context).inverseSurface,
-            //   ),
-            //   activeIcon: Icon(
-            //     Icons.person_outline,
-            //     color: colorScheme(context).primary,
-            //   ),
-            //   label: localization(context).profile,
-            // ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                Assets.icons.settings,
-                color: colorScheme(context).inverseSurface,
-              ),
-              activeIcon: SvgPicture.asset(
-                Assets.icons.settings,
-                color: colorScheme(context).primary,
-              ),
-              label: localization(context).settings,
+            activeIcon: SvgPicture.asset(
+              Assets.icons.search,
+              color: colorScheme(context).primary,
             ),
-          ],
-        ),
+            label: localization(context).search,
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              Assets.icons.cart,
+              color: colorScheme(context).inverseSurface,
+            ),
+            activeIcon: SvgPicture.asset(
+              Assets.icons.cart,
+              color: colorScheme(context).primary,
+            ),
+            label: localization(context).cart,
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              Assets.icons.settings,
+              color: colorScheme(context).inverseSurface,
+            ),
+            activeIcon: SvgPicture.asset(
+              Assets.icons.settings,
+              color: colorScheme(context).primary,
+            ),
+            label: localization(context).settings,
+          ),
+        ],
       ),
     );
   }
@@ -154,32 +132,24 @@ class SideBar extends StatelessWidget {
             leading: const SizedBox(height: 24),
             destinations: [
               NavigationRailDestination(
-                icon: const Icon(Icons.home_outlined),
+                icon: SvgPicture.asset(Assets.icons.home),
                 label: Text(localization(context).home),
               ),
               NavigationRailDestination(
-                icon: const Icon(Icons.search),
+                icon: SvgPicture.asset(Assets.icons.search),
                 label: Text(localization(context).search),
               ),
               NavigationRailDestination(
-                icon: const Icon(Icons.admin_panel_settings_outlined),
-                label: Text(localization(context).admin),
+                icon: SvgPicture.asset(Assets.icons.cart),
+                label: Text(localization(context).cart),
               ),
-              // NavigationRailDestination(
-              //   icon: const Icon(Icons.person_outline),
-              //   label: Text(localization(context).profile),
-              // ),
               NavigationRailDestination(
-                icon: const Icon(Icons.settings_outlined),
+                icon: SvgPicture.asset(Assets.icons.settings),
                 label: Text(localization(context).settings),
               ),
             ],
           ),
-          VerticalDivider(
-            width: 1,
-            color: colorScheme(context).tertiary,
-            // thickness: 1,
-          ),
+          VerticalDivider(width: 1, color: colorScheme(context).tertiary),
           Expanded(child: navigationShell),
         ],
       ),

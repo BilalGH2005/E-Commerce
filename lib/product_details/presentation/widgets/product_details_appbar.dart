@@ -1,8 +1,10 @@
 import 'package:e_commerce/core/constants/app_colors.dart';
+import 'package:e_commerce/core/constants/assets.gen.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../cart/presentation/controllers/cart_cubit.dart';
@@ -28,7 +30,7 @@ class ProductDetailsAppBar extends StatelessWidget
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Badge(
                 backgroundColor: colorScheme(context).primary,
-                offset: Offset(3, 3),
+                offset: Offset.zero,
                 label: Text(
                   cartItemCount.toString(),
                   style: textTheme(context).titleSmall!.copyWith(
@@ -45,7 +47,13 @@ class ProductDetailsAppBar extends StatelessWidget
                   onPressed: () {
                     context.goNamed(AppRoutes.cart.name);
                   },
-                  icon: const Icon(Icons.shopping_cart_outlined),
+                  icon: SvgPicture.asset(
+                    Assets.icons.cart,
+                    colorFilter: ColorFilter.mode(
+                      colorScheme(context).inverseSurface,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                 ),
               ),
             ),

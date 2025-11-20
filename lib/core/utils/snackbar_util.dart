@@ -21,19 +21,11 @@ class SnackBarUtil {
     toastification.dismissAll();
     toastification.show(
       alignment: Alignment.topRight,
-      description: Text(
-        message /*
-            style: TextStyle()
-                .copyWith(color: colorScheme(context).tertiaryFixed)*/,
-      ),
+      description: Text(message),
       type: toastificationType,
       style: ToastificationStyle.minimal,
       autoCloseDuration: Duration(seconds: 3),
       showProgressBar: true,
     );
-    // borderSide: BorderSide(
-    //   color: colorScheme(context).tertiary,
-    // ),
-    // backgroundColor: colorScheme(context).surfaceContainer,
   }
 }

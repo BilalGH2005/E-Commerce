@@ -47,7 +47,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
             context!.goNamed(AppRoutes.auth.name);
             break;
           case AuthChangeEvent.passwordRecovery:
-            context!.goNamed(AppRoutes.resetPassword.name, extra: this);
+            context!.goNamed(AppRoutes.resetPassword.name);
             break;
           default:
             break;

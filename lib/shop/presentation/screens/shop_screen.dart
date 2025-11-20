@@ -13,33 +13,35 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<ShopCubit, ShopState>(
-        listenWhen: (_, state) => state is ShopLoadingMoreFailed,
-        listener: (context, state) {
-          SnackBarUtil.showError(localization(context).somethingWentWrong);
-        },
-        buildWhen: (_, state) => state is ShopStateChanged,
-        builder: (context, state) {
-          final cubit = context.read<ShopCubit>();
-          return AsyncValueBuilder(
-            value: cubit.shopMetadata,
-            loading: (_) => Center(child: CircularProgressIndicator()),
-            data: (_, _) => ShopDataView(),
-            error: (_, _) => AppErrorWidget(
-              error: localization(context).somethingWentWrong,
-              labelWidget: Text(
-                localization(context).retry,
-                style: textTheme(
-                  context,
-                ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+    return SafeArea(
+      child: Scaffold(
+        body: BlocConsumer<ShopCubit, ShopState>(
+          listenWhen: (_, state) => state is ShopLoadingMoreFailed,
+          listener: (context, state) {
+            SnackBarUtil.showError(localization(context).somethingWentWrong);
+          },
+          buildWhen: (_, state) => state is ShopStateChanged,
+          builder: (context, state) {
+            final cubit = context.read<ShopCubit>();
+            return AsyncValueBuilder(
+              value: cubit.shopMetadata,
+              loading: (_) => Center(child: CircularProgressIndicator()),
+              data: (_, _) => ShopDataView(),
+              error: (_, _) => AppErrorWidget(
+                error: localization(context).somethingWentWrong,
+                labelWidget: Text(
+                  localization(context).retry,
+                  style: textTheme(
+                    context,
+                  ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+                ),
+                onPressed: () async {
+                  await cubit.getShopMetadata();
+                },
               ),
-              onPressed: () async {
-                await cubit.getShopMetadata();
-              },
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -31,26 +31,32 @@ class CartScreen extends StatelessWidget {
       },
       builder: (context, state) {
         final cubit = context.read<CartCubit>();
-        return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.only(top: 20.0, right: 32.0, left: 32.0),
-            child: AsyncValueBuilder(
-              value: cubit.cartProducts,
-              loading: (_) => Center(child: CircularProgressIndicator()),
-              data: (_, cartProducts) =>
-                  CartDataView(cartProducts: cartProducts),
-              error: (_, _) => Center(
-                child: AppErrorWidget(
-                  error: localization(context).somethingWentWrong,
-                  labelWidget: Text(
-                    localization(context).retry,
-                    style: textTheme(
-                      context,
-                    ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+        return SafeArea(
+          child: Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.only(
+                top: 20.0,
+                right: 32.0,
+                left: 32.0,
+              ),
+              child: AsyncValueBuilder(
+                value: cubit.cartProducts,
+                loading: (_) => Center(child: CircularProgressIndicator()),
+                data: (_, cartProducts) =>
+                    CartDataView(cartProducts: cartProducts),
+                error: (_, _) => Center(
+                  child: AppErrorWidget(
+                    error: localization(context).somethingWentWrong,
+                    labelWidget: Text(
+                      localization(context).retry,
+                      style: textTheme(context).bodyMedium!.copyWith(
+                        color: colorScheme(context).surface,
+                      ),
+                    ),
+                    onPressed: () async {
+                      await cubit.getCartItems();
+                    },
                   ),
-                  onPressed: () async {
-                    await cubit.getCartItems();
-                  },
                 ),
               ),
             ),
