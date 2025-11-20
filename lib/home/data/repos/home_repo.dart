@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/utils/auth_failure_mapper.dart';
-import 'package:e_commerce/home/data/models/home_metadata_model.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
+
+import '../../models/home_metadata_model.dart';
 
 abstract class HomeRepo {
   Future<AsyncResult<HomeMetadataModel, String>> getHomeMetadata();

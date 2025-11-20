@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AuthFailureMapper {
-  // Maping Supabase authentication error codes to localization keys and returns 'other' as a fallback key for unmapped errors.
+  // Mapping Supabase authentication error codes to localization keys and returns 'other' as a fallback key for unmapped errors.
   static String supabaseAuthError(String? errorCode) {
     switch (errorCode) {
       case 'user_already_exists':
@@ -31,14 +30,13 @@ Future<AsyncResult<T, String>> supabaseRpc<T>(
   Map<String, String>? customErrors,
   dynamic get = false,
 }) async {
-  debugPrint('STARTED');
   try {
     final response = await Supabase.instance.client.rpc(
       name,
       params: params ?? {},
       get: get,
     );
-    debugPrint("RPC RESPONSE $response");
+    print("RPC RESPONSE $response");
 
     if (fromJson != null) {
       if (response is List && T.toString().startsWith('List<')) {
@@ -46,7 +44,7 @@ Future<AsyncResult<T, String>> supabaseRpc<T>(
       } else if (response is Map<String, dynamic>) {
         return AsyncResult.data(data: fromJson(response));
       } else {
-        return AsyncResult.error(error: 'invalid_response_type');
+        return AsyncResult.data(data: fromJson(response));
       }
     }
 
@@ -59,7 +57,7 @@ Future<AsyncResult<T, String>> supabaseRpc<T>(
     }
     return AsyncResult.error(error: customErrors[exception.code!]!);
   } catch (exception) {
-    debugPrint('RPC Exception: $exception');
+    print('RPC Exception: $exception');
     return AsyncResult.error(error: 'other');
   }
 }

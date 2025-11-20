@@ -1,4 +1,4 @@
-import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/oauth_widget.dart';
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';

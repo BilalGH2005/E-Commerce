@@ -1,11 +1,11 @@
 import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/cached_image.dart';
-import 'package:e_commerce/home/data/models/home_metadata_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_routes.dart';
+import '../../../home/models/home_metadata_model.dart';
 
 class CollectionCard extends StatelessWidget {
   final Collection collection;
@@ -14,17 +14,14 @@ class CollectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
     return Stack(
       children: [
-        CachedImage(
-          imageUrl: collection.imageUrl,
-          width: 400,
-          height: 400,
-          borderRadius: 0,
-        ),
+        CachedImage(imageUrl: collection.imageUrl, borderRadius: 0),
         Positioned(
-          bottom: 32,
-          left: 32,
+          bottom: 32.0,
+          left: isRTL ? null : 32.0,
+          right: isRTL ? 32.0 : null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,6 +37,7 @@ class CollectionCard extends StatelessWidget {
                   context.pushNamed(
                     AppRoutes.collection.name,
                     pathParameters: {'collection_id': collection.id},
+                    extra: collection.name,
                   );
                 },
                 child: Row(

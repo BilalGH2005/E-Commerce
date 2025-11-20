@@ -13,8 +13,8 @@ class CachedImage extends StatelessWidget {
   const CachedImage({
     super.key,
     required this.imageUrl,
-    this.width,
-    this.height,
+    this.width = double.infinity,
+    this.height = double.infinity,
     this.borderRadius = 8,
     this.fit = BoxFit.cover,
   });

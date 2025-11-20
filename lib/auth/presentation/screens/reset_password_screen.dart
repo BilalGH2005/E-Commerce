@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/snackbar_util.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../cubit/auth_cubit.dart';
+import '../controllers/auth_cubit.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});

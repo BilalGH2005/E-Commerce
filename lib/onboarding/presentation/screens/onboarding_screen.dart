@@ -1,5 +1,5 @@
 import 'package:e_commerce/core/utils/shortcuts.dart';
-import 'package:e_commerce/onboarding/cubit/onboarding_cubit.dart';
+import 'package:e_commerce/onboarding/presentation/controllers/onboarding_cubit.dart';
 import 'package:e_commerce/onboarding/presentation/widgets/onboarding_appbar.dart';
 import 'package:e_commerce/onboarding/presentation/widgets/onboarding_bottombar.dart';
 import 'package:e_commerce/onboarding/presentation/widgets/onboarding_page.dart';

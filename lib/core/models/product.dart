@@ -47,5 +47,3 @@ class Product {
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 }
-
-// flutter pub run build_runner build --delete-conflicting-outputs

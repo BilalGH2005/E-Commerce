@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_routes.dart';
 import '../../../core/constants/assets.gen.dart';
-import '../../../core/cubit/app_cubit.dart';
+import '../../../core/controllers/app_cubit.dart';
 
 class GettingStartedScreen extends StatelessWidget {
   const GettingStartedScreen({super.key});

@@ -2,11 +2,12 @@ import 'package:e_commerce/core/constants/app_routes.dart';
 import 'package:e_commerce/core/utils/dependency_injection.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/cached_image.dart';
-import 'package:e_commerce/home/data/models/home_metadata_model.dart';
-import 'package:e_commerce/shop/cubit/shop_cubit.dart';
-import 'package:e_commerce/shop/data/models/product_filters.dart';
+import 'package:e_commerce/shop/presentation/controllers/shop_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../models/home_metadata_model.dart';
+import '../../../shop/models/product_filters.dart';
 
 class CategoryButton extends StatelessWidget {
   const CategoryButton({super.key, required this.category});
@@ -16,6 +17,7 @@ class CategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(8),
       onTap: () async {
         context.pushNamed(AppRoutes.shop.name);
         final newFilters = ProductFilters.empty().copyWith(
@@ -27,11 +29,8 @@ class CategoryButton extends StatelessWidget {
       },
       child: Column(
         children: [
-          CachedImage(
-            imageUrl: category.imageUrl,
-            height: 152,
-            width: 152,
-            borderRadius: 200,
+          Expanded(
+            child: CachedImage(imageUrl: category.imageUrl, borderRadius: 200),
           ),
           SizedBox(height: 12),
           Text(

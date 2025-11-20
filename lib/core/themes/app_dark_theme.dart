@@ -39,6 +39,9 @@ class AppDarkTheme {
         color: AppColors.white,
       ),
     ),
+    radioTheme: RadioThemeData().copyWith(
+      fillColor: WidgetStatePropertyAll(AppColors.white),
+    ),
     switchTheme: SwitchThemeData().copyWith(
       thumbColor: WidgetStatePropertyAll(AppColors.white),
       trackOutlineWidth: WidgetStatePropertyAll(1.5),

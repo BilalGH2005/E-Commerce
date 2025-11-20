@@ -235,9 +235,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get addToCart => 'الإضافة إلى سلة التسوق';
 
   @override
-  String get yourCartIsEmpty => 'سلة التسوق فارغة';
-
-  @override
   String get newProduct => 'جديد!';
 
   @override
@@ -342,4 +339,88 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get homeHeadlineText =>
       'Discover the trends that define you.\nFind your perfect outfit, every day.\nShop, style, and shine with confidence.';
+
+  @override
+  String get personalDetails => 'Personal Details';
+
+  @override
+  String get emailAddress => 'Email Address';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get businessAddressDetails => 'Business Address Details';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get streetAddress => 'Street Address';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get country => 'Country';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get totalOrders => 'Total Orders';
+
+  @override
+  String get checkout => 'Checkout';
+
+  @override
+  String get cartIsEmpty => 'Your cart is empty — start adding some products!';
+
+  @override
+  String get applyCoupon => 'Apply Coupons:';
+
+  @override
+  String get couponCode => 'Coupon Code';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get standardShipping => 'Standard Shipping';
+
+  @override
+  String get freeShipping => 'Free Shipping';
+
+  @override
+  String get expressShipping => 'Express Shipping';
+
+  @override
+  String get total => 'Total';
+
+  @override
+  String get paymentMethods => 'Payment Methods:';
+
+  @override
+  String get orderInfo => 'Order Info';
+
+  @override
+  String get shippingCost => 'Shipping cost';
+
+  @override
+  String get subtotal => 'Subtotal';
+
+  @override
+  String get invalidCouponCode => 'Invalid coupon code.';
+
+  @override
+  String get couponAppliedSuccessfully => 'Coupon applied successfully.';
+
+  @override
+  String get couponDiscount => 'Coupon discount';
+
+  @override
+  String get putYourCouponCodeHere => 'Put your coupon code here';
 }

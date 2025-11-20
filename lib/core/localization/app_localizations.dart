@@ -530,12 +530,6 @@ abstract class AppLocalizations {
   /// **'Add to cart'**
   String get addToCart;
 
-  /// No description provided for @yourCartIsEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Your cart is empty'**
-  String get yourCartIsEmpty;
-
   /// No description provided for @newProduct.
   ///
   /// In en, this message translates to:
@@ -721,6 +715,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discover the trends that define you.\nFind your perfect outfit, every day.\nShop, style, and shine with confidence.'**
   String get homeHeadlineText;
+
+  /// No description provided for @personalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Details'**
+  String get personalDetails;
+
+  /// No description provided for @emailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @businessAddressDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Address Details'**
+  String get businessAddressDetails;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// No description provided for @streetAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get streetAddress;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @totalOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Orders'**
+  String get totalOrders;
+
+  /// No description provided for @checkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkout;
+
+  /// No description provided for @cartIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cart is empty — start adding some products!'**
+  String get cartIsEmpty;
+
+  /// No description provided for @applyCoupon.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Coupon:'**
+  String get applyCoupon;
+
+  /// No description provided for @couponCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon Code'**
+  String get couponCode;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @standardShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard Shipping'**
+  String get standardShipping;
+
+  /// No description provided for @freeShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Free Shipping'**
+  String get freeShipping;
+
+  /// No description provided for @expressShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Express Shipping'**
+  String get expressShipping;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @paymentMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Methods:'**
+  String get paymentMethods;
+
+  /// No description provided for @orderInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Info'**
+  String get orderInfo;
+
+  /// No description provided for @shippingCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping cost'**
+  String get shippingCost;
+
+  /// No description provided for @subtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get subtotal;
+
+  /// No description provided for @invalidCouponCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid coupon code.'**
+  String get invalidCouponCode;
+
+  /// No description provided for @couponAppliedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon applied successfully.'**
+  String get couponAppliedSuccessfully;
+
+  /// No description provided for @couponDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Coupon discount'**
+  String get couponDiscount;
+
+  /// No description provided for @putYourCouponCodeHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Put your coupon code here'**
+  String get putYourCouponCodeHere;
 }
 
 class _AppLocalizationsDelegate

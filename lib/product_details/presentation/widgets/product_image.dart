@@ -5,10 +5,11 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/utils/shortcuts.dart';
 import '../../../core/widgets/cached_image.dart';
-import '../../cubit/product_details_cubit.dart';
+import '../controllers/product_details_cubit.dart';
 
 class ProductImage extends StatelessWidget {
-  const ProductImage({super.key});
+  // ignore: prefer_const_constructors_in_immutables
+  ProductImage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class ProductImage extends StatelessWidget {
     return Column(
       children: [
         AspectRatio(
-          aspectRatio: 160 / 100,
+          aspectRatio: 160 / 130,
           child: Stack(
             clipBehavior: Clip.none,
             alignment: Alignment.center,

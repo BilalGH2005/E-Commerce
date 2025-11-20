@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/snackbar_util.dart';
 import '../../../core/widgets/app_error_widget.dart';
-import '../../cubit/shop_cubit.dart';
+import '../controllers/shop_cubit.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});

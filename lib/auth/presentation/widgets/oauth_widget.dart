@@ -1,4 +1,4 @@
-import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/oauth_button.dart';
 import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants/assets.gen.dart';
-import '../../../core/cubit/app_cubit.dart';
+import '../../../core/controllers/app_cubit.dart';
 
 class OAuthWidget extends StatelessWidget {
   const OAuthWidget({

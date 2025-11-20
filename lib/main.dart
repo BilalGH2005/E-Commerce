@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:e_commerce/core/router/app_router.dart';
 import 'package:e_commerce/core/themes/app_dark_theme.dart';
 import 'package:e_commerce/core/themes/app_light_theme.dart';
@@ -7,10 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../../core/cubit/app_cubit.dart';
+// ignore: depend_on_referenced_packages
+import 'package:device_preview/device_preview.dart';
+import '../../../core/controllers/app_cubit.dart';
 import 'core/constants/assets.gen.dart';
 import 'core/localization/app_localizations.dart';
 import 'core/utils/bloc_observer.dart';
@@ -25,6 +27,7 @@ Future<void> main() async {
   await _initEnv();
   await _initSupabase();
   // runApp(const MyApp());
+  _initializeStripe();
   runApp(DevicePreview(builder: (context) => const MyApp()));
   _removeNativeSplashScreen();
 }
@@ -34,6 +37,12 @@ void _launchNativeSplashScreen(WidgetsBinding widgetsBinding) {
 }
 
 void _initBlocObserver() => Bloc.observer = AppBlocObserver();
+
+Future<void> _initializeStripe() async {
+  final stripePublishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
+  Stripe.publishableKey = stripePublishableKey;
+  // await Stripe.instance.applySettings();
+}
 
 Future<void> _initDependencies() async => await setupDependencyInjection();
 
@@ -45,9 +54,7 @@ Future<void> _initSupabase() async {
   await Supabase.initialize(url: url, anonKey: anonKey);
 }
 
-void _removeNativeSplashScreen() {
-  FlutterNativeSplash.remove();
-}
+void _removeNativeSplashScreen() => FlutterNativeSplash.remove();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

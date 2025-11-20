@@ -1,4 +1,4 @@
-import 'package:e_commerce/shop/data/models/product_filters.dart';
+import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +7,8 @@ import '../../../core/utils/shortcuts.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_field.dart';
 import '../../../core/widgets/app_item_card.dart';
-import '../../cubit/shop_cubit.dart';
+import '../../models/product_filters.dart';
+import '../controllers/shop_cubit.dart';
 
 class ShopDataView extends StatelessWidget {
   const ShopDataView({super.key});
@@ -15,6 +16,7 @@ class ShopDataView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ShopCubit>();
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -82,7 +84,8 @@ class ShopDataView extends StatelessWidget {
                     if (cubit.appliedFilters.withoutPage() !=
                         ProductFilters.empty().withoutPage())
                       Positioned(
-                        right: -4,
+                        right: isRTL ? null : -4,
+                        left: isRTL ? -4 : null,
                         top: -4,
                         child: Container(
                           width: 50,
@@ -95,7 +98,7 @@ class ShopDataView extends StatelessWidget {
                             child: Text(
                               localization(context).applied,
                               style: textTheme(context).titleSmall!.copyWith(
-                                color: colorScheme(context).surface,
+                                color: AppColors.white,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

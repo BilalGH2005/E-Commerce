@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/shortcuts.dart';
-import '../../cubit/shop_cubit.dart';
+import '../controllers/shop_cubit.dart';
 
 class PriceRangeWidget extends StatelessWidget {
   const PriceRangeWidget({super.key});

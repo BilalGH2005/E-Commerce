@@ -1,4 +1,4 @@
-import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/core/constants/app_breakpoints.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';

@@ -95,17 +95,17 @@ class BottomNavBar extends StatelessWidget {
               ),
               label: localization(context).cart,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_outline,
-                color: colorScheme(context).inverseSurface,
-              ),
-              activeIcon: Icon(
-                Icons.person_outline,
-                color: colorScheme(context).primary,
-              ),
-              label: localization(context).profile,
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(
+            //     Icons.person_outline,
+            //     color: colorScheme(context).inverseSurface,
+            //   ),
+            //   activeIcon: Icon(
+            //     Icons.person_outline,
+            //     color: colorScheme(context).primary,
+            //   ),
+            //   label: localization(context).profile,
+            // ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 Assets.icons.settings,
@@ -165,10 +165,10 @@ class SideBar extends StatelessWidget {
                 icon: const Icon(Icons.admin_panel_settings_outlined),
                 label: Text(localization(context).admin),
               ),
-              NavigationRailDestination(
-                icon: const Icon(Icons.person_outline),
-                label: Text(localization(context).profile),
-              ),
+              // NavigationRailDestination(
+              //   icon: const Icon(Icons.person_outline),
+              //   label: Text(localization(context).profile),
+              // ),
               NavigationRailDestination(
                 icon: const Icon(Icons.settings_outlined),
                 label: Text(localization(context).settings),

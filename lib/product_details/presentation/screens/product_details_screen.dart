@@ -1,12 +1,12 @@
 import 'package:e_commerce/core/utils/responsive_builder.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_error_widget.dart';
-import 'package:e_commerce/product_details/cubit/product_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../controllers/product_details_cubit.dart';
 import '../widgets/product_details_appbar.dart';
 import '../widgets/screen_layouts.dart';
 

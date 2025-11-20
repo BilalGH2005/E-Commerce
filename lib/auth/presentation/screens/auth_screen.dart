@@ -1,4 +1,4 @@
-import 'package:e_commerce/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/sign_in_form.dart';
 import 'package:e_commerce/auth/presentation/widgets/sign_up_form.dart';
 import 'package:e_commerce/core/constants/app_breakpoints.dart';

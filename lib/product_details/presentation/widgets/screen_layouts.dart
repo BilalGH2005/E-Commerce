@@ -1,13 +1,17 @@
-import 'package:e_commerce/product_details/cubit/product_details_cubit.dart';
+import 'package:e_commerce/cart/presentation/controllers/cart_cubit.dart';
+import 'package:e_commerce/core/utils/dependency_injection.dart';
+import 'package:e_commerce/core/widgets/app_products_grid_view.dart';
+import 'package:e_commerce/payment/presentation/controllers/payment_cubit.dart';
 import 'package:e_commerce/product_details/presentation/widgets/product_image.dart';
+import 'package:e_commerce/product_details/presentation/widgets/size_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/shortcuts.dart';
 import '../../../core/widgets/app_color_button.dart';
-import '../../../core/widgets/app_item_card.dart';
-import '../../data/model/product_details_model.dart';
+import '../../model/product_details_model.dart';
+import '../controllers/product_details_cubit.dart';
 import 'custom_button.dart';
 
 class MobileLayout extends StatelessWidget {
@@ -35,17 +39,9 @@ class MobileLayout extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 4)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 0.75,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => AppItemCard(product.similarProducts[index]),
-                childCount: product.similarProducts.length,
-              ),
+            sliver: AppProductsGridView.sliver(
+              itemCount: product.similarProducts.length,
+              products: product.similarProducts,
             ),
           ),
         ],
@@ -71,7 +67,7 @@ class TabletLayout extends StatelessWidget {
               children: [
                 Expanded(child: _ProductDetails(product: product)),
                 const SizedBox(width: 24),
-                const Expanded(child: ProductImage()),
+                Expanded(child: ProductImage()),
               ],
             ),
           ),
@@ -86,17 +82,9 @@ class TabletLayout extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 4)),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 152 / 192,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => AppItemCard(product.similarProducts[index]),
-                childCount: product.similarProducts.length,
-              ),
+            sliver: AppProductsGridView.sliver(
+              itemCount: product.similarProducts.length,
+              products: product.similarProducts,
             ),
           ),
         ],
@@ -134,39 +122,7 @@ class _ProductDetails extends StatelessWidget {
 
               return Padding(
                 padding: const EdgeInsets.only(right: 8.0),
-                child: ChoiceChip(
-                  side: BorderSide(
-                    width: 1.5,
-                    color: colorScheme(context).primary,
-                  ),
-                  color: WidgetStateColor.resolveWith((states) {
-                    if (states.contains(WidgetState.selected)) {
-                      return colorScheme(context).primary;
-                    } else {
-                      return colorScheme(context).surface;
-                    }
-                  }),
-                  labelStyle: textTheme(context).displaySmall!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: isSelected
-                        ? colorScheme(context).surface
-                        : colorScheme(context).primary,
-                  ),
-                  showCheckmark: false,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  label: Text(size.name),
-                  selected: isSelected,
-                  onSelected: (_) {
-                    if (!isSelected) {
-                      final newOrderDetails = cubit.orderDetails.copyWith(
-                        sizeId: size.id,
-                      );
-                      cubit.updateOrderDetails(newOrderDetails);
-                    }
-                  },
-                ),
+                child: SizeButton(isSelected: isSelected, size: size),
               );
             },
           ),
@@ -265,13 +221,25 @@ class _ProductDetails extends StatelessWidget {
               colors: [AppColors.blue, AppColors.lightBlue],
               label: localization(context).addToCart,
               icon: Icons.shopping_cart_outlined,
-              onPressed: () async {},
+              onPressed: () async {
+                serviceLocator<CartCubit>().addToCart(
+                  orderDetails: cubit.orderDetails,
+                );
+              },
             ),
-            CustomButton(
-              colors: [AppColors.green, AppColors.lightGreen],
-              label: localization(context).buyNow,
-              icon: Icons.touch_app_outlined,
-              onPressed: () {},
+            BlocBuilder<PaymentCubit, PaymentState>(
+              builder: (context, state) {
+                return CustomButton(
+                  colors: [AppColors.green, AppColors.lightGreen],
+                  label: localization(context).buyNow,
+                  icon: Icons.touch_app_outlined,
+                  onPressed: () {
+                    context.read<PaymentCubit>().createPaymentIntent(
+                      amount: product.finalPrice,
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),

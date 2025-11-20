@@ -39,6 +39,9 @@ class AppLightTheme {
         color: AppColors.white,
       ),
     ),
+    radioTheme: RadioThemeData().copyWith(
+      fillColor: WidgetStatePropertyAll(AppColors.black),
+    ),
     switchTheme: SwitchThemeData().copyWith(
       thumbColor: WidgetStatePropertyAll(AppColors.black),
       trackOutlineWidth: WidgetStatePropertyAll(1),
@@ -55,7 +58,6 @@ class AppLightTheme {
             : FontFamily.montserrat,
         fontWeight: FontWeight.w500,
         fontSize: 12,
-        color: AppColors.lightTertiaryFixed,
       ),
       floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
         if (states.contains(WidgetState.focused)) {

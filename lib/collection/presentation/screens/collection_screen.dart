@@ -1,5 +1,5 @@
-import 'package:e_commerce/collection/cubit/collection_cubit.dart';
-import 'package:e_commerce/core/widgets/app_item_card.dart';
+import 'package:e_commerce/collection/presentation/controllers/collection_cubit.dart';
+import 'package:e_commerce/core/widgets/app_products_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,30 +8,32 @@ import '../../../core/utils/shortcuts.dart';
 import '../../../core/widgets/app_error_widget.dart';
 
 class CollectionScreen extends StatelessWidget {
-  const CollectionScreen({super.key});
+  final String collectionName;
+
+  const CollectionScreen({super.key, required this.collectionName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          collectionName,
+          style: textTheme(
+            context,
+          ).bodyMedium!.copyWith(color: colorScheme(context).inverseSurface),
+        ),
+      ),
       body: BlocBuilder<CollectionCubit, CollectionState>(
         builder: (context, state) {
           final cubit = context.read<CollectionCubit>();
           return AsyncValueBuilder(
             value: cubit.collectionProducts,
-            loading: (context) => Center(child: CircularProgressIndicator()),
-            data: (context, collectionProducts) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 152 + 32,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 152 / 314,
-                ),
-                itemCount: collectionProducts.length,
-                itemBuilder: (context, index) =>
-                    AppItemCard(collectionProducts[index]),
-              ),
+            loading: (_) => Center(child: CircularProgressIndicator()),
+            data: (_, collectionProducts) => AppProductsGridView(
+              itemCount: collectionProducts.length,
+              products: collectionProducts,
+              padding: EdgeInsets.symmetric(horizontal: 32),
             ),
             error: (context, error) => AppErrorWidget(
               error: localization(context).somethingWentWrong,

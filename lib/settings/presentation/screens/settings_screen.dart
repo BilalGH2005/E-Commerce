@@ -1,7 +1,7 @@
 import 'package:e_commerce/core/constants/app_breakpoints.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_dropdown_button.dart';
-import 'package:e_commerce/settings/cubit/settings_cubit.dart';
+import 'package:e_commerce/settings/presentation/controllers/settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_routes.dart';
 import '../../../core/constants/assets.gen.dart';
-import '../../../core/cubit/app_cubit.dart';
+import '../../../core/controllers/app_cubit.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

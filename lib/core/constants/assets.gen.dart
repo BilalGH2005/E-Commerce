@@ -23,6 +23,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cart.svg
   String get cart => 'assets/icons/cart.svg';
 
+  /// File path: assets/icons/coupon.svg
+  String get coupon => 'assets/icons/coupon.svg';
+
+  /// File path: assets/icons/empty_cart.svg
+  String get emptyCart => 'assets/icons/empty_cart.svg';
+
   /// File path: assets/icons/facebook.svg
   String get facebook => 'assets/icons/facebook.svg';
 
@@ -34,6 +40,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/home.svg
   String get home => 'assets/icons/home.svg';
+
+  /// File path: assets/icons/pencil.svg
+  String get pencil => 'assets/icons/pencil.svg';
 
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
@@ -52,10 +61,13 @@ class $AssetsIconsGen {
     appLogo,
     apple,
     cart,
+    coupon,
+    emptyCart,
     facebook,
     globe,
     google,
     home,
+    pencil,
     search,
     settings,
     signOut,

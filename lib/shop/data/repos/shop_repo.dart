@@ -1,9 +1,9 @@
 import 'package:e_commerce/core/utils/auth_failure_mapper.dart';
-import 'package:e_commerce/shop/data/models/shop_metadata_model.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 
-import '../models/filtered_products_model.dart';
-import '../models/product_filters.dart';
+import '../../models/filtered_products_model.dart';
+import '../../models/product_filters.dart';
+import '../../models/shop_metadata_model.dart';
 
 abstract class ShopRepo {
   Future<AsyncResult<ShopMetadata, String>> getShopMetadata();

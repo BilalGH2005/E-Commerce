@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/core/models/product_preview.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_item_card.dart';
-import 'package:e_commerce/home/cubit/home_cubit.dart';
+import 'package:e_commerce/home/presentation/controllers/home_cubit.dart';
 import 'package:flutter/material.dart';
 
 class NewProductsCarousel extends StatelessWidget {
@@ -35,7 +35,10 @@ class NewProductsCarousel extends StatelessWidget {
             child: CarouselSlider.builder(
               itemCount: newProducts.length,
               itemBuilder: (context, index, realIndex) {
-                return AppItemCard(newProducts[index]);
+                return AspectRatio(
+                  aspectRatio: 270 / 412,
+                  child: AppItemCard(newProducts[index]),
+                );
               },
               options: CarouselOptions(
                 height: 400,

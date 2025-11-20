@@ -1,12 +1,13 @@
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_color_button.dart';
-import 'package:e_commerce/shop/cubit/shop_cubit.dart';
-import 'package:e_commerce/shop/data/models/product_filters.dart';
+import 'package:e_commerce/shop/presentation/controllers/shop_cubit.dart';
 import 'package:e_commerce/shop/presentation/widgets/price_range_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../models/product_filters.dart';
 
 class ProductsFiltersBottomSheet extends StatelessWidget {
   const ProductsFiltersBottomSheet({super.key});

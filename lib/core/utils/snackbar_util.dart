@@ -27,7 +27,7 @@ class SnackBarUtil {
                 .copyWith(color: colorScheme(context).tertiaryFixed)*/,
       ),
       type: toastificationType,
-      style: ToastificationStyle.fillColored,
+      style: ToastificationStyle.minimal,
       autoCloseDuration: Duration(seconds: 3),
       showProgressBar: true,
     );
