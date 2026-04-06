@@ -59,7 +59,9 @@ Widget signInForm({required BuildContext context, Key? key}) {
                   textInputAction: TextInputAction.done,
                   suffixIcon: ObscureButton(
                     isObscure: cubit.isPasswordFieldObscure,
-                    onPressed: () => cubit.togglePasswordObscure(),
+                    onPressed: () {
+                      cubit.togglePasswordObscure();
+                    },
                   ),
                   label: localization(context).password,
                   prefixIcon: SvgPicture.asset(
@@ -74,15 +76,16 @@ Widget signInForm({required BuildContext context, Key? key}) {
                     context: context,
                     value: value,
                   ),
-                  onSubmitted: (_) async => await cubit.signInWithPassword(),
+                  onSubmitted: (_) => cubit.signInWithPassword(),
                 ),
                 SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () =>
-                          context.pushNamed(AppRoutes.forgetPassword.name),
+                      onPressed: () {
+                        context.pushNamed(AppRoutes.forgetPassword.name);
+                      },
                       child: Text(
                         localization(context).forgotPassword,
                         style: textTheme(context).bodySmall!.copyWith(
@@ -96,7 +99,7 @@ Widget signInForm({required BuildContext context, Key? key}) {
                 AppButton(
                   onPressed: cubit.isLoading
                       ? null
-                      : () async => await cubit.signInWithPassword(),
+                      : () => cubit.signInWithPassword(),
                   labelWidget: cubit.isLoading
                       ? CircularProgressIndicator()
                       : Text(
@@ -108,7 +111,7 @@ Widget signInForm({required BuildContext context, Key? key}) {
                 OAuthWidget(
                   label: localization(context).createAnAccount,
                   buttonText: localization(context).signUp,
-                  onPressed: () async => cubit.toggleAuth(),
+                  onPressed: () => cubit.toggleAuth(),
                 ),
               ],
             ),

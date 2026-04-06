@@ -43,15 +43,18 @@ class OAuthWidget extends StatelessWidget {
             children: [
               OAuthButton(
                 iconPath: Assets.icons.google,
-                onPressed: () async =>
-                    await context.read<AuthCubit>().googleSignIn(),
+                onPressed: () {
+                  context.read<AuthCubit>().googleSignIn();
+                },
                 tooltip: localization(context).googleOAuth,
               ),
               OAuthButton(
                 iconPath: Assets.icons.apple,
-                onPressed: () => SnackBarUtil.showInfo(
-                  localization(context).appleAccountsSoon,
-                ),
+                onPressed: () {
+                  SnackBarUtil.showInfo(
+                    localization(context).appleAccountsSoon,
+                  );
+                },
                 tooltip: localization(context).appleOAuth,
                 colorFilter: isDarkTheme
                     ? const ColorFilter.mode(AppColors.white, BlendMode.srcIn)

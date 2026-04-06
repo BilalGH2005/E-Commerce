@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/home/presentation/controllers/home_cubit.dart';
 import 'package:e_commerce/home/presentation/widgets/home_data_view.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +31,10 @@ class HomeScreen extends StatelessWidget {
                     localization(context).retry,
                     style: textTheme(
                       context,
-                    ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+                    ).bodyMedium!.copyWith(color: AppColors.white),
                   ),
-                  onPressed: () async {
-                    await cubit.getHomeMetadata();
+                  onPressed: () {
+                    cubit.getHomeMetadata();
                   },
                 ),
               ),

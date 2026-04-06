@@ -72,12 +72,12 @@ class CustomButton extends StatelessWidget {
                   end: Alignment.topCenter,
                 ),
                 boxShadow: [
-                  BoxShadow(
-                    color: AppColors.black.withAlpha(77),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
+                  // BoxShadow(
+                  //   color: AppColors.black.withAlpha(77),
+                  //   spreadRadius: 2,
+                  //   blurRadius: 5,
+                  //   offset: const Offset(0, 3),
+                  // ),
                 ],
               ),
               child: Icon(icon, color: Colors.white),

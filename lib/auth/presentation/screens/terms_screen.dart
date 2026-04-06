@@ -1,48 +1,41 @@
-import 'package:e_commerce/core/utils/shortcuts.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:go_router/go_router.dart';
-
-class TermsScreen extends StatelessWidget {
-  const TermsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: colorScheme(context).surface,
-        backgroundColor: colorScheme(context).surface,
-        leading: InkWell(
-          onTap: () => context.pop(),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: colorScheme(context).onSurface,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          localization(context).termsAndConditions,
-          style: textTheme(context).headlineMedium,
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Markdown(
-                data: localization(context).termsText,
-                styleSheet: MarkdownStyleSheet(
-                  p: textTheme(context).displayMedium!.copyWith(height: 1.5),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// import 'package:flutter/material.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
+//
+// class WebViewPage extends StatefulWidget {
+//   final String url;
+//
+//   const WebViewPage({super.key, required this.url});
+//
+//   @override
+//   State<WebViewPage> createState() => _WebViewPageState();
+// }
+//
+// class _WebViewPageState extends State<WebViewPage> {
+//   late final WebViewController _controller;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//
+//     _controller = WebViewController()
+//       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+//       ..setNavigationDelegate(
+//         NavigationDelegate(
+//           onPageStarted: (url) {},
+//           onPageFinished: (url) {},
+//           onNavigationRequest: (request) {
+//             return NavigationDecision.navigate;
+//           },
+//         ),
+//       )
+//       ..loadRequest(Uri.parse(widget.url));
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Webview')),
+//       body: WebViewWidget(controller: _controller),
+//     );
+//   }
+// }

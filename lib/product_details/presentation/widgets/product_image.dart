@@ -13,6 +13,7 @@ class ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
     final cubit = context.read<ProductDetailsCubit>();
     final imagesUrls = cubit.product.data!.imagesUrls;
     return Column(
@@ -32,12 +33,14 @@ class ProductImage extends StatelessWidget {
                   child: CachedImage(
                     imageUrl: imagesUrls[index],
                     borderRadius: 16,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
               cubit.currentPage != 0
                   ? Positioned(
-                      left: 10,
+                      left: isRTL ? null : 10,
+                      right: isRTL ? 10 : null,
                       child: CustomIconButton(
                         icon: Icons.arrow_back_ios_outlined,
                         onPressed: () {
@@ -48,7 +51,8 @@ class ProductImage extends StatelessWidget {
                   : SizedBox.shrink(),
               cubit.currentPage != imagesUrls.length - 1
                   ? Positioned(
-                      right: 10,
+                      left: isRTL ? 10 : null,
+                      right: isRTL ? null : 10,
                       child: CustomIconButton(
                         icon: Icons.arrow_forward_ios_outlined,
                         onPressed: () {

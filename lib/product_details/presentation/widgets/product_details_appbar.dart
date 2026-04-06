@@ -24,6 +24,8 @@ class ProductDetailsAppBar extends StatelessWidget
         final cartItemCount =
             context.read<CartCubit>().cartProducts.data?.length ?? 0;
         return AppBar(
+          surfaceTintColor: colorScheme(context).surface,
+          backgroundColor: colorScheme(context).surface,
           leading: AppBackButton(),
           actions: [
             Padding(

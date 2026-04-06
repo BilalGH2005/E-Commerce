@@ -149,7 +149,7 @@ class SideBar extends StatelessWidget {
               ),
             ],
           ),
-          VerticalDivider(width: 1, color: colorScheme(context).tertiary),
+          VerticalDivider(width: 1),
           Expanded(child: navigationShell),
         ],
       ),

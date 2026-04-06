@@ -56,7 +56,7 @@ class AppProductsGridView extends StatelessWidget {
   ) {
     if (width >= AppBreakpoints.kDesktopWidth) {
       return SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 250,
+        maxCrossAxisExtent: 200,
         crossAxisSpacing: 24,
         mainAxisSpacing: 48,
         childAspectRatio: 45 / 100,
@@ -64,7 +64,7 @@ class AppProductsGridView extends StatelessWidget {
     }
     if (width >= AppBreakpoints.kTabletWidth) {
       SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 225,
+        maxCrossAxisExtent: 200,
         crossAxisSpacing: 16,
         mainAxisSpacing: 32,
         childAspectRatio: 45 / 100,

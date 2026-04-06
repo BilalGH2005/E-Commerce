@@ -20,46 +20,48 @@ class CachedImage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => ClipRRect(
-    borderRadius: BorderRadius.circular(borderRadius),
-    child: SizedBox(
-      width: width,
-      height: height,
-      child: CachedNetworkImage(
-        fit: fit,
-        imageUrl: imageUrl,
-        placeholder: (context, url) => Center(
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
-            child: Container(
-              width: width,
-              height: height,
-              decoration: BoxDecoration(color: colorScheme(context).tertiary),
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: CachedNetworkImage(
+          fit: fit,
+          imageUrl: imageUrl,
+          placeholder: (context, url) => Center(
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(color: colorScheme(context).tertiary),
+              ),
             ),
           ),
-        ),
-        errorWidget: (context, url, error) => Center(
-          child: SizedBox(
-            height: 180,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error),
-                const SizedBox(height: 3),
-                Text(
-                  localization(context).somethingWentWrong,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: colorScheme(context).tertiaryFixed,
+          errorWidget: (context, url, error) => Center(
+            child: SizedBox(
+              height: 180,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error),
+                  const SizedBox(height: 3),
+                  Text(
+                    localization(context).somethingWentWrong,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: colorScheme(context).tertiaryFixed,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

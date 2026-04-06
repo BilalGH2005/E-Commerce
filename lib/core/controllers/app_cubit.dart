@@ -8,46 +8,48 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
+  final prefs = serviceLocator<SharedPreferences>();
+
+  // dummy assignments until app get fully initialized
   bool seenOnBoarding = false;
   bool seenGettingStarted = false;
   bool isDarkTheme = false;
   bool isArabic = false;
 
   AppCubit() : super(AppInitial()) {
-    final sharedPreferences = serviceLocator<SharedPreferences>();
-    seenOnBoarding = sharedPreferences.getBool('seenOnBoarding') ?? false;
-    seenGettingStarted =
-        sharedPreferences.getBool('seenGettingStarted') ?? false;
-    isDarkTheme = sharedPreferences.getBool('isDarkTheme') ?? false;
-    isArabic = sharedPreferences.getBool('isArabic') ?? false;
+    _getInitialData();
+  }
+
+  Future<void> _getInitialData() async {
+    seenOnBoarding = prefs.getBool('seenOnBoarding') ?? false;
+    seenGettingStarted = prefs.getBool('seenGettingStarted') ?? false;
+    isDarkTheme = prefs.getBool('isDarkTheme') ?? false;
+    isArabic = prefs.getBool('isArabic') ?? false;
+
     emit(GotAppInitialData());
   }
 
   Future<void> hasSeenOnBoarding() async {
-    await serviceLocator<SharedPreferences>().setBool('seenOnBoarding', true);
+    await prefs.setBool('seenOnBoarding', true);
+    seenOnBoarding = true;
     emit(AppDataChanged());
   }
 
   Future<void> hasSeenGettingStarted() async {
-    await serviceLocator<SharedPreferences>().setBool(
-      'seenGettingStarted',
-      true,
-    );
+    await prefs.setBool('seenGettingStarted', true);
+    seenGettingStarted = true;
     emit(AppDataChanged());
   }
 
   Future<void> toggleTheme(bool? newValue) async {
     isDarkTheme = newValue ?? false;
-    await serviceLocator<SharedPreferences>().setBool(
-      'isDarkTheme',
-      isDarkTheme,
-    );
+    await prefs.setBool('isDarkTheme', isDarkTheme);
     emit(AppDataChanged());
   }
 
   Future<void> localeValue(String? newValue) async {
     isArabic = newValue != 'English';
-    await serviceLocator<SharedPreferences>().setBool('isArabic', isArabic);
+    await prefs.setBool('isArabic', isArabic);
     emit(AppDataChanged());
   }
 }

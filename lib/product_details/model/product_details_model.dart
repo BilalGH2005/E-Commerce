@@ -50,4 +50,32 @@ class ProductDetailsModel {
       _$ProductDetailsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductDetailsModelToJson(this);
+
+  ProductDetailsModel copyWith({
+    String? id,
+    String? name,
+    String? description,
+    double? price,
+    double? finalPrice,
+    DateTime? addedAt,
+    List<String>? imagesUrls,
+    Category? category,
+    List<JsonColor>? colors,
+    List<JsonSize>? sizes,
+    List<ProductPreview>? similarProducts,
+  }) {
+    return ProductDetailsModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      finalPrice: finalPrice ?? this.finalPrice,
+      addedAt: addedAt ?? this.addedAt,
+      imagesUrls: imagesUrls ?? this.imagesUrls,
+      category: category ?? this.category,
+      colors: colors ?? this.colors,
+      sizes: sizes ?? this.sizes,
+      similarProducts: similarProducts ?? this.similarProducts,
+    );
+  }
 }

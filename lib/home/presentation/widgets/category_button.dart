@@ -18,14 +18,15 @@ class CategoryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: () async {
-        context.pushNamed(AppRoutes.shop.name);
+      onTap: () {
         final newFilters = ProductFilters.empty().copyWith(
           categoryId: category.id,
         );
+        // TODO: settle things
         serviceLocator<ShopCubit>()
           ..updateFilter(newFilters)
-          ..getFilteredProducts(initialGet: true);
+          ..getFilteredProducts();
+        context.goNamed(AppRoutes.shop.name);
       },
       child: Column(
         children: [

@@ -14,16 +14,24 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
     return BlocBuilder<ShopCubit, ShopState>(
       builder: (context, state) {
         final cubit = context.read<ShopCubit>();
         final shopMetadata = cubit.shopMetadata.data!;
-        return SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.65,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8),
+
+        return ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(
+              top: 16,
+              bottom: 16,
+              right: isRTL ? 16 : 0,
+              left: isRTL ? 0 : 16,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Center(
                   child: Text(
@@ -50,21 +58,19 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
                       final isSelected =
                           cubit.draftFilters.categoryId == category.id;
                       return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
+                        padding: EdgeInsets.only(
+                          left: isRTL ? 0 : 8,
+                          right: isRTL ? 8 : 0,
+                        ),
                         child: ChoiceChip.elevated(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
                           label: Text(category.name),
                           selected: isSelected,
                           onSelected: (_) {
-                            final newCategoryId = isSelected
-                                ? null
-                                : category.id;
-                            final newFilters = cubit.draftFilters.copyWith(
-                              categoryId: newCategoryId,
+                            cubit.updateFilter(
+                              cubit.draftFilters.copyWith(
+                                categoryId: isSelected ? null : category.id,
+                              ),
                             );
-                            cubit.updateFilter(newFilters);
                           },
                         ),
                       );
@@ -86,19 +92,19 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
                       final size = shopMetadata.sizes[index];
                       final isSelected = cubit.draftFilters.sizeId == size.id;
                       return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
+                        padding: EdgeInsets.only(
+                          left: isRTL ? 0 : 8,
+                          right: isRTL ? 8 : 0,
+                        ),
                         child: ChoiceChip.elevated(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
                           label: Text(size.name),
                           selected: isSelected,
                           onSelected: (_) {
-                            final newSizeId = isSelected ? null : size.id;
-                            final newFilters = cubit.draftFilters.copyWith(
-                              sizeId: newSizeId,
+                            cubit.updateFilter(
+                              cubit.draftFilters.copyWith(
+                                sizeId: isSelected ? null : size.id,
+                              ),
                             );
-                            cubit.updateFilter(newFilters);
                           },
                         ),
                       );
@@ -120,16 +126,19 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
                       final color = shopMetadata.colors[index];
                       final isSelected = cubit.draftFilters.colorId == color.id;
                       return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
+                        padding: EdgeInsets.only(
+                          left: isRTL ? 0 : 8,
+                          right: isRTL ? 8 : 0,
+                        ),
                         child: AppColorButton(
                           color: color,
                           isSelected: isSelected,
                           onPressed: () {
-                            final newColorId = isSelected ? null : color.id;
-                            final newFilters = cubit.draftFilters.copyWith(
-                              colorId: newColorId,
+                            cubit.updateFilter(
+                              cubit.draftFilters.copyWith(
+                                colorId: isSelected ? null : color.id,
+                              ),
                             );
-                            cubit.updateFilter(newFilters);
                           },
                         ),
                       );
@@ -137,27 +146,18 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 25),
-                PriceRangeWidget(),
-                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: isRTL ? 0 : 16,
+                    left: isRTL ? 16 : 0,
+                  ),
+                  child: PriceRangeWidget(),
+                ),
+                const SizedBox(height: 32),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      flex: 3,
-                      child: AppButton(
-                        onPressed: () async {
-                          context.pop();
-                          await cubit.getFilteredProducts();
-                        },
-                        labelWidget: Text(
-                          localization(context).applyFilters,
-                          style: textTheme(context).bodyMedium,
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      flex: 2,
+                      flex: 9,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(double.infinity, 55),
@@ -176,6 +176,22 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
                         },
                       ),
                     ),
+                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
+                    Expanded(
+                      flex: 11,
+                      child: AppButton(
+                        onPressed: () {
+                          context.pop();
+                          cubit.getFilteredProducts();
+                        },
+                        labelWidget: Text(
+                          localization(context).applyFilters,
+                          style: textTheme(context).bodyMedium,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16),
                   ],
                 ),
               ],

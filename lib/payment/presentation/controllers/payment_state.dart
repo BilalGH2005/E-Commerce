@@ -7,4 +7,6 @@ final class PaymentInitial extends PaymentState {}
 
 final class PaymentStateChanged extends PaymentState {}
 
-final class PaymentFailedState extends PaymentState {}
+final class PaymentSuccessful extends PaymentState {}
+
+final class PaymentFailed extends PaymentState {}

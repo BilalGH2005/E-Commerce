@@ -15,7 +15,7 @@ class CouponWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<CartCubit>();
     return AnimatedSwitcher(
-      duration: 1.s,
+      duration: 700.ms,
       transitionBuilder: (child, animation) {
         final slideAnimation = Tween<Offset>(
           begin: const Offset(0.3, 0.0),

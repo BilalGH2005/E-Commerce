@@ -284,11 +284,11 @@ abstract class AppLocalizations {
   /// **'Sign in'**
   String get signIn;
 
-  /// No description provided for @termsAndConditions.
+  /// No description provided for @termsOfService.
   ///
   /// In en, this message translates to:
-  /// **'Terms and Conditions'**
-  String get termsAndConditions;
+  /// **'Terms Of Service'**
+  String get termsOfService;
 
   /// No description provided for @termsText.
   ///
@@ -434,17 +434,23 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settings;
 
-  /// No description provided for @switchAppTheme.
+  /// No description provided for @theme.
   ///
   /// In en, this message translates to:
-  /// **'Switch app theme'**
-  String get switchAppTheme;
+  /// **'Theme'**
+  String get theme;
 
-  /// No description provided for @chooseAppLanguage.
+  /// No description provided for @language.
   ///
   /// In en, this message translates to:
-  /// **'Choose app language:'**
-  String get chooseAppLanguage;
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @privacyAgreementPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get privacyAgreementPrefix;
 
   /// No description provided for @orContinueWith.
   ///
@@ -791,7 +797,7 @@ abstract class AppLocalizations {
   /// No description provided for @cartIsEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Your cart is empty — start adding some products!'**
+  /// **'Your cart is empty, start adding some products!'**
   String get cartIsEmpty;
 
   /// No description provided for @applyCoupon.
@@ -883,6 +889,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Put your coupon code here'**
   String get putYourCouponCodeHere;
+
+  /// No description provided for @paymentDoneSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment done successfully.'**
+  String get paymentDoneSuccessfully;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @others.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get others;
+
+  /// No description provided for @generalSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'General Settings'**
+  String get generalSettings;
 }
 
 class _AppLocalizationsDelegate

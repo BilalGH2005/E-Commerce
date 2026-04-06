@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../controllers/cart_cubit.dart';
 
@@ -49,12 +50,12 @@ class CartScreen extends StatelessWidget {
                     error: localization(context).somethingWentWrong,
                     labelWidget: Text(
                       localization(context).retry,
-                      style: textTheme(context).bodyMedium!.copyWith(
-                        color: colorScheme(context).surface,
-                      ),
+                      style: textTheme(
+                        context,
+                      ).bodyMedium!.copyWith(color: AppColors.white),
                     ),
-                    onPressed: () async {
-                      await cubit.getCartItems();
+                    onPressed: () {
+                      cubit.getCartItems();
                     },
                   ),
                 ),

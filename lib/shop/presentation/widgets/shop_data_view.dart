@@ -187,10 +187,12 @@ class ShopDataView extends StatelessWidget {
                 error: localization(context).somethingWentWrong,
                 labelWidget: Text(
                   localization(context).retry,
-                  style: textTheme(context).bodyMedium,
+                  style: textTheme(
+                    context,
+                  ).bodyMedium!.copyWith(color: AppColors.white),
                 ),
-                onPressed: () async {
-                  await cubit.getFilteredProducts(initialGet: true);
+                onPressed: () {
+                  cubit.getFilteredProducts(initialGet: true);
                 },
               ),
             ),

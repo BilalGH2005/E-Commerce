@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/utils/responsive_builder.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_error_widget.dart';
@@ -33,7 +34,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 localization(context).retry,
                 style: textTheme(
                   context,
-                ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+                ).bodyMedium!.copyWith(color: AppColors.white),
               ),
               onPressed: () {
                 cubit.getProductDetails(

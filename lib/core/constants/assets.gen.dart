@@ -23,6 +23,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cart.svg
   String get cart => 'assets/icons/cart.svg';
 
+  /// File path: assets/icons/check.svg
+  String get check => 'assets/icons/check.svg';
+
+  /// File path: assets/icons/chevron-left.svg
+  String get chevronLeft => 'assets/icons/chevron-left.svg';
+
   /// File path: assets/icons/coupon.svg
   String get coupon => 'assets/icons/coupon.svg';
 
@@ -59,6 +65,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/lock.svg
   String get lock => 'assets/icons/lock.svg';
 
+  /// File path: assets/icons/particle.svg
+  String get particle => 'assets/icons/particle.svg';
+
   /// File path: assets/icons/pencil.svg
   String get pencil => 'assets/icons/pencil.svg';
 
@@ -85,6 +94,8 @@ class $AssetsIconsGen {
     appLogo,
     apple,
     cart,
+    check,
+    chevronLeft,
     coupon,
     email,
     emptyCart,
@@ -97,6 +108,7 @@ class $AssetsIconsGen {
     home,
     info,
     lock,
+    particle,
     pencil,
     person,
     refresh,
@@ -135,10 +147,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/onboarding3.svg
   String get onboarding3 => 'assets/images/onboarding3.svg';
 
-  /// File path: assets/images/winter_jacket.png
-  AssetGenImage get winterJacket =>
-      const AssetGenImage('assets/images/winter_jacket.png');
-
   /// List of all assets
   List<dynamic> get values => [
     appLogo,
@@ -148,7 +156,6 @@ class $AssetsImagesGen {
     onboarding1,
     onboarding2,
     onboarding3,
-    winterJacket,
   ];
 }
 

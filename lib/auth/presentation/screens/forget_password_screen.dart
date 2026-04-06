@@ -14,119 +14,123 @@ class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthCubitState>(
-    listenWhen: (_, state) => state is AuthResetPasswordRequested,
-    listener: (context, state) {
-      if (state is AuthResetPasswordRequested) {
-        SnackBarUtil.showSuccess(localization(context).resetPasswordEmailSent);
-      }
-    },
-    builder: (_, _) {
-      final cubit = context.read<AuthCubit>();
-      return Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: AppBreakpoints.kTabletWidth,
-              ),
-              child: Form(
-                key: cubit.forgetPasswordFormKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              localization(context).forgotPasswordTitle,
-                              textAlign: TextAlign.start,
-                              style: textTheme(context).bodyLarge,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-                      SizedBox(
-                        height: 210,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget build(BuildContext context) {
+    return BlocConsumer<AuthCubit, AuthState>(
+      listenWhen: (_, state) => state is AuthResetPasswordRequested,
+      listener: (context, state) {
+        if (state is AuthResetPasswordRequested) {
+          SnackBarUtil.showSuccess(
+            localization(context).resetPasswordEmailSent,
+          );
+        }
+      },
+      builder: (_, _) {
+        final cubit = context.read<AuthCubit>();
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: AppBreakpoints.kTabletWidth,
+                ),
+                child: Form(
+                  key: cubit.forgetPasswordFormKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            AppField(
-                              controller: cubit.emailFieldController,
-                              label: localization(
-                                context,
-                              ).enterYourEmailAddress,
-                              textInputAction: TextInputAction.done,
-                              prefixIcon: SvgPicture.asset(
-                                Assets.icons.email,
-                                fit: BoxFit.scaleDown,
-                                colorFilter: ColorFilter.mode(
-                                  colorScheme(context).tertiaryFixed,
-                                  BlendMode.srcIn,
-                                ),
+                            Expanded(
+                              child: Text(
+                                localization(context).forgotPasswordTitle,
+                                textAlign: TextAlign.start,
+                                style: textTheme(context).bodyLarge,
                               ),
-                              validator: (value) => AuthCubit.emailValidator(
-                                context: context,
-                                value: value,
-                              ),
-                              onSubmitted: (_) async =>
-                                  await cubit.resetPasswordForEmail(),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      text: '* ',
-                                      style: textTheme(context).bodySmall!
-                                          .copyWith(
-                                            color: colorScheme(context).error,
-                                          ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: localization(
-                                            context,
-                                          ).passwordResetMessage,
-                                          style: textTheme(context).bodySmall!
-                                              .copyWith(
-                                                color: colorScheme(
-                                                  context,
-                                                ).tertiaryFixed,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            AppButton(
-                              onPressed: cubit.isLoading
-                                  ? null
-                                  : () async =>
-                                        await cubit.resetPasswordForEmail(),
-                              labelWidget: cubit.isLoading
-                                  ? CircularProgressIndicator()
-                                  : Text(
-                                      localization(context).submit,
-                                      style: textTheme(context).bodyMedium,
-                                    ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          height: 210,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppField(
+                                controller: cubit.emailFieldController,
+                                label: localization(
+                                  context,
+                                ).enterYourEmailAddress,
+                                textInputAction: TextInputAction.done,
+                                prefixIcon: SvgPicture.asset(
+                                  Assets.icons.email,
+                                  fit: BoxFit.scaleDown,
+                                  colorFilter: ColorFilter.mode(
+                                    colorScheme(context).tertiaryFixed,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                validator: (value) => AuthCubit.emailValidator(
+                                  context: context,
+                                  value: value,
+                                ),
+                                onSubmitted: (_) async =>
+                                    await cubit.resetPasswordForEmail(),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: '* ',
+                                        style: textTheme(context).bodySmall!
+                                            .copyWith(
+                                              color: colorScheme(context).error,
+                                            ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: localization(
+                                              context,
+                                            ).passwordResetMessage,
+                                            style: textTheme(context).bodySmall!
+                                                .copyWith(
+                                                  color: colorScheme(
+                                                    context,
+                                                  ).tertiaryFixed,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              AppButton(
+                                onPressed: cubit.isLoading
+                                    ? null
+                                    : () async =>
+                                          await cubit.resetPasswordForEmail(),
+                                labelWidget: cubit.isLoading
+                                    ? CircularProgressIndicator()
+                                    : Text(
+                                        localization(context).submit,
+                                        style: textTheme(context).bodyMedium,
+                                      ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }

@@ -107,7 +107,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signIn => 'Sign in';
 
   @override
-  String get termsAndConditions => 'Terms and Conditions';
+  String get termsOfService => 'Terms Of Service';
 
   @override
   String get termsText =>
@@ -186,10 +186,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
-  String get switchAppTheme => 'Switch app theme';
+  String get theme => 'Theme';
 
   @override
-  String get chooseAppLanguage => 'Choose app language:';
+  String get language => 'Language';
+
+  @override
+  String get privacyAgreementPrefix => 'I agree to the ';
 
   @override
   String get orContinueWith => '- Or continue with -';
@@ -377,7 +380,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkout => 'Checkout';
 
   @override
-  String get cartIsEmpty => 'Your cart is empty — start adding some products!';
+  String get cartIsEmpty => 'Your cart is empty, start adding some products!';
 
   @override
   String get applyCoupon => 'Apply Coupon:';
@@ -423,4 +426,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get putYourCouponCodeHere => 'Put your coupon code here';
+
+  @override
+  String get paymentDoneSuccessfully => 'Payment done successfully.';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get others => 'Others';
+
+  @override
+  String get generalSettings => 'General Settings';
 }

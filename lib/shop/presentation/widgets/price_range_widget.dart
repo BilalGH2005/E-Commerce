@@ -4,8 +4,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/shortcuts.dart';
 import '../controllers/shop_cubit.dart';
 
-class PriceRangeWidget extends StatelessWidget {
+class PriceRangeWidget extends StatefulWidget {
   const PriceRangeWidget({super.key});
+
+  @override
+  State<PriceRangeWidget> createState() => _PriceRangeWidgetState();
+}
+
+class _PriceRangeWidgetState extends State<PriceRangeWidget> {
+  late RangeValues _currentRange;
+
+  @override
+  void initState() {
+    super.initState();
+    final cubit = context.read<ShopCubit>();
+    final shopMetadata = cubit.shopMetadata.data!;
+
+    _currentRange =
+        cubit.draftFilters.priceRange ??
+        RangeValues(shopMetadata.minPrice, shopMetadata.maxPrice);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,37 +39,34 @@ class PriceRangeWidget extends StatelessWidget {
         SizedBox(height: 5),
         RangeSlider(
           labels: RangeLabels(
-            _formatPrice(
-              cubit.draftFilters.priceRange?.start,
-              shopMetadata.minPrice,
-            ),
-            _formatPrice(
-              cubit.draftFilters.priceRange?.end,
-              shopMetadata.maxPrice,
-            ),
+            _formatPrice(_currentRange.start, shopMetadata.minPrice),
+            _formatPrice(_currentRange.end, shopMetadata.maxPrice),
           ),
+          values: _currentRange,
           min: shopMetadata.minPrice,
           max: shopMetadata.maxPrice,
           divisions: (shopMetadata.maxPrice - shopMetadata.minPrice).round(),
-          values:
-              cubit.draftFilters.priceRange ??
-              RangeValues(shopMetadata.minPrice, shopMetadata.maxPrice),
           onChanged: (newRange) {
-            final newFilters = cubit.draftFilters.copyWith(
-              priceRange: newRange,
+            setState(() {
+              _currentRange = newRange;
+            });
+          },
+          onChangeEnd: (finalRange) {
+            final cubit = context.read<ShopCubit>();
+            cubit.updateFilter(
+              cubit.draftFilters.copyWith(priceRange: finalRange),
             );
-            cubit.updateFilter(newFilters);
           },
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '\$${shopMetadata.minPrice.floor().toString()}',
+              '\$${shopMetadata.minPrice.floor()}',
               style: textTheme(context).headlineMedium,
             ),
             Text(
-              '\$${shopMetadata.maxPrice.ceil().toString()}',
+              '\$${shopMetadata.maxPrice.ceil()}',
               style: textTheme(context).headlineMedium,
             ),
           ],

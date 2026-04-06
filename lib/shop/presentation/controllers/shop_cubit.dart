@@ -76,7 +76,7 @@ class ShopCubit extends Cubit<ShopState> {
       filteredProducts = PaginatedAsyncValue.error(error: result.error!);
     }
 
-    emit(ShopStateChanged());
+    emit(NiggaState());
   }
 
   bool isLoadingMore = false;

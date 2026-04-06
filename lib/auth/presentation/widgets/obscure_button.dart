@@ -14,26 +14,28 @@ class ObscureButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => IconButton(
-    splashRadius: 20,
-    onPressed: onPressed,
-    focusNode: FocusNode(skipTraversal: true),
-    icon: isObscure
-        ? SvgPicture.asset(
-            Assets.icons.eyeOff,
-            fit: BoxFit.scaleDown,
-            colorFilter: ColorFilter.mode(
-              colorScheme(context).tertiaryFixed,
-              BlendMode.srcIn,
+  Widget build(BuildContext context) {
+    return IconButton(
+      splashRadius: 20,
+      onPressed: onPressed,
+      focusNode: FocusNode(skipTraversal: true),
+      icon: isObscure
+          ? SvgPicture.asset(
+              Assets.icons.eyeOff,
+              fit: BoxFit.scaleDown,
+              colorFilter: ColorFilter.mode(
+                colorScheme(context).tertiaryFixed,
+                BlendMode.srcIn,
+              ),
+            )
+          : SvgPicture.asset(
+              Assets.icons.eye,
+              fit: BoxFit.scaleDown,
+              colorFilter: ColorFilter.mode(
+                colorScheme(context).tertiaryFixed,
+                BlendMode.srcIn,
+              ),
             ),
-          )
-        : SvgPicture.asset(
-            Assets.icons.eye,
-            fit: BoxFit.scaleDown,
-            colorFilter: ColorFilter.mode(
-              colorScheme(context).tertiaryFixed,
-              BlendMode.srcIn,
-            ),
-          ),
-  );
+    );
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:e_commerce/cart/presentation/controllers/cart_cubit.dart';
+import 'package:e_commerce/core/models/json_color.dart';
+import 'package:e_commerce/core/models/json_size.dart';
 import 'package:e_commerce/core/utils/dependency_injection.dart';
 import 'package:e_commerce/core/widgets/app_products_grid_view.dart';
 import 'package:e_commerce/payment/presentation/controllers/payment_cubit.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/shortcuts.dart';
+import '../../../core/utils/snackbar_util.dart';
 import '../../../core/widgets/app_color_button.dart';
 import '../../model/product_details_model.dart';
 import '../controllers/product_details_cubit.dart';
@@ -223,21 +226,59 @@ class _ProductDetails extends StatelessWidget {
               colors: [AppColors.blue, AppColors.lightBlue],
               label: localization(context).addToCart,
               icon: Icons.shopping_cart_outlined,
-              onPressed: () async {
+              onPressed: () {
                 serviceLocator<CartCubit>().addToCart(
-                  orderDetails: cubit.orderDetails,
+                  product: product.copyWith(
+                    colors: [
+                      JsonColor(
+                        id: cubit.orderDetails.colorId,
+                        hexCode: '',
+                        name: product.colors
+                            .firstWhere(
+                              (color) => color.id == cubit.orderDetails.colorId,
+                            )
+                            .name,
+                      ),
+                    ],
+                    sizes: [
+                      JsonSize(
+                        id: cubit.orderDetails.sizeId,
+                        name: product.sizes
+                            .firstWhere(
+                              (size) => size.id == cubit.orderDetails.sizeId,
+                            )
+                            .name,
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
-            BlocBuilder<PaymentCubit, PaymentState>(
+            BlocConsumer<PaymentCubit, PaymentState>(
+              listenWhen: (_, state) =>
+                  state is PaymentFailed || state is PaymentSuccessful,
+              listener: (context, state) {
+                if (state is PaymentSuccessful) {
+                  context.read<PaymentCubit>().showSuccessfulPaymentDialog(
+                    context,
+                  );
+                } else if (state is PaymentFailed) {
+                  SnackBarUtil.showError(
+                    localization(context).somethingWentWrong,
+                  );
+                }
+              },
               builder: (context, state) {
                 return CustomButton(
                   colors: [AppColors.green, AppColors.lightGreen],
                   label: localization(context).buyNow,
                   icon: Icons.touch_app_outlined,
                   onPressed: () {
-                    context.read<PaymentCubit>().createPaymentIntent(
-                      amount: product.finalPrice,
+                    context.read<PaymentCubit>().presentPaymentSheet(
+                      amount: (double.parse(
+                        product.finalPrice.toStringAsFixed(2),
+                      )),
+                      context: context,
                     );
                   },
                 );

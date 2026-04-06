@@ -24,9 +24,6 @@ Future<void> setupDependencyInjection() async {
   serviceLocator.registerLazySingleton<CartRepo>(() => SupabaseCartRepo());
   serviceLocator.registerLazySingleton<ShopRepo>(() => SupabaseShopRepo());
   serviceLocator.registerLazySingleton<PaymentRepo>(() => StripePaymentRepo());
-  // serviceLocator.registerLazySingleton<ProfileRepo>(
-  //   () => SupabaseProfileRepo(),
-  // );
   serviceLocator.registerLazySingleton<ProductDetailsRepo>(
     () => SupabaseProductDetailsRepo(),
   );
@@ -52,8 +49,7 @@ Future<void> setupDependencyInjection() async {
     dispose: (cubit) => cubit.close(),
   );
 
-  final prefs = await SharedPreferences.getInstance();
-  serviceLocator.registerLazySingleton<SharedPreferences>(() => prefs);
+  serviceLocator.registerSingletonAsync(() => SharedPreferences.getInstance());
   serviceLocator.registerLazySingleton<Stripe>(() => Stripe.instance);
   serviceLocator.registerLazySingleton<Dio>(() => Dio());
 }

@@ -1,11 +1,15 @@
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
 import 'package:e_commerce/core/constants/app_breakpoints.dart';
+import 'package:e_commerce/core/constants/app_routes.dart';
 import 'package:e_commerce/core/constants/assets.gen.dart';
+import 'package:e_commerce/core/controllers/app_cubit.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
+import 'package:e_commerce/core/widgets/app_back_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/utils/snackbar_util.dart';
 import '../../../core/widgets/app_button.dart';
@@ -15,7 +19,7 @@ class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthCubitState>(
+  Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthState>(
     listenWhen: (_, state) =>
         state is AuthResetPasswordSuccess || state is AuthFailure,
     listener: (context, state) {
@@ -29,13 +33,28 @@ class ResetPasswordScreen extends StatelessWidget {
         );
       }
     },
-    buildWhen: (_, state) =>
-        state is AuthResetPasswordRequested ||
-        state is AuthFailure ||
-        state is AuthFormChanged,
     builder: (context, state) {
       final cubit = context.read<AuthCubit>();
       return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          surfaceTintColor: colorScheme(context).surface,
+          backgroundColor: colorScheme(context).surface,
+          leading: AppBackButton(
+            onPressed: () {
+              if (!context.read<AppCubit>().seenGettingStarted) {
+                context.goNamed(AppRoutes.gettingStarted.name);
+              } else {
+                context.goNamed(AppRoutes.home.name);
+              }
+            },
+          ),
+          title: Text(
+            localization(context).resetPassword,
+            style: textTheme(context).displayMedium,
+          ),
+          centerTitle: true,
+        ),
         body: SingleChildScrollView(
           child: Center(
             child: ConstrainedBox(
@@ -46,7 +65,7 @@ class ResetPasswordScreen extends StatelessWidget {
               child: Form(
                 key: cubit.resetPasswordFormKey,
                 child: Padding(
-                  padding: const EdgeInsets.all(30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -59,7 +78,14 @@ class ResetPasswordScreen extends StatelessWidget {
                           onPressed: () => cubit.togglePasswordObscure(),
                         ),
                         label: localization(context).password,
-                        prefixIcon: SvgPicture.asset(Assets.icons.lock),
+                        prefixIcon: SvgPicture.asset(
+                          Assets.icons.lock,
+                          fit: BoxFit.scaleDown,
+                          colorFilter: ColorFilter.mode(
+                            colorScheme(context).tertiaryFixed,
+                            BlendMode.srcIn,
+                          ),
+                        ),
                         validator: (value) => AuthCubit.passwordValidator(
                           context: context,
                           value: value,
@@ -79,6 +105,10 @@ class ResetPasswordScreen extends StatelessWidget {
                         prefixIcon: SvgPicture.asset(
                           Assets.icons.lock,
                           fit: BoxFit.scaleDown,
+                          colorFilter: ColorFilter.mode(
+                            colorScheme(context).tertiaryFixed,
+                            BlendMode.srcIn,
+                          ),
                         ),
                         validator: (value) => cubit.confirmPasswordValidator(
                           context: context,
@@ -90,7 +120,8 @@ class ResetPasswordScreen extends StatelessWidget {
                       AppButton(
                         onPressed: cubit.isLoading
                             ? null
-                            : () async => await cubit.updateUserPassword(),
+                            : () async =>
+                                  await cubit.updateUserPassword(context),
                         labelWidget: cubit.isLoading
                             ? CircularProgressIndicator()
                             : Text(

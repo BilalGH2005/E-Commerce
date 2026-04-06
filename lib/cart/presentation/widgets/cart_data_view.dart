@@ -11,9 +11,7 @@ import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/payment/presentation/controllers/payment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-
-import '../../../core/utils/dependency_injection.dart';
+import '../../../core/utils/snackbar_util.dart';
 import 'cart_item_card.dart';
 
 class CartDataView extends StatelessWidget {
@@ -34,7 +32,16 @@ class CartDataView extends StatelessWidget {
       0,
     );
 
-    return BlocBuilder<PaymentCubit, PaymentState>(
+    return BlocConsumer<PaymentCubit, PaymentState>(
+      listenWhen: (_, state) =>
+          state is PaymentFailed || state is PaymentSuccessful,
+      listener: (context, state) {
+        if (state is PaymentSuccessful) {
+          context.read<PaymentCubit>().showSuccessfulPaymentDialog(context);
+        } else if (state is PaymentFailed) {
+          SnackBarUtil.showError(localization(context).somethingWentWrong);
+        }
+      },
       builder: (context, state) {
         return cartProducts.isNotEmpty
             ? CustomScrollView(
@@ -75,17 +82,22 @@ class CartDataView extends StatelessWidget {
                   SliverSizedBox(height: 32),
                   SliverToBoxAdapter(
                     child: AppButton(
-                      onPressed: () async {
-                        await context.read<PaymentCubit>().createPaymentIntent(
-                          amount:
-                              (double.parse(total.toStringAsFixed(2)) * 100),
-                        );
-                        await serviceLocator<Stripe>().presentPaymentSheet();
-                      },
-                      labelWidget: Text(
-                        localization(context).checkout,
-                        style: textTheme(context).bodyMedium,
-                      ),
+                      onPressed: context.read<PaymentCubit>().isLoading
+                          ? null
+                          : () {
+                              context.read<PaymentCubit>().presentPaymentSheet(
+                                amount: (double.parse(
+                                  total.toStringAsFixed(2),
+                                )),
+                                context: context,
+                              );
+                            },
+                      labelWidget: context.read<PaymentCubit>().isLoading
+                          ? CircularProgressIndicator()
+                          : Text(
+                              localization(context).checkout,
+                              style: textTheme(context).bodyMedium,
+                            ),
                     ),
                   ),
                   SliverSizedBox(height: 8),

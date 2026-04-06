@@ -8,16 +8,21 @@ import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/utils/snackbar_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../core/constants/app_routes.dart';
 import '../../../core/constants/assets.gen.dart';
+import '../../../core/controllers/app_cubit.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthCubitState>(
+  Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthState>(
     listenWhen: (_, state) =>
-        state is AuthFailure || state is AuthSuccessSignUp,
+        state is AuthFailure ||
+        state is AuthSuccessSignUp ||
+        state is AuthSuccessSignIn,
     listener: (context, state) {
       if (state is AuthFailure) {
         SnackBarUtil.showError(
@@ -27,6 +32,12 @@ class AuthScreen extends StatelessWidget {
         SnackBarUtil.showSuccess(
           localization(context).checkEmailForVerification,
         );
+      } else if (state is AuthSuccessSignIn) {
+        if (!context.read<AppCubit>().seenGettingStarted) {
+          context.goNamed(AppRoutes.gettingStarted.name);
+        } else {
+          context.goNamed(AppRoutes.home.name);
+        }
       }
     },
     builder: (context, state) {

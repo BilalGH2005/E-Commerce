@@ -11,7 +11,8 @@ class AppLightTheme {
   ThemeData get lightTheme => ThemeData.light().copyWith(
     scaffoldBackgroundColor: AppColors.white,
     primaryColor: AppColors.lightPrimary,
-    brightness: Brightness.light,
+    dividerTheme: DividerThemeData(color: AppColors.lightTertiary),
+    dividerColor: AppColors.red,
     chipTheme: ChipThemeData(
       color: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {

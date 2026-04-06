@@ -18,6 +18,7 @@ class EmptyCartWidget extends StatelessWidget {
           Text(
             localization(context).cartIsEmpty,
             style: textTheme(context).displaySmall,
+            textAlign: TextAlign.center,
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:e_commerce/collection/presentation/controllers/collection_cubit.dart';
+import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/widgets/app_products_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
@@ -16,6 +17,9 @@ class CollectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: colorScheme(context).surface,
+        backgroundColor: colorScheme(context).surface,
+
         centerTitle: true,
         title: Text(
           collectionName,
@@ -39,12 +43,12 @@ class CollectionScreen extends StatelessWidget {
               error: localization(context).somethingWentWrong,
               labelWidget: Text(
                 localization(context).retry,
-                style: textTheme(context).bodyMedium,
+                style: textTheme(
+                  context,
+                ).bodyMedium!.copyWith(color: AppColors.white),
               ),
-              onPressed: () async {
-                return cubit.getCollectionProducts(
-                  collectionId: cubit.collectionId,
-                );
+              onPressed: () {
+                cubit.getCollectionProducts(collectionId: cubit.collectionId);
               },
             ),
           );

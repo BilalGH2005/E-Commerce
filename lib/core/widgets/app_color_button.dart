@@ -19,33 +19,39 @@ class AppColorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(30),
-      onTap: onPressed,
-      child: AnimatedContainer(
-        duration: 300.ms,
-        padding: isSelected ? const EdgeInsets.all(4) : EdgeInsets.zero,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: HexColor(color.hexCode),
-          border: Border.all(color: colorScheme(context).tertiary, width: 0.8),
-        ),
+    return Tooltip(
+      message: color.name,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        onTap: onPressed,
         child: AnimatedContainer(
           duration: 300.ms,
-          padding: isSelected ? const EdgeInsets.all(3) : EdgeInsets.zero,
+          padding: isSelected ? const EdgeInsets.all(1.5) : EdgeInsets.zero,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isSelected
-                ? colorScheme(context).surface
-                : Colors.transparent,
+            color: colorScheme(context).primary,
+            border: Border.all(
+              color: colorScheme(context).tertiary,
+              width: 0.8,
+            ),
           ),
           child: AnimatedContainer(
             duration: 300.ms,
-            width: 45,
-            height: 45,
+            padding: isSelected ? const EdgeInsets.all(3) : EdgeInsets.zero,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: HexColor(color.hexCode),
+              color: isSelected
+                  ? colorScheme(context).surface
+                  : Colors.transparent,
+            ),
+            child: AnimatedContainer(
+              duration: 300.ms,
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: HexColor(color.hexCode),
+              ),
             ),
           ),
         ),

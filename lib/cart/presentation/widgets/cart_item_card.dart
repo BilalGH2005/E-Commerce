@@ -1,7 +1,10 @@
 import 'package:e_commerce/cart/models/cart_item_model.dart';
 import 'package:e_commerce/cart/presentation/widgets/quantity_modifier_widget.dart';
+import 'package:e_commerce/core/models/category.dart';
+import 'package:e_commerce/core/models/json_color.dart';
 import 'package:e_commerce/core/widgets/cached_image.dart';
 import 'package:e_commerce/product_details/model/order_details.dart';
+import 'package:e_commerce/product_details/model/product_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +26,26 @@ class CartItemCard extends StatelessWidget {
       colorId: cartItem.pickedColor.id,
       sizeId: cartItem.pickedSize.id,
     );
+    final ProductDetailsModel product = ProductDetailsModel(
+      id: cartItem.productId,
+      name: cartItem.productName,
+      imagesUrls: [cartItem.imageUrl],
+      colors: [
+        JsonColor(
+          id: cartItem.pickedColor.id,
+          name: cartItem.pickedColor.name,
+          hexCode: '',
+        ),
+      ],
+      sizes: [cartItem.pickedSize],
+      price: cartItem.oldPrice,
+      finalPrice: cartItem.newPrice,
+      // dummy data
+      similarProducts: [],
+      category: Category(id: 'id', name: 'name'),
+      description: '',
+      addedAt: DateTime.now(),
+    );
 
     return Stack(
       children: [
@@ -42,6 +65,7 @@ class CartItemCard extends StatelessWidget {
                       imageUrl: cartItem.imageUrl,
                       width: 130,
                       height: 125,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -137,13 +161,11 @@ class CartItemCard extends StatelessWidget {
                         SizedBox(height: 8),
                         QuantityModifierWidget(
                           quantity: cartItem.quantity,
-                          decrementEvent: () async {
-                            await cubit.removeFromCart(
-                              orderDetails: orderDetails,
-                            );
+                          decrementEvent: () {
+                            cubit.removeFromCart(orderDetails: orderDetails);
                           },
-                          incrementEvent: () async {
-                            await cubit.addToCart(orderDetails: orderDetails);
+                          incrementEvent: () {
+                            cubit.addToCart(product: product);
                           },
                         ),
                       ],
@@ -152,7 +174,7 @@ class CartItemCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 10),
-              Divider(color: colorScheme(context).tertiary),
+              Divider(),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,8 +199,8 @@ class CartItemCard extends StatelessWidget {
           right: isRTL ? null : 0,
           left: isRTL ? 0 : null,
           child: IconButton(
-            onPressed: () async {
-              await cubit.removeFromCart(orderDetails: orderDetails);
+            onPressed: () {
+              cubit.removeFromCartEntirely(orderDetails: orderDetails);
             },
             icon: Icon(
               Icons.close,

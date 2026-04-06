@@ -16,7 +16,6 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(SettingsLoading());
 
     final result = await serviceLocator<AuthRepo>().signOut();
-
     isLoading = false;
 
     if (result.isData) {

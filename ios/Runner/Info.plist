@@ -44,9 +44,9 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>NSCameraUsageDescription</key>
-        <string>Scan your card to add it automatically</string>
-        <key>NSCameraUsageDescription</key>
-        <string>To scan cards</string>
+		<string>Scan your card to add it automatically</string>
+		<key>NSCameraUsageDescription</key>
+		<string>To scan cards</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -54,6 +54,6 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>CFBundleName</key>
-        <string>Stylish</string>
+		<string>Stylish</string>
 	</dict>
 </plist>

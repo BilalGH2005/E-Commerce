@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:e_commerce/core/utils/dependency_injection.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -29,12 +28,10 @@ class StripePaymentRepo implements PaymentRepo {
 
       return AsyncResult.data(data: response.data['client_secret']);
     } on DioException catch (exception) {
-      debugPrint('Stripe error: ${exception.response?.data}');
       return AsyncResult.error(
         error: exception.response?.data['error']['message'] ?? 'other',
       );
-    } catch (exception) {
-      debugPrint('Unexpected error: $exception');
+    } catch (_) {
       return AsyncResult.error(error: 'other');
     }
   }

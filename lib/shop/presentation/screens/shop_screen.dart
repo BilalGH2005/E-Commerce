@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/shop/presentation/widgets/shop_data_view.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +34,10 @@ class ShopScreen extends StatelessWidget {
                   localization(context).retry,
                   style: textTheme(
                     context,
-                  ).bodyMedium!.copyWith(color: colorScheme(context).surface),
+                  ).bodyMedium!.copyWith(color: AppColors.white),
                 ),
-                onPressed: () async {
-                  await cubit.getShopMetadata();
+                onPressed: () {
+                  cubit.getShopMetadata();
                 },
               ),
             );

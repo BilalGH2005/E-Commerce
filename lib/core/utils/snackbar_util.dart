@@ -23,7 +23,7 @@ class SnackBarUtil {
       alignment: Alignment.topRight,
       description: Text(message),
       type: toastificationType,
-      style: ToastificationStyle.minimal,
+      style: ToastificationStyle.fillColored,
       autoCloseDuration: Duration(seconds: 3),
       showProgressBar: true,
     );

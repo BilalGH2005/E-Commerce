@@ -38,7 +38,9 @@ class OnBoardingAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           TextButton(
-            onPressed: () async => await cubit.goToSignIn(context),
+            onPressed: () {
+              cubit.goToSignIn(context);
+            },
             child: Text(
               localization(context).skip,
               style: textTheme(context).headlineMedium,

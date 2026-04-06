@@ -1,7 +1,7 @@
+import 'package:e_commerce/product_details/model/product_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_async_value/flutter_async_value.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/models/json_size.dart';
 import '../../../core/utils/shortcuts.dart';
 import '../../../product_details/model/order_details.dart';
 import '../../data/repos/cart_repo.dart';
@@ -39,46 +39,42 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  Future<void> addToCart({required OrderDetails orderDetails}) async {
+  Future<void> addToCart({required ProductDetailsModel product}) async {
     if (isCartBusy) return;
     isCartBusy = true;
     emit(CartStateChanged());
 
     final previous = List<CartItem>.from(cartProducts.data ?? []);
 
+    // return -1 if product isn't found
     final index = previous.indexWhere(
       (item) =>
-          item.productId == orderDetails.productId &&
-          item.pickedColor.id == orderDetails.colorId &&
-          item.pickedSize.id == orderDetails.sizeId,
+          item.productId == product.id &&
+          item.pickedColor.id == product.colors[0].id &&
+          item.pickedSize.id == product.sizes[0].id,
     );
 
     List<CartItem> updated = List<CartItem>.from(previous);
 
+    // product is in the list
     if (index != -1) {
-      final item = updated[index];
-      updated[index] = CartItem(
-        quantity: item.quantity + 1,
-        imageUrl: item.imageUrl,
-        newPrice: item.newPrice,
-        oldPrice: item.oldPrice,
-        productId: item.productId,
-        pickedSize: item.pickedSize,
-        pickedColor: item.pickedColor,
-        productName: item.productName,
+      updated[index] = updated[index].copyWith(
+        quantity: updated[index].quantity + 1,
       );
     } else {
       updated.add(
-        // API will return correct data after full fetch
         CartItem(
           quantity: 1,
-          imageUrl: '',
-          newPrice: 0,
-          oldPrice: 0,
-          productId: orderDetails.productId,
-          pickedSize: JsonSize(id: orderDetails.sizeId, name: ''),
-          pickedColor: SimpleJsonColor(id: orderDetails.colorId, name: ''),
-          productName: '',
+          imageUrl: product.imagesUrls[0],
+          newPrice: product.finalPrice,
+          oldPrice: product.price,
+          productId: product.id,
+          pickedSize: product.sizes[0],
+          pickedColor: SimpleJsonColor(
+            id: product.colors[0].id,
+            name: product.colors[0].name,
+          ),
+          productName: product.name,
         ),
       );
     }
@@ -86,9 +82,15 @@ class CartCubit extends Cubit<CartState> {
     cartProducts = AsyncValue.data(data: updated);
     emit(CartStateChanged());
 
-    final result = await _cartRepo.addToCart(orderDetails: orderDetails);
+    final result = await _cartRepo.addToCart(
+      orderDetails: OrderDetails(
+        productId: product.id,
+        colorId: product.colors[0].id,
+        sizeId: product.sizes[0].id,
+      ),
+    );
 
-    if (!result.isData) {
+    if (result.isError) {
       _revertChange(previous);
     }
 
@@ -113,18 +115,9 @@ class CartCubit extends Cubit<CartState> {
 
     if (index == -1) return;
 
-    final item = updated[index];
-
-    if (item.quantity > 1) {
-      updated[index] = CartItem(
-        quantity: item.quantity - 1,
-        imageUrl: item.imageUrl,
-        newPrice: item.newPrice,
-        oldPrice: item.oldPrice,
-        productId: item.productId,
-        pickedSize: item.pickedSize,
-        pickedColor: item.pickedColor,
-        productName: item.productName,
+    if (updated[index].quantity > 1) {
+      updated[index] = updated[index].copyWith(
+        quantity: updated[index].quantity - 1,
       );
     } else {
       updated.removeAt(index);
@@ -135,7 +128,7 @@ class CartCubit extends Cubit<CartState> {
 
     final result = await _cartRepo.removeFromCart(orderDetails: orderDetails);
 
-    if (!result.isData) {
+    if (result.isError) {
       _revertChange(previous);
     }
 
@@ -167,7 +160,7 @@ class CartCubit extends Cubit<CartState> {
       orderDetails: orderDetails,
     );
 
-    if (!result.isData) {
+    if (result.isError) {
       _revertChange(previous);
     }
 

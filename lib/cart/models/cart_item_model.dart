@@ -43,6 +43,28 @@ class CartItem {
       _$CartItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$CartItemToJson(this);
+
+  CartItem copyWith({
+    int? quantity,
+    String? imageUrl,
+    double? newPrice,
+    double? oldPrice,
+    String? productId,
+    JsonSize? pickedSize,
+    SimpleJsonColor? pickedColor,
+    String? productName,
+  }) {
+    return CartItem(
+      quantity: quantity ?? this.quantity,
+      imageUrl: imageUrl ?? this.imageUrl,
+      newPrice: newPrice ?? this.newPrice,
+      oldPrice: oldPrice ?? this.oldPrice,
+      productId: productId ?? this.productId,
+      pickedSize: pickedSize ?? this.pickedSize,
+      pickedColor: pickedColor ?? this.pickedColor,
+      productName: productName ?? this.productName,
+    );
+  }
 }
 
 @JsonSerializable()

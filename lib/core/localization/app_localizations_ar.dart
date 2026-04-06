@@ -106,7 +106,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signIn => 'تسجيل الدخول';
 
   @override
-  String get termsAndConditions => 'الشروط والأحكام';
+  String get termsOfService => 'شروط الخدمة';
 
   @override
   String get termsText =>
@@ -187,10 +187,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settings => 'الإعدادات';
 
   @override
-  String get switchAppTheme => 'تحويل مظهر التطبيق';
+  String get theme => 'المظهر';
 
   @override
-  String get chooseAppLanguage => 'إختيار لغة التطبيق:';
+  String get language => 'اللغة';
+
+  @override
+  String get privacyAgreementPrefix => 'أوافق على ';
 
   @override
   String get orContinueWith => '- أو تابع باستخدام -';
@@ -322,7 +325,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get similarItems => 'منتجات مشابهة';
 
   @override
-  String get applied => 'مطبق';
+  String get applied => 'مفعل';
 
   @override
   String get shopByCategories => 'تسوق\nحسب الفئات';
@@ -377,7 +380,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get checkout => 'الدفع';
 
   @override
-  String get cartIsEmpty => 'سلة التسوق فارغة — ابدأ بإضافة بعض المنتجات!';
+  String get cartIsEmpty => 'سلة التسوق فارغة, ابدأ بإضافة بعض المنتجات!';
 
   @override
   String get applyCoupon => 'تطبيق القسائم:';
@@ -423,4 +426,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get putYourCouponCodeHere => 'أدخل رمز القسيمة هنا';
+
+  @override
+  String get paymentDoneSuccessfully => 'تمت عملية الدفع بنجاح.';
+
+  @override
+  String get privacyPolicy => 'سياسة الخصوصية';
+
+  @override
+  String get others => 'أخرى';
+
+  @override
+  String get generalSettings => 'الإعدادات العامة';
 }

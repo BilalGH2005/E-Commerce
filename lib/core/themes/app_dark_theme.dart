@@ -12,6 +12,7 @@ class AppDarkTheme {
     scaffoldBackgroundColor: AppColors.darkSurface,
     primaryColor: AppColors.darkPrimary,
     brightness: Brightness.dark,
+    dividerTheme: DividerThemeData(color: AppColors.darkTertiary),
     chipTheme: ChipThemeData(
       color: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
