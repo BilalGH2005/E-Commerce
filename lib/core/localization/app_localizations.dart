@@ -913,6 +913,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'General Settings'**
   String get generalSettings;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @changesAppliedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes applied successfully!'**
+  String get changesAppliedSuccessfully;
+
+  /// No description provided for @accountDeletionIsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Account deletion is failed'**
+  String get accountDeletionIsFailed;
+
+  /// No description provided for @areYouSure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure?'**
+  String get areYouSure;
+
+  /// No description provided for @takePicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Picture'**
+  String get takePicture;
+
+  /// No description provided for @chooseFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGallery;
+
+  /// No description provided for @removePicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Picture'**
+  String get removePicture;
 }
 
 class _AppLocalizationsDelegate

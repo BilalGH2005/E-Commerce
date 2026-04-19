@@ -55,6 +55,11 @@ Future<void> _initSupabase() async {
 
 void _removeNativeSplashScreen() => FlutterNativeSplash.remove();
 
+Locale _themeLocaleFor(Locale? selectedLocale) {
+  final locale = selectedLocale ?? WidgetsBinding.instance.platformDispatcher.locale;
+  return locale.languageCode == 'ar' ? const Locale('ar') : const Locale('en');
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -72,23 +77,20 @@ class MyApp extends StatelessWidget {
           return BlocBuilder<AppCubit, AppState>(
             builder: (context, state) {
               final cubit = context.read<AppCubit>();
-              final locale = cubit.isArabic
-                  ? const Locale('ar')
-                  : const Locale('en');
+              final selectedLocale = cubit.locale;
+              final themeLocale = _themeLocaleFor(selectedLocale);
               return ToastificationWrapper(
                 child: MaterialApp.router(
                   title: 'Stylish',
                   localizationsDelegates:
                       AppLocalizations.localizationsDelegates,
                   supportedLocales: AppLocalizations.supportedLocales,
-                  locale: locale,
+                  locale: selectedLocale,
                   routerConfig: router,
                   debugShowCheckedModeBanner: false,
-                  theme: AppLightTheme(locale).lightTheme,
-                  darkTheme: AppDarkTheme(locale).darkTheme,
-                  themeMode: cubit.isDarkTheme
-                      ? ThemeMode.dark
-                      : ThemeMode.light,
+                  theme: AppLightTheme(themeLocale).lightTheme,
+                  darkTheme: AppDarkTheme(themeLocale).darkTheme,
+                  themeMode: cubit.themeMode,
                 ),
               );
             },

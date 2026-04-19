@@ -438,4 +438,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get generalSettings => 'General Settings';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get changesAppliedSuccessfully => 'Changes applied successfully!';
+
+  @override
+  String get accountDeletionIsFailed => 'Account deletion is failed';
+
+  @override
+  String get areYouSure => 'Are you sure?';
+
+  @override
+  String get takePicture => 'Take Picture';
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get removePicture => 'Remove Picture';
 }

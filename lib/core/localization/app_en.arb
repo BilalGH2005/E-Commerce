@@ -134,5 +134,14 @@
   "paymentDoneSuccessfully": "Payment done successfully.",
   "privacyPolicy": "Privacy Policy",
   "others": "Others",
-  "generalSettings": "General Settings"
+  "generalSettings": "General Settings",
+  "appearance": "Appearance",
+  "editProfile": "Edit Profile",
+  "deleteAccount": "Delete Account",
+  "changesAppliedSuccessfully": "Changes applied successfully!",
+  "accountDeletionIsFailed": "Account deletion is failed",
+  "areYouSure": "Are you sure?",
+  "takePicture": "Take Picture",
+  "chooseFromGallery": "Choose from Gallery",
+  "removePicture": "Remove Picture"
 }

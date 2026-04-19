@@ -4,6 +4,7 @@ import '../utils/shortcuts.dart';
 
 class AppField extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final String? label;
   final Widget? prefixIcon;
   final String? Function(String?)? validator;
@@ -22,6 +23,7 @@ class AppField extends StatelessWidget {
   const AppField({
     super.key,
     required this.controller,
+    this.focusNode,
     this.label,
     this.prefixIcon,
     this.validator,
@@ -44,6 +46,7 @@ class AppField extends StatelessWidget {
       onTapOutside: (PointerDownEvent event) {
         FocusManager.instance.primaryFocus?.unfocus();
       },
+      focusNode: focusNode,
       enabled: enabled,
       autofocus: autoFocus ?? false,
       onChanged: onChanged,

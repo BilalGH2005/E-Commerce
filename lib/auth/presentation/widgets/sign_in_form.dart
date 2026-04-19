@@ -1,14 +1,12 @@
 import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/oauth_widget.dart';
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
-import 'package:e_commerce/core/constants/app_routes.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/assets.gen.dart';
 
@@ -83,9 +81,8 @@ Widget signInForm({required BuildContext context, Key? key}) {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        context.pushNamed(AppRoutes.forgetPassword.name);
-                      },
+                      onPressed: () =>
+                          cubit.navigateToForgotPasswordScreen(context),
                       child: Text(
                         localization(context).forgotPassword,
                         style: textTheme(context).bodySmall!.copyWith(
@@ -97,15 +94,9 @@ Widget signInForm({required BuildContext context, Key? key}) {
                 ),
                 SizedBox(height: 15),
                 AppButton(
-                  onPressed: cubit.isLoading
-                      ? null
-                      : () => cubit.signInWithPassword(),
-                  labelWidget: cubit.isLoading
-                      ? CircularProgressIndicator()
-                      : Text(
-                          localization(context).login,
-                          style: textTheme(context).bodyMedium,
-                        ),
+                  onPressed: () => cubit.signInWithPassword(),
+                  isLoading: cubit.isLoading,
+                  label: localization(context).login,
                 ),
                 Spacer(),
                 OAuthWidget(

@@ -118,16 +118,10 @@ class ResetPasswordScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 60),
                       AppButton(
-                        onPressed: cubit.isLoading
-                            ? null
-                            : () async =>
-                                  await cubit.updateUserPassword(context),
-                        labelWidget: cubit.isLoading
-                            ? CircularProgressIndicator()
-                            : Text(
-                                localization(context).resetPassword,
-                                style: textTheme(context).bodyMedium,
-                              ),
+                        onPressed: () async =>
+                            await cubit.updateUserPassword(context),
+                        isLoading: cubit.isLoading,
+                        label: localization(context).resetPassword,
                       ),
                     ],
                   ),

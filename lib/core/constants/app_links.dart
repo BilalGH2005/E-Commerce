@@ -15,18 +15,12 @@ abstract class AppLinks {
       'https://stylish-flutter.netlify.app/privacy_ar';
 
   static String termsOfServiceLink(String locale) {
-    if (locale == 'en') {
-      return _termsOfServiceLinkEN;
-    } else {
-      return _termsOfServiceLinkAR;
-    }
+    if (locale == 'ar') return _termsOfServiceLinkAR;
+    return _termsOfServiceLinkEN;
   }
 
   static String privacyPolicyLink(String locale) {
-    if (locale == 'en') {
-      return _privacyPolicyLinkEN;
-    } else {
-      return _privacyPolicyLinkAR;
-    }
+    if (locale == 'ar') return _privacyPolicyLinkAR;
+    return _privacyPolicyLinkEN;
   }
 }

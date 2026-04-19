@@ -1,7 +1,6 @@
 import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/auth/presentation/widgets/oauth_widget.dart';
 import 'package:e_commerce/auth/presentation/widgets/obscure_button.dart';
-import 'package:e_commerce/core/constants/app_colors.dart';
 import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:e_commerce/core/widgets/app_button.dart';
 import 'package:e_commerce/core/widgets/app_field.dart';
@@ -162,15 +161,9 @@ Widget signUpForm({required BuildContext context, Key? key}) {
               ),
               SizedBox(height: 35),
               AppButton(
-                onPressed: cubit.isLoading
-                    ? null
-                    : () async => await cubit.signUp(),
-                labelWidget: cubit.isLoading
-                    ? CircularProgressIndicator(color: AppColors.white)
-                    : Text(
-                        localization(context).createAccount,
-                        style: textTheme(context).bodyMedium,
-                      ),
+                onPressed: () async => await cubit.signUp(),
+                isLoading: cubit.isLoading,
+                label: localization(context).createAccount,
               ),
               SizedBox(height: 35),
               OAuthWidget(

@@ -53,11 +53,12 @@ class CartDataView extends StatelessWidget {
                     },
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 550,
-                      mainAxisExtent: 250,
+                      mainAxisExtent: 295,
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
                     ),
                   ),
+                  SliverSizedBox(height: 16),
                   SliverToBoxAdapter(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

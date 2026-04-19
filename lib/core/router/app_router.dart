@@ -32,6 +32,7 @@ import '../../product_details/data/repos/product_details_repo.dart';
 import '../../product_details/presentation/controllers/product_details_cubit.dart';
 import '../../product_details/presentation/screens/product_details_screen.dart';
 import '../../settings/presentation/controllers/settings_cubit.dart';
+import '../../settings/presentation/screens/profile_screen.dart';
 import '../../shop/presentation/controllers/shop_cubit.dart';
 import '../constants/app_links.dart';
 import '../constants/app_routes.dart';
@@ -192,6 +193,19 @@ final router = GoRouter(
         );
       },
     ),
+    GoRoute(
+      name: AppRoutes.profile.name,
+      path: AppRoutes.profile.path,
+      pageBuilder: (context, state) {
+        return slideFadePage(
+          child: BlocProvider.value(
+            value: serviceLocator<SettingsCubit>(),
+            child: const ProfileScreen(),
+          ),
+          key: AppRoutes.profile.name,
+        );
+      },
+    ),
     StatefulShellRoute.indexedStack(
       builder: (_, _, navigationShell) => AppResponsiveBar(navigationShell),
       branches: [
@@ -245,8 +259,8 @@ final router = GoRouter(
             GoRoute(
               name: AppRoutes.settings.name,
               path: AppRoutes.settings.path,
-              builder: (_, _) => BlocProvider(
-                create: (context) => SettingsCubit(),
+              builder: (_, _) => BlocProvider.value(
+                value: serviceLocator<SettingsCubit>(),
                 child: const SettingsScreen(),
               ),
             ),

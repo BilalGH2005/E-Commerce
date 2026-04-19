@@ -134,5 +134,14 @@
   "paymentDoneSuccessfully": "تمت عملية الدفع بنجاح.",
   "privacyPolicy": "سياسة الخصوصية",
   "others": "أخرى",
-  "generalSettings": "الإعدادات العامة"
+  "generalSettings": "الإعدادات العامة",
+  "appearance": "المظهر",
+  "editProfile": "تعديل الحساب",
+  "deleteAccount": "حذف الحساب",
+  "changesAppliedSuccessfully": "تم تطبيق التعديلات بنجاح!",
+  "accountDeletionIsFailed": "حصل خطأ أثناء محاولة حذف الحساب",
+  "areYouSure": "هل أنت متأكد؟",
+  "takePicture": "إلتقاط صورة",
+  "chooseFromGallery": "إختيار من المعرض",
+  "removePicture": "إزالة الصورة"
 }

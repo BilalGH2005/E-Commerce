@@ -438,4 +438,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get generalSettings => 'الإعدادات العامة';
+
+  @override
+  String get appearance => 'المظهر';
+
+  @override
+  String get editProfile => 'تعديل الحساب';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get changesAppliedSuccessfully => 'تم تطبيق التعديلات بنجاح!';
+
+  @override
+  String get accountDeletionIsFailed => 'حصل خطأ أثناء محاولة حذف الحساب';
+
+  @override
+  String get areYouSure => 'هل أنت متأكد؟';
+
+  @override
+  String get takePicture => 'إلتقاط صورة';
+
+  @override
+  String get chooseFromGallery => 'إختيار من المعرض';
+
+  @override
+  String get removePicture => 'إزالة الصورة';
 }

@@ -4,6 +4,7 @@ import 'package:e_commerce/auth/presentation/controllers/auth_cubit.dart';
 import 'package:e_commerce/collection/data/repos/collection_repo.dart';
 import 'package:e_commerce/payment/presentation/controllers/payment_cubit.dart';
 import 'package:e_commerce/product_details/data/repos/product_details_repo.dart';
+import 'package:e_commerce/settings/data/repos/settings_repo.dart';
 import 'package:e_commerce/shop/data/repos/shop_repo.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get_it/get_it.dart';
@@ -13,6 +14,7 @@ import '../../cart/data/repos/cart_repo.dart';
 import '../../cart/presentation/controllers/cart_cubit.dart';
 import '../../home/data/repos/home_repo.dart';
 import '../../payment/data/repos/payment_repo.dart';
+import '../../settings/presentation/controllers/settings_cubit.dart';
 import '../../shop/presentation/controllers/shop_cubit.dart';
 
 final serviceLocator = GetIt.instance;
@@ -30,8 +32,15 @@ Future<void> setupDependencyInjection() async {
   serviceLocator.registerLazySingleton<CollectionRepo>(
     () => SupabaseCollectionRepo(),
   );
+  serviceLocator.registerLazySingleton<SettingsRepo>(
+    () => SupabaseSettingsRepo(),
+  );
 
   // Cubits
+  serviceLocator.registerLazySingleton<SettingsCubit>(
+    () => SettingsCubit(serviceLocator<SettingsRepo>()),
+    dispose: (cubit) => cubit.close(),
+  );
   serviceLocator.registerLazySingleton<AuthCubit>(
     () => AuthCubit(serviceLocator<AuthRepo>()),
     dispose: (cubit) => cubit.close(),

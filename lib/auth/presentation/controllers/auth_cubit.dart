@@ -32,7 +32,17 @@ class AuthCubit extends Cubit<AuthState> {
 
   void toggleAuth() {
     isSignIn = !isSignIn;
+    emailFieldController.clear();
+    nameFieldController.clear();
+    passwordFieldController.clear();
+    confirmPasswordFieldController.clear();
     emit(AuthFormChanged());
+  }
+
+  void navigateToForgotPasswordScreen(BuildContext context) {
+    context.pushNamed(AppRoutes.forgetPassword.name);
+    emailFieldController.clear();
+    nameFieldController.clear();
   }
 
   Future<void> signInWithPassword() async {

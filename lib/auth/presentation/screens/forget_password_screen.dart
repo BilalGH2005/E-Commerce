@@ -108,16 +108,10 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 ],
                               ),
                               AppButton(
-                                onPressed: cubit.isLoading
-                                    ? null
-                                    : () async =>
-                                          await cubit.resetPasswordForEmail(),
-                                labelWidget: cubit.isLoading
-                                    ? CircularProgressIndicator()
-                                    : Text(
-                                        localization(context).submit,
-                                        style: textTheme(context).bodyMedium,
-                                      ),
+                                onPressed: () async =>
+                                    await cubit.resetPasswordForEmail(),
+                                isLoading: cubit.isLoading,
+                                label: localization(context).submit,
                               ),
                             ],
                           ),

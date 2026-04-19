@@ -185,6 +185,7 @@ class ProductsFiltersBottomSheet extends StatelessWidget {
                           context.pop();
                           cubit.getFilteredProducts();
                         },
+                        label: localization(context).applyFilters,
                         labelWidget: Text(
                           localization(context).applyFilters,
                           style: textTheme(context).bodyMedium,

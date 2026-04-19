@@ -2,8 +2,6 @@ import 'package:e_commerce/core/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../constants/app_colors.dart';
-
 class AppWebViewPage extends StatefulWidget {
   const AppWebViewPage({super.key, required this.url, required this.title});
 
@@ -71,6 +69,7 @@ class _AppWebViewPageState extends State<AppWebViewPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: _reload,
@@ -119,7 +118,7 @@ class _AppWebViewPageState extends State<AppWebViewPage> {
             LinearProgressIndicator(
               minHeight: 2,
               color: colorScheme(context).primary,
-              backgroundColor: AppColors.white,
+              backgroundColor: colorScheme(context).tertiary,
             ),
         ],
       ),

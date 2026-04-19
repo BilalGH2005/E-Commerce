@@ -89,6 +89,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/theme.svg
   String get theme => 'assets/icons/theme.svg';
 
+  /// File path: assets/icons/trash.svg
+  String get trash => 'assets/icons/trash.svg';
+
   /// List of all assets
   List<String> get values => [
     appLogo,
@@ -116,6 +119,7 @@ class $AssetsIconsGen {
     settings,
     signOut,
     theme,
+    trash,
   ];
 }
 
@@ -126,17 +130,13 @@ class $AssetsImagesGen {
   AssetGenImage get appLogo =>
       const AssetGenImage('assets/images/app_logo.png');
 
-  /// File path: assets/images/dark_splash.png
-  AssetGenImage get darkSplash =>
-      const AssetGenImage('assets/images/dark_splash.png');
+  /// File path: assets/images/app_logo_dark.png
+  AssetGenImage get appLogoDark =>
+      const AssetGenImage('assets/images/app_logo_dark.png');
 
   /// File path: assets/images/getting_started.jpg
   AssetGenImage get gettingStarted =>
       const AssetGenImage('assets/images/getting_started.jpg');
-
-  /// File path: assets/images/light_splash.png
-  AssetGenImage get lightSplash =>
-      const AssetGenImage('assets/images/light_splash.png');
 
   /// File path: assets/images/onboarding1.svg
   String get onboarding1 => 'assets/images/onboarding1.svg';
@@ -150,9 +150,8 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
     appLogo,
-    darkSplash,
+    appLogoDark,
     gettingStarted,
-    lightSplash,
     onboarding1,
     onboarding2,
     onboarding3,

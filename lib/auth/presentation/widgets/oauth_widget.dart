@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants/assets.gen.dart';
-import '../../../core/controllers/app_cubit.dart';
 
 class OAuthWidget extends StatelessWidget {
   const OAuthWidget({
@@ -24,7 +23,7 @@ class OAuthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkTheme = context.read<AppCubit>().isDarkTheme;
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       width: 236,
       height: 154,

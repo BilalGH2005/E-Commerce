@@ -5,8 +5,6 @@ sealed class ShopState {}
 
 final class ShopInitial extends ShopState {}
 
-final class NiggaState extends ShopState {}
-
 final class ShopStateChanged extends ShopState {}
 
 final class ShopLoadingMoreFailed extends ShopState {}

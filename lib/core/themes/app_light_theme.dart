@@ -10,6 +10,7 @@ class AppLightTheme {
 
   ThemeData get lightTheme => ThemeData.light().copyWith(
     scaffoldBackgroundColor: AppColors.white,
+    dropdownMenuTheme: _dropdownMenuTheme(),
     primaryColor: AppColors.lightPrimary,
     dividerTheme: DividerThemeData(color: AppColors.lightTertiary),
     dividerColor: AppColors.red,
@@ -61,6 +62,13 @@ class AppLightTheme {
         fontSize: 12,
       ),
       floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
+        if (states.contains(WidgetState.error)) {
+          return const TextStyle(
+            color: AppColors.red,
+            fontSize: 12,
+            fontWeight: FontWeight.w300,
+          );
+        }
         if (states.contains(WidgetState.focused)) {
           return const TextStyle(
             color: AppColors.lightPrimary,
@@ -94,6 +102,63 @@ class AppLightTheme {
     ),
     textTheme: _getTextTheme(),
   );
+
+  DropdownMenuThemeData _dropdownMenuTheme() {
+    final radius = BorderRadius.circular(14);
+    final fontFamily = locale.languageCode == 'ar'
+        ? FontFamily.tajawal
+        : FontFamily.montserrat;
+
+    OutlineInputBorder border(Color color, [double width = 1]) {
+      return OutlineInputBorder(
+        borderRadius: radius,
+        borderSide: BorderSide(color: color, width: width),
+      );
+    }
+
+    return DropdownMenuThemeData(
+      textStyle: TextStyle(
+        fontFamily: fontFamily,
+        color: AppColors.black,
+        fontWeight: FontWeight.w600,
+        fontSize: 13,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        isDense: false,
+        contentPadding: const EdgeInsetsDirectional.only(
+          start: 16,
+          end: 12,
+          top: 14,
+          bottom: 14,
+        ),
+        filled: true,
+        fillColor: AppColors.lightSurfaceContainer,
+        enabledBorder: border(AppColors.lightTertiary.withAlpha(190)),
+        disabledBorder: border(AppColors.lightTertiary.withAlpha(110)),
+        focusedBorder: border(AppColors.lightPrimary, 1.6),
+        border: border(AppColors.lightTertiary.withAlpha(190)),
+        errorBorder: border(AppColors.red),
+        focusedErrorBorder: border(AppColors.red, 1.6),
+        errorStyle: TextStyle(
+          fontFamily: fontFamily,
+          color: AppColors.red,
+          fontSize: 14,
+        ),
+      ),
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStatePropertyAll(AppColors.white),
+        surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+        shadowColor: WidgetStatePropertyAll(AppColors.black.withAlpha(14)),
+        elevation: const WidgetStatePropertyAll(6),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 6),
+        ),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: radius),
+        ),
+      ),
+    );
+  }
 
   TextTheme _getTextTheme() {
     final String fontFamily = locale.languageCode == 'ar'

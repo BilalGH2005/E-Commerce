@@ -11,6 +11,7 @@ enum AppRoutes {
   cart(name: 'cart', path: '/cart'),
   shop(name: 'shop', path: '/shop'),
   settings(name: 'settings', path: '/settings'),
+  profile(name: 'profile', path: '/profile'),
   productDetails(name: 'productDetails', path: '/product_details/:product_id'),
   collection(name: 'collection', path: '/collection/:collection_id');
 

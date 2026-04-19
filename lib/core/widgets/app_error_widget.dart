@@ -19,14 +19,14 @@ class AppErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final gradient = LinearGradient(
-      colors: [
-        theme.colorScheme.secondary.withAlpha(37),
-        theme.colorScheme.surface,
-      ],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-    );
+    // final gradient = LinearGradient(
+    //   colors: [
+    //     theme.colorScheme.primary.withAlpha(37),
+    //     theme.colorScheme.surface,
+    //   ],
+    //   begin: Alignment.topLeft,
+    //   end: Alignment.bottomRight,
+    // );
 
     return Center(
       child: ConstrainedBox(
@@ -40,17 +40,17 @@ class AppErrorWidget extends StatelessWidget {
             color: Colors.transparent,
             child: Container(
               decoration: BoxDecoration(
-                gradient: gradient,
+                // gradient: gradient,
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
                   color: theme.colorScheme.onSurface.withAlpha(30),
                 ),
                 boxShadow: [
-                  BoxShadow(
-                    color: theme.colorScheme.shadow.withAlpha(62),
-                    offset: const Offset(0, 20),
-                    blurRadius: 35,
-                  ),
+                  // BoxShadow(
+                  //   color: theme.colorScheme.shadow.withAlpha(62),
+                  //   offset: const Offset(0, 20),
+                  //   blurRadius: 35,
+                  // ),
                 ],
               ),
               child: Padding(
@@ -65,12 +65,12 @@ class AppErrorWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: theme.colorScheme.secondaryContainer,
+                        color: theme.colorScheme.primary,
                       ),
                       child: Icon(
                         Icons.error_outline,
                         size: 56,
-                        color: theme.colorScheme.onSecondaryContainer,
+                        color: theme.colorScheme.inversePrimary,
                       ),
                     ),
                     const SizedBox(height: 24),
