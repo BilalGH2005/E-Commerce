@@ -33,25 +33,36 @@ jobs:
           node -e "
           (async () => {
             try {
-              // Debugging: Log environment variables (optional)
-              console.log('Supabase URL:', process.env.SUPABASE_URL);
-              console.log('Supabase Key:', process.env.SUPABASE_KEY);
+              // Validate and normalize environment variables
+              const rawUrl = process.env.SUPABASE_URL;
+              const key = process.env.SUPABASE_KEY;
+              if (!rawUrl || !key) {
+                throw new Error('Missing SUPABASE_URL or SUPABASE_KEY secret');
+              }
+              const normalizedUrl = /^https?:\/\//i.test(rawUrl) ? rawUrl : 'https://' + rawUrl;
 
               // Import Supabase client
               const { createClient } = require('@supabase/supabase-js');
-              const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+              const supabase = createClient(normalizedUrl, key);
 
-              // Ping Supabase by querying a table (e.g., 'products')
-              const { data, error } = await supabase.from('products').select('*').limit(10);
+              // Ping Supabase with lightweight query and retry for transient network failures
+              let lastError;
+              for (let attempt = 1; attempt <= 3; attempt++) {
+                const { error } = await supabase.from('products').select('id').limit(1);
+                if (!error) {
+                  console.log('Ping successful');
+                  return;
+                }
+                lastError = error;
+                if (attempt < 3) {
+                  await new Promise((resolve) => setTimeout(resolve, 2000));
+                }
+              }
 
-              // Handle errors
-              if (error) throw error;
-
-              // Log success
-              console.log('Ping successful:', data);
+              throw lastError;
             } catch (err) {
               // Log and exit with error
-              console.error('Error pinging Supabase:', err.message);
+              console.error('Error pinging Supabase:', err.stack || err.message);
               process.exit(1);
             }
           })();
